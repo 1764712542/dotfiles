@@ -1,0 +1,109 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+  "logo": {
+    "type": "auto",
+    "source": "macos",
+    "padding": {
+      "top": 1,
+      "left": 2,
+      "right": 4
+    },
+    "color": {
+      "1": "#7dcfff",
+      "2": "#7aa2f7",
+      "3": "#bb9af7",
+      "4": "#c0caf5",
+      "5": "#9ece6a",
+      "6": "#e0af68",
+      "7": "#f7768e",
+      "8": "#7dcfff",
+      "9": "#7aa2f7"
+    }
+  },
+  "display": {
+    "separator": "  ",
+    "color": {
+      "keys": "#7aa2f7"
+    }
+  },
+  "modules": [
+    {
+      "type": "title",
+      "color": {
+        "user": "#7dcfff",
+        "at": "#bb9af7",
+        "host": "#7aa2f7"
+      }
+    },
+    "break",
+    {
+      "type": "custom",
+      "format": " "
+    },
+    {
+      "type": "os",
+      "key": "\u001b[38;2;125;207;255m  \uf179  系统\u001b[0m",
+      "keyColor": "#7dcfff"
+    },
+    {
+      "type": "kernel",
+      "key": "\u001b[38;2;122;162;247m  \uf135  内核\u001b[0m",
+      "keyColor": "#7aa2f7"
+    },
+    {
+      "type": "uptime",
+      "key": "\u001b[38;2;187;154;247m  \uf017  运行\u001b[0m",
+      "keyColor": "#bb9af7"
+    },
+    {
+      "type": "packages",
+      "key": "\u001b[38;2;125;207;255m  \uf487  包管理\u001b[0m",
+      "keyColor": "#7dcfff"
+    },
+    {
+      "type": "shell",
+      "key": "\u001b[38;2;122;162;247m  \uf489  Shell\u001b[0m",
+      "keyColor": "#7aa2f7"
+    },
+    {
+      "type": "terminal",
+      "key": "\u001b[38;2;187;154;247m  \uf7c0  终端\u001b[0m",
+      "keyColor": "#bb9af7"
+    },
+    {
+      "type": "cpu",
+      "key": "\u001b[38;2;125;207;255m  \uf2db  处理器\u001b[0m",
+      "keyColor": "#7dcfff"
+    },
+    {
+      "type": "gpu",
+      "key": "\u001b[38;2;122;162;247m  \uf26c  显卡\u001b[0m",
+      "keyColor": "#7aa2f7"
+    },
+    {
+      "type": "memory",
+      "key": "\u001b[38;2;187;154;247m  \uf538  内存\u001b[0m",
+      "keyColor": "#bb9af7"
+    },
+    {
+      "type": "disk",
+      "key": "\u001b[38;2;125;207;255m  \uf0a0  磁盘\u001b[0m",
+      "keyColor": "#7dcfff",
+      "format": "{size-used}/{size-total} ({size-percentage})"
+    },
+    {
+      "type": "battery",
+      "key": "\u001b[38;2;122;162;247m  \uf240  电池\u001b[0m",
+      "keyColor": "#7aa2f7",
+      "format": "{capacity}% {status}"
+    },
+    {
+      "type": "custom",
+      "format": "\u001b[38;2;187;154;247m  ♪ Rei Ayanami ♪\u001b[0m"
+    },
+    {
+      "type": "colors",
+      "symbol": "circle"
+    }
+  ]
+}

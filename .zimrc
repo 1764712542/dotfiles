@@ -1,0 +1,30 @@
+# ============================================================
+#  ~/.zimrc — Zimfw Module Configuration
+#  Updated: 2026-04-28
+# ============================================================
+
+# --- 基础模块 ---
+zmodule environment
+zmodule input
+zmodule utility
+zmodule termtitle
+
+# --- 补全 ---
+zmodule zsh-users/zsh-completions --fpath src
+zmodule completion
+zmodule archive
+
+# --- 高亮与建议 ---
+zmodule zsh-users/zsh-syntax-highlighting
+zmodule zsh-users/zsh-autosuggestions
+
+# --- 增强模块 ---
+zmodule git
+zmodule ssh
+zmodule ruby
+
+# --- 现代增强 ---
+zmodule olets/zsh-abbr    # 智能缩写展开 (空格触发)
+
+# --- 主题 ---
+zmodule romkatv/powerlevel10k --use degit

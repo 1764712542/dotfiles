@@ -1,0 +1,7 @@
+[user]
+	name = ryanzhu
+	email = 1764712542@qq.com
+[safe]
+	directory = *
+[url "git@github.com:"]
+	insteadOf = https://github.com/
