@@ -1,0 +1,53 @@
+local completion = {}
+
+completion["neovim/nvim-lspconfig"] = {
+	lazy = true,
+	event = { "CursorHold", "CursorHoldI" },
+	config = require("completion.lsp"),
+	dependencies = {
+		{ "mason-org/mason.nvim" },
+		{ "mason-org/mason-lspconfig.nvim" },
+		{ "folke/neoconf.nvim" },
+	},
+}
+completion["rachartier/tiny-inline-diagnostic.nvim"] = {
+	lazy = false,
+	config = require("completion.tiny-inline-diagnostic"),
+}
+
+completion["hrsh7th/nvim-cmp"] = {
+	lazy = true,
+	event = "InsertEnter",
+	config = require("completion.cmp"),
+	dependencies = {
+		{
+			"L3MON4D3/LuaSnip",
+			build = "make install_jsregexp",
+			config = require("completion.luasnip"),
+			dependencies = "rafamadriz/friendly-snippets",
+		},
+		{ "lukas-reineke/cmp-under-comparator" },
+		{ "saadparwaiz1/cmp_luasnip" },
+		{ "hrsh7th/cmp-nvim-lsp" },
+		{ "andersevenrud/cmp-tmux" },
+		{ "hrsh7th/cmp-path" },
+		{ "f3fora/cmp-spell" },
+		{ "hrsh7th/cmp-buffer" },
+		{ "kdheepak/cmp-latex-symbols" },
+	},
+}
+completion["zbirenbaum/copilot.lua"] = {
+	lazy = true,
+	cond = require("core.settings").use_copilot,
+	cmd = "Copilot",
+	event = "InsertEnter",
+	config = require("completion.copilot"),
+	dependencies = {
+		{
+			"zbirenbaum/copilot-cmp",
+			config = require("completion.copilot-cmp"),
+		},
+	},
+}
+
+return completion

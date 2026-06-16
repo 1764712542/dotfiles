@@ -1,0 +1,126 @@
+local bind = require("keymap.bind")
+local map_callback = bind.map_callback
+
+local crates = require("crates")
+local crates_keymap = {
+	["n|<leader>ct"] = map_callback(function()
+			crates.toggle()
+		end)
+		:with_noremap()
+		:with_silent()
+		:with_buffer(0)
+		:with_desc("Cargo: 切换功能"),
+	["n|<leader>cr"] = map_callback(function()
+			crates.reload()
+		end)
+		:with_noremap()
+		:with_silent()
+		:with_buffer(0)
+		:with_desc("Cargo: 重新加载依赖"),
+
+	["n|<leader>cs"] = map_callback(function()
+			crates.show_popup()
+		end)
+		:with_noremap()
+		:with_silent()
+		:with_buffer(0)
+		:with_desc("Cargo: 弹出信息窗口"),
+	["n|<leader>cv"] = map_callback(function()
+			crates.show_versions_popup()
+			crates.show_popup()
+		end)
+		:with_noremap()
+		:with_silent()
+		:with_buffer(0)
+		:with_desc("Cargo: 选择版本"),
+	["n|<leader>cf"] = map_callback(function()
+			crates.show_features_popup()
+			crates.show_popup()
+		end)
+		:with_noremap()
+		:with_silent()
+		:with_buffer(0)
+		:with_desc("Cargo: 选择特性"),
+	["n|<leader>cd"] = map_callback(function()
+			crates.show_dependencies_popup()
+			crates.show_popup()
+		end)
+		:with_noremap()
+		:with_silent()
+		:with_buffer(0)
+		:with_desc("Cargo: 显示项目依赖"),
+
+	["n|<leader>cu"] = map_callback(function()
+			crates.update_crate()
+		end)
+		:with_noremap()
+		:with_silent()
+		:with_buffer(0)
+		:with_desc("Cargo: 更新当前依赖版本"),
+	["v|<leader>cu"] = map_callback(function()
+			crates.update_crates()
+		end)
+		:with_noremap()
+		:with_silent()
+		:with_buffer(0)
+		:with_desc("Cargo: 更新选中的依赖"),
+	["n|<leader>ca"] = map_callback(function()
+			crates.update_all_crates()
+		end)
+		:with_noremap()
+		:with_silent()
+		:with_buffer(0)
+		:with_desc("Cargo: 更新所有依赖"),
+	["n|<leader>cU"] = map_callback(function()
+			crates.upgrade_crate()
+		end)
+		:with_noremap()
+		:with_silent()
+		:with_buffer(0)
+		:with_desc("Cargo: 升级当前依赖"),
+	["v|<leader>cU"] = map_callback(function()
+			crates.upgrade_crates()
+		end)
+		:with_noremap()
+		:with_silent()
+		:with_buffer(0)
+		:with_desc("Cargo: 升级选中的依赖"),
+	["n|<leader>cA"] = map_callback(function()
+			crates.upgrade_all_crates()
+		end)
+		:with_noremap()
+		:with_silent()
+		:with_buffer(0)
+		:with_desc("Cargo: 升级所有依赖"),
+
+	["n|<leader>cH"] = map_callback(function()
+			crates.open_homepage()
+		end)
+		:with_noremap()
+		:with_silent()
+		:with_buffer(0)
+		:with_desc("Cargo: 打开主页"),
+	["n|<leader>cR"] = map_callback(function()
+			crates.open_repository()
+		end)
+		:with_noremap()
+		:with_silent()
+		:with_buffer(0)
+		:with_desc("Cargo: 打开仓库"),
+	["n|<leader>cD"] = map_callback(function()
+			crates.open_documentation()
+		end)
+		:with_noremap()
+		:with_silent()
+		:with_buffer(0)
+		:with_desc("Cargo: 打开文档"),
+	["n|<leader>cC"] = map_callback(function()
+			crates.open_crates_io()
+		end)
+		:with_noremap()
+		:with_silent()
+		:with_buffer(0)
+		:with_desc("Cargo: 在 crates.io 上浏览"),
+}
+
+bind.nvim_load_mapping(crates_keymap)

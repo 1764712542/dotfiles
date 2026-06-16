@@ -1,0 +1,55 @@
+local ui = {}
+
+ui["goolord/alpha-nvim"] = {
+	lazy = true,
+	event = "BufWinEnter",
+	config = require("ui.alpha"),
+}
+ui["akinsho/bufferline.nvim"] = {
+	lazy = true,
+	event = { "BufReadPre", "BufAdd", "BufNewFile" },
+	config = require("ui.bufferline"),
+}
+ui["folke/tokyonight.nvim"] = {
+	lazy = false,
+	priority = 1000,
+	config = require("ui.tokyonight"),
+}
+ui["lewis6991/gitsigns.nvim"] = {
+	lazy = true,
+	event = { "CursorHold", "CursorHoldI" },
+	config = require("ui.gitsigns"),
+}
+ui["lukas-reineke/indent-blankline.nvim"] = {
+	lazy = true,
+	event = { "CursorHold", "CursorHoldI" },
+	config = require("ui.indent-blankline"),
+}
+ui["nvim-lualine/lualine.nvim"] = {
+	lazy = true,
+	event = { "BufReadPost", "BufAdd", "BufNewFile" },
+	config = require("ui.lualine"),
+}
+
+ui["folke/paint.nvim"] = {
+	lazy = true,
+	event = "VeryLazy",
+	config = require("ui.paint"),
+}
+ui["mrjones2014/smart-splits.nvim"] = {
+	lazy = true,
+	event = "VeryLazy",
+	config = require("ui.splits"),
+}
+ui["folke/edgy.nvim"] = {
+	lazy = true,
+	event = "VeryLazy",
+	config = require("ui.edgy"),
+}
+ui["folke/todo-comments.nvim"] = {
+	lazy = true,
+	event = "VeryLazy",
+	config = require("ui.todo"),
+	dependencies = "nvim-lua/plenary.nvim",
+}
+return ui
