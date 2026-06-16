@@ -45,6 +45,7 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p'"   # man 页面用 bat 渲染
 # brew shellenv 已在 .zprofile 中加载，此处无需重复
 export PATH="$HOME/go/bin:$PATH"
 export GOPATH="$HOME/go"
+export PATH="$HOME/.local/bin:$PATH"
 export PATH="/opt/homebrew/opt/node@22/bin:$PATH"
 . "$HOME/.cargo/env"
 export PATH="$PATH:/opt/metasploit-framework/bin"
@@ -64,7 +65,6 @@ setopt HIST_IGNORE_SPACE
 setopt HIST_SAVE_NO_DUPS
 setopt HIST_VERIFY
 setopt SHARE_HISTORY
-setopt INC_APPEND_HISTORY
 setopt EXTENDED_HISTORY
 
 # ==============================================================================
@@ -222,6 +222,21 @@ alias zi='z -i'
 alias za='z -b .'
 
 # ==============================================================================
+#  atuin — Shell History
+# ==============================================================================
+eval "$(atuin init zsh)"
+
+# ==============================================================================
+#  carapace — Completions
+# ==============================================================================
+eval "$(carapace _init zsh)"
+
+# ==============================================================================
+#  direnv — Directory-specific env vars
+# ==============================================================================
+eval "$(direnv hook zsh)"
+
+# ==============================================================================
 #  Aliases — Modern CLI Tools
 # ==============================================================================
 
@@ -278,13 +293,13 @@ alias ln='ln -iv'
 
 # --- 系统信息 ---
 alias c='clear'
-alias h='history'
+alias h='atuin history'
+alias hg='atuin search --interactive'
 alias ports='lsof -iTCP -sTCP:LISTEN -n -P'
 alias path='echo -e ${PATH//:/\\n}'
 alias reload='source ~/.zshrc'
 alias zshconfig="nvim ~/.zshrc"
 alias p10kconfig="nvim ~/.p10k.zsh"
-alias kittyconfig="nvim ~/.config/kitty/kitty.conf"
 alias tmuxconfig="nvim ~/.config/tmux/tmux.conf"
 
 # --- Quick Look (macOS) ---
@@ -320,9 +335,10 @@ alias brewcask='brew install --cask'
 
 # --- 快速工具启动 ---
 alias lg='lazygit'
-alias josh='joshuto'
 alias bt='btop'
 alias tldr='tldr --color always'
+alias ai='source ~/venvs/ai/bin/activate'
+alias asitop='asitop --color'
 
 # ==============================================================================
 #  Custom Functions
@@ -420,7 +436,7 @@ ipinfo() { curl -s "ipinfo.io/$1" | jq . }
 # ==============================================================================
 
 # 仅在交互式首窗口显示 fastfetch
-if [[ $- == *i* ]] && [[ -z "$TMUX" ]] && [[ -z "$KITTY_LISTEN_ON" ]]; then
+if [[ $- == *i* ]] && [[ -z "$TMUX" ]] && [[ -z "${GHOSTTY_RESOURCES_DIR:-}" ]]; then
   fastfetch --pipe false
 fi
 
@@ -434,4 +450,5 @@ fi
 #  rbenv (if installed)
 # ==============================================================================
 
-if which rbenv > /dev/null 2>&1; then eval "$(rbenv init -)"; fi
+# mise 已管理所有 runtime，rbenv 不再需要
+# if which rbenv > /dev/null 2>&1; then eval "$(rbenv init -)"; fi

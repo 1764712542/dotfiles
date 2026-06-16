@@ -1,6 +1,8 @@
 [user]
 	name = ryanzhu
 	email = 1764712542@qq.com
+[core]
+	excludesfile = ~/.gitignore_global
 [safe]
 	directory = *
 [url "git@github.com:"]

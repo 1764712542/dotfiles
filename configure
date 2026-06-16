@@ -2,21 +2,37 @@
 # ==============================================================================
 #  configure — 管理 ~/dotfiles 的 GNU Stow 助手
 #  用法:
-#    ./configure       列出所有包
-#    ./configure link  部署所有 symlink (stow)
-#    ./configure unlink  移除所有 symlink (unstow)
+#    ./configure           列出所有包
+#    ./configure link      部署所有 symlink (stow)
+#    ./configure unlink    移除所有 symlink (unstow)
 #    ./configure reinstall 重新部署 (unlink + link)
+#    ./configure doctor    检查 symlink 健康状态
 # ==============================================================================
 
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 PACKAGES=(
   zsh p10k zim git conda npm
   ghostty zellij yazi btop fastfetch lazygit pip
+  docker nvim brew
 )
 
 cd "$DOTFILES_DIR" || exit 1
 
 cmd="${1:-list}"
+
+check_symlinks() {
+  local errors=0
+  while read -r link; do
+    target=$(readlink "$link")
+    if [ -L "$link" ] && [ -e "$(dirname "$link")/$target" ]; then
+      echo "  ✓ ${link#$HOME/}"
+    else
+      echo "  ✗ ${link#$HOME/}  (broken → $target)"
+      errors=$((errors + 1))
+    fi
+  done
+  return $errors
+}
 
 case "$cmd" in
   link|stow)
@@ -34,6 +50,17 @@ case "$cmd" in
     stow -v -D "${PACKAGES[@]}" && stow -v "${PACKAGES[@]}"
     echo "✓ 完成"
     ;;
+  doctor)
+    echo "=== doctor: 检查 symlink 健康状态 ==="
+    {
+      find "$HOME" -maxdepth 1 -type l -lname "dotfiles/*" 2>/dev/null
+      find "$HOME/.config" -maxdepth 2 -type l -lname "../../dotfiles/*" 2>/dev/null
+      find "$HOME/.config" -maxdepth 2 -type l -lname "../../../dotfiles/*" 2>/dev/null
+    } | sort -u | check_symlinks
+    rc=$?
+    echo ""
+    [ "$rc" -eq 0 ] && echo "✓ 全部正常" || echo "✗ $rc 个异常"
+    ;;
   list|status)
     echo "=== dotfiles packages ==="
     for pkg in "${PACKAGES[@]}"; do
@@ -45,17 +72,14 @@ case "$cmd" in
     done
     echo ""
     echo "=== symlink 状态 ==="
-    find "$HOME" -maxdepth 1 -type l -lname "dotfiles/*" -not -path "dotfiles/.git" 2>/dev/null | while read -r link; do
-      target=$(readlink "$link")
-      if [ -L "$link" ] && [ -e "$(dirname "$link")/$target" ]; then
-        echo "  ✓ $(basename "$link")"
-      else
-        echo "  ✗ $(basename "$link")  (broken)"
-      fi
-    done
+    {
+      find "$HOME" -maxdepth 1 -type l -lname "dotfiles/*" 2>/dev/null
+      find "$HOME/.config" -maxdepth 2 -type l -lname "../../dotfiles/*" 2>/dev/null
+      find "$HOME/.config" -maxdepth 2 -type l -lname "../../../dotfiles/*" 2>/dev/null
+    } | sort -u | check_symlinks
     ;;
   *)
-    echo "用法: $0 [link|unlink|reinstall|list]"
+    echo "用法: $0 [link|unlink|reinstall|list|doctor]"
     exit 1
     ;;
 esac
