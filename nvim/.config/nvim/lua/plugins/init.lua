@@ -366,6 +366,90 @@ return {
     opts = {},
   },
 
+  -- ======== File Explorer (oil) ========
+
+  {
+    "stevearc/oil.nvim",
+    cmd = "Oil",
+    keys = {
+      { "<leader>e", "<cmd>Oil<CR>", desc = "File explorer" },
+    },
+    opts = {
+      default_file_explorer = true,
+      view_options = {
+        show_hidden = true,
+      },
+    },
+  },
+
+  -- ======== Floating Terminal ========
+
+  {
+    "akinsho/toggleterm.nvim",
+    cmd = "ToggleTerm",
+    keys = {
+      { "<C-\\>", "<cmd>ToggleTerm<CR>", desc = "Toggle terminal", mode = { "n", "t" } },
+      { "<leader>tt", "<cmd>ToggleTerm<CR>", desc = "Toggle terminal" },
+    },
+    opts = {
+      size = 12,
+      open_mapping = nil,
+      direction = "float",
+      float_opts = {
+        border = "rounded",
+      },
+    },
+  },
+
+  -- ======== Quick Cursor Jump ========
+
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    keys = {
+      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash jump" },
+      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash treesitter" },
+    },
+    opts = {},
+  },
+
+  -- ======== Session Persistence ========
+
+  {
+    "folke/persistence.nvim",
+    event = "BufReadPre",
+    opts = {},
+    keys = {
+      { "<leader>qs", function() require("persistence").load() end, desc = "Restore session" },
+      { "<leader>ql", function() require("persistence").load({ last = true }) end, desc = "Restore last session" },
+      { "<leader>qd", function() require("persistence").stop() end, desc = "Don't save session" },
+    },
+  },
+
+  -- ======== TODO Highlight ========
+
+  {
+    "folke/todo-comments.nvim",
+    event = "VeryLazy",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {},
+  },
+
+  -- ======== Free AI Code Completion ========
+
+  {
+    "supermaven-inc/supermaven-nvim",
+    event = "InsertEnter",
+    opts = {
+      keymaps = {
+        accept_suggestion = "<C-y>",
+        clear_suggestion = "<C-]>",
+        accept_word = "<C-j>",
+      },
+      log_level = "warn",
+    },
+  },
+
   {
     "folke/which-key.nvim",
     event = "VeryLazy",

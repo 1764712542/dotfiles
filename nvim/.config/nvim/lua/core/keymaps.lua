@@ -69,6 +69,31 @@ map("n", "<leader>gp", "<cmd>Gitsigns preview_hunk<CR>", opts)
 map("n", "<leader>gs", "<cmd>Gitsigns stage_hunk<CR>", opts)
 map("n", "<leader>gr", "<cmd>Gitsigns reset_hunk<CR>", opts)
 
+-- Oil file explorer
+map("n", "<leader>e", "<cmd>Oil<CR>", opts)
+
+-- ToggleTerm
+map("n", "<leader>tt", "<cmd>ToggleTerm<CR>", opts)
+map("t", "<C-\\>", "<cmd>ToggleTerm<CR>", opts)
+
+-- Flash jump
+map("n", "s", function() require("flash").jump() end, opts)
+map("x", "s", function() require("flash").jump() end, opts)
+map("o", "s", function() require("flash").jump() end, opts)
+map("n", "S", function() require("flash").treesitter() end, opts)
+
+-- Session persistence
+map("n", "<leader>qs", function() require("persistence").load() end, opts)
+map("n", "<leader>ql", function() require("persistence").load({ last = true }) end, opts)
+map("n", "<leader>qd", function() require("persistence").stop() end, opts)
+
+-- Supermaven AI completion
+map("i", "<C-y>", function()
+  if require("supermaven-nvim").can_accept() then
+    require("supermaven-nvim").accept_suggestion()
+  end
+end, { silent = true })
+
 -- CodeCompanion
 map("n", "<leader>ac", "<cmd>CodeCompanion<CR>", opts)
 map("v", "<leader>ac", "<cmd>CodeCompanion<CR>", opts)
