@@ -442,7 +442,7 @@ return {
     event = "InsertEnter",
     opts = {
       keymaps = {
-        accept_suggestion = "<C-y>",
+        accept_suggestion = nil,
         clear_suggestion = "<C-]>",
         accept_word = "<C-j>",
       },
@@ -454,5 +454,19 @@ return {
     "folke/which-key.nvim",
     event = "VeryLazy",
     opts = {},
+    config = function()
+      local wk = require("which-key")
+      wk.setup({})
+      wk.add({
+        { "<leader>f", group = "📂 搜索" },
+        { "<leader>t", group = "📑 标签" },
+        { "<leader>d", group = "⚠️ 诊断" },
+        { "<leader>l", group = "🔧 LSP" },
+        { "<leader>x", group = "📋 面板" },
+        { "<leader>g", group = "🔄 Git" },
+        { "<leader>q", group = "💾 会话" },
+        { "<leader>a", group = "🤖 AI" },
+      })
+    end,
   },
 }

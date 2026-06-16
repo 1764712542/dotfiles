@@ -50,13 +50,13 @@ local function button(sc, txt, keybind)
 end
 
 dashboard.section.buttons.val = {
-  button(" f f", "  Find files", "<cmd>FzfLua files<CR>"),
-  button(" f g", "  Live grep", "<cmd>FzfLua live_grep<CR>"),
-  button(" f r", "  Recent files", "<cmd>FzfLua oldfiles<CR>"),
-  button(" f b", "  Buffers", "<cmd>FzfLua buffers<CR>"),
+  button(" f f", "  🔍 搜索文件", "<cmd>FzfLua files<CR>"),
+  button(" f g", "  📝 全文搜索", "<cmd>FzfLua live_grep<CR>"),
+  button(" f r", "  📂 最近文件", "<cmd>FzfLua oldfiles<CR>"),
+  button(" e", "  📁 文件管理器", "<cmd>Oil<CR>"),
 }
 
-dashboard.section.footer.val = "  ♪ Rei Ayanami ♪"
+dashboard.section.footer.val = "  ♪ 綾波レイ ♪"
 
 dashboard.section.footer.opts.hl = "NonText"
 
