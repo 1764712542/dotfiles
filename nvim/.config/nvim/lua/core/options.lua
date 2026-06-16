@@ -63,3 +63,12 @@ vim.g.maplocalleader = " "
 
 -- persistence
 vim.g.persist_save_on_leave = true
+
+-- Auto-save session on exit
+vim.api.nvim_create_autocmd("VimLeavePre", {
+  callback = function()
+    if vim.fn.argc() == 0 and vim.bo.buftype == "" then
+      require("persistence").save()
+    end
+  end,
+})

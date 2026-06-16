@@ -88,11 +88,17 @@ map("n", "<A-S-f>", function()
 end, vim.tbl_extend("force", opts, { desc = "手动格式化" }))
 
 -- ======== AI 补全 (Supermaven) ========
-map("i", "<C-y>", function()
+-- C-j 部分接受 (accept_word), C-l 全部接受 (accept_suggestion)
+map("i", "<C-j>", function()
+  if require("supermaven-nvim").can_accept() then
+    require("supermaven-nvim").accept_word()
+  end
+end, { silent = true, desc = "AI 补全: 部分接受" })
+map("i", "<C-l>", function()
   if require("supermaven-nvim").can_accept() then
     require("supermaven-nvim").accept_suggestion()
   end
-end, { silent = true, desc = "接受 AI 补全" })
+end, { silent = true, desc = "AI 补全: 全部接受" })
 
 -- ======== AI 聊天 (CodeCompanion) ========
 map({ "n", "v" }, "<leader>ac", "<cmd>CodeCompanion<CR>", vim.tbl_extend("force", opts, { desc = "AI 聊天" }))

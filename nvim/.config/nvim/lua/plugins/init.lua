@@ -134,6 +134,24 @@ return {
     end,
   },
 
+  -- ======== Cmdline UI (noice) ========
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    dependencies = { "MunifTanjim/nui.nvim" },
+    opts = {
+      cmdline = {
+        enabled = true,
+        view = "cmdline_popup",
+        opts = { position = { row = "50%", col = "50%" }, size = { width = "auto", height = "auto" } },
+      },
+      messages = { enabled = false },
+      notify = { enabled = false },
+      lsp = { progress = { enabled = false } },
+      popupmenu = { enabled = false },
+    },
+  },
+
   -- ======== Autopairs ========
   {
     "windwp/nvim-autopairs",
@@ -154,6 +172,13 @@ return {
       css = { css_fn = true },
       html = { names = true },
     },
+  },
+
+  -- ======== Comment ========
+  {
+    "numToStr/Comment.nvim",
+    event = "VeryLazy",
+    opts = {},
   },
 
   -- ======== Dashboard ========
@@ -424,8 +449,9 @@ return {
     opts = {
       keymaps = {
         accept_suggestion = nil,
-        clear_suggestion = "<C-]>",
-        accept_word = "<C-j>",
+        clear_suggestion = nil,
+        accept_word = nil,
+        accept_line = nil,
       },
       log_level = "warn",
     },
@@ -710,10 +736,17 @@ return {
       "rcarriga/nvim-dap-ui",
       "theHamsta/nvim-dap-virtual-text",
       "nvim-neotest/nvim-nio",
+      "mfussenegger/nvim-dap-python",
+      "leoluz/nvim-dap-go",
     },
     config = function()
       local dap = require("dap")
       local dapui = require("dapui")
+
+      require("dap-python").setup("python3")
+      require("dap-go").setup({
+        delve = { path = "dlv" },
+      })
 
       dapui.setup({
         icons = { expanded = "", collapsed = "", current_frame = "" },
@@ -741,20 +774,25 @@ return {
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
-    opts = {
-      spec = {
-        { "<leader>f", group = "📂 搜索" },
-        { "<leader>t", group = "📑 标签" },
-        { "<leader>d", group = "🩺 诊断/调试" },
-        { "<leader>l", group = "🔧 LSP" },
-        { "<leader>x", group = "📋 面板" },
-        { "<leader>g", group = "🔄 Git" },
-        { "<leader>q", group = "💾 会话" },
-        { "<leader>a", group = "🤖 AI / 参数" },
-        { "<leader>E", group = "🌳 目录树" },
-        { "<leader>S", group = "🔎 搜索替换" },
-        { "<leader>b", group = "📄 Buffer" },
-      },
-    },
+    opts = function()
+      local icons = require("configs.icons")
+      return {
+        spec = {
+          { "<leader>f", group = icons.ui.Search .. " 搜索" },
+          { "<leader>t", group = icons.ui.Tab .. " 标签" },
+          { "<leader>d", group = icons.ui.Bug .. " 诊断/调试" },
+          { "<leader>l", group = icons.misc.LspAvailable .. " LSP" },
+          { "<leader>x", group = icons.ui.List .. " 面板" },
+          { "<leader>g", group = icons.git.Git .. " Git" },
+          { "<leader>q", group = icons.ui.History .. " 会话" },
+          { "<leader>a", group = icons.aichat.Chat .. " AI" },
+          { "<leader>E", group = icons.ui.FolderOpen .. " 目录树" },
+          { "<leader>S", group = icons.ui.Search .. " 搜索替换" },
+          { "<leader>b", group = icons.ui.Buffer .. " Buffer" },
+          { "<leader>W", group = icons.ui.Window .. " 窗口" },
+          { "<leader>m", group = icons.misc.Code .. " 代码操作" },
+        },
+      }
+    end,
   },
 }

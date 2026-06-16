@@ -1,5 +1,6 @@
 local alpha = require("alpha")
 local dashboard = require("alpha.themes.dashboard")
+local icons = require("configs.icons")
 
 dashboard.section.header.val = {
   [[⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿]],
@@ -50,25 +51,44 @@ local function button(sc, txt, keybind)
 end
 
 dashboard.section.buttons.val = {
-  button(" f f", "  🔍 搜索文件    ", "<cmd>FzfLua files<CR>"),
-  button(" f g", "  📝 全文搜索    ", "<cmd>FzfLua live_grep<CR>"),
-  button(" f r", "  📂 最近文件    ", "<cmd>FzfLua oldfiles<CR>"),
-  button(" e", "  📁 快速文件管理", "<cmd>Oil<CR>"),
-  button(" E", "  🌳 目录树浏览  ", "<cmd>Neotree toggle<CR>"),
-  button(" r", "  ▶️  运行代码    ", ""),
+  button(" f f", icons.ui.Search .. "  搜索文件    ", "<cmd>FzfLua files<CR>"),
+  button(" f g", icons.documents.Word .. "  全文搜索    ", "<cmd>FzfLua live_grep<CR>"),
+  button(" f r", icons.ui.History .. "  最近文件    ", "<cmd>FzfLua oldfiles<CR>"),
+  button(" e", icons.ui.Folder .. "  快速文件管理", "<cmd>Oil<CR>"),
+  button(" E", icons.ui.FolderOpen .. "  目录树浏览  ", "<cmd>Neotree toggle<CR>"),
+  button(" r", icons.misc.Code .. "  运行代码    ", ""),
 }
 
-dashboard.section.footer.val = "  ♪ 綾波レイ ♪"
+local function footer()
+  local stats = require("lazy").stats()
+  local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
+  return "  " .. icons.misc.Ghost .. "  綾波レイ  "
+    .. "  " .. icons.misc.Glass .. "  v" .. vim.version().major .. "." .. vim.version().minor .. "." .. vim.version().patch
+    .. "  " .. icons.misc.Squirrel .. "  " .. stats.count .. " plugins in " .. ms .. "ms"
+end
 
+dashboard.section.footer.val = footer()
 dashboard.section.footer.opts.hl = "NonText"
 
+local head_butt_padding = 2
+local occu_height = #dashboard.section.header.val + 2 * #dashboard.section.buttons.val + head_butt_padding
+local header_padding = math.max(0, math.ceil((vim.fn.winheight(0) - occu_height) * 0.25))
+
 dashboard.config.layout = {
-  { type = "padding", val = 5 },
+  { type = "padding", val = header_padding },
   dashboard.section.header,
-  { type = "padding", val = 2 },
+  { type = "padding", val = head_butt_padding },
   dashboard.section.buttons,
   { type = "padding", val = 1 },
   dashboard.section.footer,
 }
 
 alpha.setup(dashboard.opts)
+
+vim.api.nvim_create_autocmd("User", {
+  pattern = "LazyVimStarted",
+  callback = function()
+    dashboard.section.footer.val = footer()
+    pcall(vim.cmd.AlphaRedraw)
+  end,
+})
