@@ -16,7 +16,7 @@ return {
         loops = { bold = true },
         booleans = { bold = true, italic = true },
       },
-      sidebars = { "trouble", "qf", "Outline", "dapui_scaffold", "dapui_console", "dapui_watches", "dapui_stacks", "dapui_breakpoints" },
+      sidebars = { "trouble", "qf", "dapui_scaffold", "dapui_console", "dapui_watches", "dapui_stacks", "dapui_breakpoints" },
       on_highlights = function(hl, c)
         hl.Normal = { fg = c.fg, bg = c.none }
         hl.NormalFloat = { fg = c.fg, bg = c.none }
@@ -92,9 +92,16 @@ return {
           end
           return ret
         end,
-        offsets = { { filetype = "neo-tree", text = "Explorer", text_align = "left" } },
+        offsets = { { filetype = "NvimTree", text = "文件树", text_align = "left" } },
       },
     },
+  },
+  {
+    "ojroques/nvim-bufdel",
+    keys = {
+      { "<A-q>", "<cmd>BufDel<CR>", desc = "关闭 Buffer" },
+    },
+    opts = { next = "tabs" },
   },
 
   -- ======== Dialogs (dressing) ========
@@ -105,8 +112,7 @@ return {
       input = { enabled = true, default_prompt = " ", border = "rounded" },
       select = {
         enabled = true,
-        backend = { "fzf", "telescope", "builtin" },
-        telescope = nil,
+        backend = { "telescope", "builtin" },
         builtin = { border = "rounded" },
       },
     },
@@ -190,26 +196,59 @@ return {
     end,
   },
 
-  -- ======== Search (fzf-lua) ========
+  -- ======== Search (telescope) ========
   {
-    "ibhagwan/fzf-lua",
-    cmd = "FzfLua",
+    "nvim-telescope/telescope.nvim",
+    cmd = "Telescope",
+    dependencies = {
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+      "debugloop/telescope-undo.nvim",
+      "nvim-telescope/telescope-live-grep-args.nvim",
+      "nvim-lua/plenary.nvim",
+    },
     keys = {
-      { "<leader>ff", desc = "Find files" },
-      { "<leader>fg", desc = "Live grep" },
-      { "<leader>fb", desc = "Buffers" },
-      { "<leader>fh", desc = "Help tags" },
-      { "<leader>fr", desc = "Recent files" },
+      { "<leader>ff", function() require("telescope.builtin").find_files() end, desc = "查找文件" },
+      { "<leader>fg", function() require("telescope.builtin").live_grep() end, desc = "全文搜索" },
+      { "<leader>fb", function() require("telescope.builtin").buffers() end, desc = "缓冲区" },
+      { "<leader>fh", function() require("telescope.builtin").help_tags() end, desc = "帮助标签" },
+      { "<leader>fr", function() require("telescope.builtin").resume() end, desc = "恢复搜索" },
+      { "<leader>fp", function() require("telescope.builtin").find_files({ cwd = vim.fn.expand("%:p:h") }) end, desc = "当前目录文件" },
+      { "<leader>f.", function() require("telescope.builtin").oldfiles() end, desc = "最近文件" },
+      { "<C-p>", function() require("telescope.builtin").keymaps() end, desc = "命令面板" },
     },
-    opts = {
-      "fzf-native",
-      winopts = {
-        height = 0.85,
-        width = 0.80,
-        preview = { scrollbar = false },
-      },
-      fzf_opts = { ["--border"] = "rounded" },
-    },
+    opts = function()
+      local actions = require("telescope.actions")
+      return {
+        defaults = {
+          layout_strategy = "horizontal",
+          layout_config = { prompt_position = "top" },
+          sorting_strategy = "ascending",
+          winblend = 0,
+          borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+          mappings = {
+            i = {
+              ["<C-j>"] = actions.move_selection_next,
+              ["<C-k>"] = actions.move_selection_previous,
+            },
+          },
+        },
+        pickers = {
+          find_files = { hidden = true },
+          live_grep = { additional_args = { "--hidden", "--no-ignore" } },
+        },
+        extensions = {
+          fzf = { fuzzy = true, override_generic_sorter = true, override_file_sorter = true },
+          undo = {},
+          live_grep_args = { auto_quoting = true },
+        },
+      }
+    end,
+    config = function(_, opts)
+      require("telescope").setup(opts)
+      pcall(require("telescope").load_extension, "fzf")
+      pcall(require("telescope").load_extension, "undo")
+      pcall(require("telescope").load_extension, "live_grep_args")
+    end,
   },
 
   -- ======== Treesitter + Textobjects ========
@@ -305,12 +344,13 @@ return {
         vim.keymap.set("n", "gD", vim.lsp.buf.declaration, vim.tbl_extend("force", bufopts, { desc = "跳转声明" }))
         vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", bufopts, { desc = "悬浮文档" }))
         vim.keymap.set("n", "gi", vim.lsp.buf.implementation, vim.tbl_extend("force", bufopts, { desc = "查找实现" }))
-        vim.keymap.set("n", "<leader>lr", vim.lsp.buf.references, vim.tbl_extend("force", bufopts, { desc = "查找引用" }))
-        vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, vim.tbl_extend("force", bufopts, { desc = "代码操作" }))
-        vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, vim.tbl_extend("force", bufopts, { desc = "重命名" }))
-        vim.keymap.set("n", "<leader>de", vim.diagnostic.open_float, vim.tbl_extend("force", bufopts, { desc = "诊断详情" }))
-        vim.keymap.set("n", "<leader>d[", vim.diagnostic.goto_prev, vim.tbl_extend("force", bufopts, { desc = "上个诊断" }))
-        vim.keymap.set("n", "<leader>d]", vim.diagnostic.goto_next, vim.tbl_extend("force", bufopts, { desc = "下个诊断" }))
+        vim.keymap.set("n", "gh", vim.lsp.buf.references, vim.tbl_extend("force", bufopts, { desc = "查找引用" }))
+        vim.keymap.set("n", "gr", vim.lsp.buf.rename, vim.tbl_extend("force", bufopts, { desc = "重命名" }))
+        vim.keymap.set("n", "ga", vim.lsp.buf.code_action, vim.tbl_extend("force", bufopts, { desc = "代码操作" }))
+        vim.keymap.set("n", "gs", vim.lsp.buf.signature_help, vim.tbl_extend("force", bufopts, { desc = "签名帮助" }))
+        vim.keymap.set("n", "go", "<cmd>Trouble symbols toggle win.position=right<CR>", vim.tbl_extend("force", bufopts, { desc = "符号大纲" }))
+        vim.keymap.set("n", "g[", vim.diagnostic.goto_prev, vim.tbl_extend("force", bufopts, { desc = "上个诊断" }))
+        vim.keymap.set("n", "g]", vim.diagnostic.goto_next, vim.tbl_extend("force", bufopts, { desc = "下个诊断" }))
 
         if client.server_capabilities.inlayHintProvider then
           vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
@@ -424,22 +464,34 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
     },
-    cmd = "CodeCompanion",
+    cmd = { "CodeCompanion", "CodeCompanionChat" },
     opts = {
       strategies = {
-        chat = { adapter = "openrouter" },
+        chat = {
+          adapter = "openrouter",
+          window = {
+            layout = "vertical",
+            position = "right",
+            width = 0.3,
+          },
+          tools = {
+            opts = { default_tools = { "agent" } },
+          },
+        },
         inline = { adapter = "openrouter" },
       },
       adapters = {
-        openrouter = function()
-          return require("codecompanion.adapters").extend("openai", {
-            env = {
-              url = "https://openrouter.ai/api/v1",
-              api_key = vim.env.CODE_COMPANION_KEY,
-            },
-            schema = { model = { default = "qwen/qwen3-coder:free" } },
-          })
-        end,
+        http = {
+          openrouter = function()
+            return require("codecompanion.adapters").extend("openai", {
+              url = "https://openrouter.ai/api/v1/chat/completions",
+              env = {
+                api_key = "CODE_COMPANION_KEY",
+              },
+              schema = { model = { default = "openrouter/free" } },
+            })
+          end,
+        },
       },
     },
   },
@@ -498,6 +550,16 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     event = { "BufReadPre", "BufNewFile" },
+    keys = {
+      { "]g", function() require("gitsigns").nav_hunk("next") end, desc = "下个 Hunk" },
+      { "[g", function() require("gitsigns").nav_hunk("prev") end, desc = "上个 Hunk" },
+      { "<leader>gs", function() require("gitsigns").stage_hunk() end, desc = "暂存 Hunk", mode = { "n", "v" } },
+      { "<leader>gr", function() require("gitsigns").reset_hunk() end, desc = "重置 Hunk", mode = { "n", "v" } },
+      { "<leader>gR", function() require("gitsigns").reset_buffer() end, desc = "重置缓冲区" },
+      { "<leader>gp", function() require("gitsigns").preview_hunk() end, desc = "预览 Hunk" },
+      { "<leader>gb", function() require("gitsigns").blame_line({ full = true }) end, desc = "Blame" },
+      { "<leader>gB", function() require("gitsigns").toggle_current_line_blame() end, desc = "切换行号 Blame" },
+    },
     opts = {
       signs = {
         add = { text = "│" },
@@ -527,6 +589,8 @@ return {
     cmd = { "G", "Git", "Gdiffsplit", "Gread", "Gwrite", "Gstatus" },
     keys = {
       { "<leader>gG", "<cmd>Git<CR>", desc = "Git 面板" },
+      { "gps", "<cmd>G push<CR>", desc = "Git Push" },
+      { "gpl", "<cmd>G pull<CR>", desc = "Git Pull" },
     },
   },
 
@@ -561,8 +625,10 @@ return {
     "folke/trouble.nvim",
     cmd = "Trouble",
     keys = {
-      { "<leader>xx", "<cmd>Trouble diagnostics toggle<CR>", desc = "全部诊断" },
-      { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<CR>", desc = "当前诊断" },
+      { "gt", "<cmd>Trouble diagnostics toggle<CR>", desc = "全部诊断" },
+      { "<leader>lw", "<cmd>Trouble diagnostics toggle<CR>", desc = "诊断列表" },
+      { "<leader>lp", "<cmd>Trouble project_diagnostics toggle<CR>", desc = "项目诊断" },
+      { "<leader>ld", "<cmd>Trouble diagnostics toggle filter.buf=0<CR>", desc = "当前诊断" },
       { "<leader>xs", "<cmd>Trouble symbols toggle<CR>", desc = "符号列表" },
       { "<leader>xl", "<cmd>Trouble loclist toggle<CR>", desc = "位置列表" },
       { "<leader>xq", "<cmd>Trouble qflist toggle<CR>", desc = "快速修复" },
@@ -581,89 +647,59 @@ return {
     },
   },
 
-  -- ======== File Explorer (oil + neo-tree) ========
+  -- ======== File Explorer (nvim-tree + edgy) ========
   {
-    "stevearc/oil.nvim",
-    cmd = "Oil",
+    "nvim-tree/nvim-tree.lua",
+    cmd = { "NvimTreeToggle", "NvimTreeFindFile", "NvimTreeRefresh" },
     keys = {
-      { "<leader>e", "<cmd>Oil<CR>", desc = "文件管理器" },
-      { "-", "<cmd>Oil<CR>", desc = "文件管理器" },
+      { "<leader>nf", "<cmd>NvimTreeFindFile<CR>", desc = "定位文件" },
+      { "<leader>nr", "<cmd>NvimTreeRefresh<CR>", desc = "刷新文件树" },
     },
     opts = {
-      default_file_explorer = true,
-      view_options = { show_hidden = true },
-      float = {
-        padding = { 3, 10, 3, 10 },
-        max_width = 80,
-        max_height = 0.9,
-        border = "rounded",
+      disable_netrw = true,
+      hijack_netrw = true,
+      auto_reload_on_write = true,
+      respect_buf_cwd = true,
+      sync_root_with_cwd = true,
+      update_focused_file = {
+        enable = true,
+        update_root = { enable = true },
       },
+      view = { width = 35 },
+      renderer = {
+        indent_width = 2,
+        icons = {
+          show = { file = true, folder = true, git = true },
+          glyphs = {
+            default = "",
+            symlink = "",
+            folder = { arrow_closed = "", arrow_open = "", default = "", open = "" },
+            git = { unstaged = "", staged = "", unmerged = "󰘬", renamed = "", untracked = "★", deleted = "", ignored = "◌" },
+          },
+        },
+      },
+      filters = { dotfiles = false, custom = { ".DS_Store" } },
+      actions = { open_file = { quit_on_open = false, resize_window = true } },
     },
   },
   {
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "v3.x",
-    cmd = "Neotree",
-    keys = {
-      { "<leader>E", "<cmd>Neotree toggle<CR>", desc = "目录树" },
-    },
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-web-devicons",
-      "MunifTanjim/nui.nvim",
-    },
+    "folke/edgy.nvim",
+    event = "VeryLazy",
     opts = {
-      sources = { "filesystem", "buffers", "git_status" },
-      source_selector = {
-        winbar = true,
-        content_layout = "center",
-        sources = {
-          { source = "filesystem", display_name = "   文件" },
-          { source = "buffers", display_name = "   缓冲区" },
-          { source = "git_status", display_name = "   Git" },
-        },
+      left = {
+        { title = "文件树", ft = "NvimTree", pinned = true, collapsed = false, size = { h = 0.5, w = 0.2 } },
+        { title = "符号大纲", ft = "trouble", pinned = true, collapsed = false, size = { h = 0.5, w = 0.2 },
+          open = function()
+            if vim.bo.buftype == "" then return "Trouble symbols toggle win.position=right" end
+          end },
       },
-      default_component_configs = {
-        indent = { padding = 1, with_markers = true, indent_size = 2 },
-        icon = { folder_closed = "", folder_open = "", folder_empty = "" },
-        modified = { symbol = "●" },
-        git_status = { symbols = {
-          added = "", deleted = "", modified = "",
-          renamed = "", staged = "✓", untracked = "★",
-          ignored = "◌", unstaged = "✗", conflict = "",
-        } },
+      right = {
+        { title = "AI 聊天", ft = "codecompanion", size = { w = 0.25 } },
       },
-      window = {
-        position = "left",
-        width = 35,
-        mappings = {
-          ["<space>"] = "toggle_node",
-          ["<2-LeftMouse>"] = "open",
-          ["o"] = "open",
-          ["O"] = "open_vsplit",
-          ["t"] = "open_tabnew",
-          ["w"] = "open_with_window_picker",
-          ["P"] = "toggle_preview",
-          ["S"] = "open_split",
-          ["d"] = "show_info",
-          ["r"] = "rename",
-          ["c"] = "copy",
-          ["x"] = "cut",
-          ["p"] = "paste",
-          ["a"] = "add",
-          ["d"] = "delete",
-          ["q"] = "close_window",
-          ["s"] = "system_open",
-          ["y"] = "copy_to_clipboard",
-          ["R"] = "refresh",
-          ["?"] = "show_help",
-          ["<"] = "prev_source",
-          [">"] = "next_source",
-        },
-      },
-      filesystem = {
-        follow_current_file = { enabled = true, leave_dirs_open = false },
-        filtered_items = { visible = true, hide_dotfiles = false, hide_gitignored = false },
+      bottom = {
+        { title = "快速修复", ft = "qf", size = { h = 0.3 } },
+        { title = "终端", ft = "toggleterm", size = { h = 0.3 } },
+        { title = "帮助", ft = "help", size = { h = 0.3 } },
       },
     },
   },
@@ -684,30 +720,53 @@ return {
     },
   },
 
-  -- ======== Quick Cursor Jump ========
+  -- ======== Quick Cursor Jump (hop + flash) ========
+  {
+    "smoka7/hop.nvim",
+    event = "VeryLazy",
+    keys = {
+      { "<leader>w", function() require("hop").hint_words() end, desc = "跳转单词" },
+      { "<leader>j", function()
+        local Hint = require("hop.hint")
+        require("hop").hint_lines({ direction = Hint.HintDirection.AFTER_CURSOR })
+      end, desc = "跳转下行" },
+      { "<leader>k", function()
+        local Hint = require("hop.hint")
+        require("hop").hint_lines({ direction = Hint.HintDirection.BEFORE_CURSOR })
+      end, desc = "跳转上行" },
+      { "<leader>C", function() require("hop").hint_char2() end, desc = "跳转双字符" },
+    },
+    opts = {
+      keys = "etovxqpdygfblzhckisuran",
+    },
+    config = function(_, opts)
+      require("hop").setup(opts)
+      -- Override hop default highlights to match Tokyo Night color scheme
+      vim.api.nvim_set_hl(0, "HopNextKey",  { fg = "#ff9e64", bold = true })
+      vim.api.nvim_set_hl(0, "HopNextKey1", { fg = "#7dcfff", bold = true })
+      vim.api.nvim_set_hl(0, "HopNextKey2", { fg = "#2b8db3" })
+      vim.api.nvim_set_hl(0, "HopUnmatched", { fg = "#565f89" })
+    end,
+  },
   {
     "folke/flash.nvim",
     event = "VeryLazy",
     keys = {
-      { "<leader>s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "快速跳转" },
-      { "<leader>S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "语法跳转" },
+      { "<leader>S", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "快速跳转" },
+      { "<leader>s", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "语法跳转" },
     },
-    opts = {
-      modes = {
-        char = { enabled = false },
-      },
-    },
+    opts = { modes = { char = { enabled = false } } },
   },
 
-  -- ======== Session Persistence ========
+  -- ======== Session Persistence (persisted.nvim) ========
   {
-    "folke/persistence.nvim",
+    "olimorris/persisted.nvim",
     event = "BufReadPre",
     opts = {},
     keys = {
-      { "<leader>qs", function() require("persistence").load() end, desc = "恢复会话" },
-      { "<leader>ql", function() require("persistence").load({ last = true }) end, desc = "上次会话" },
-      { "<leader>qd", function() require("persistence").stop() end, desc = "停止会话" },
+      { "<leader>ss", function() require("persisted").save() end, desc = "保存会话" },
+      { "<leader>sl", function() require("persisted").load() end, desc = "加载会话" },
+      { "<leader>sd", function() require("persisted").delete() end, desc = "删除会话" },
     },
   },
 
@@ -770,6 +829,21 @@ return {
     end,
   },
 
+  -- ======== Markdown ========
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    ft = { "markdown", "codecompanion" },
+    opts = { render_modes = { "n", "v" } },
+  },
+  {
+    "iamcco/markdown-preview.nvim",
+    ft = "markdown",
+    build = function() vim.fn["mkdp#util#install"]() end,
+    keys = {
+      { "<F12>", "<cmd>MarkdownPreviewToggle<CR>", desc = "Markdown 预览" },
+    },
+  },
+
   -- ======== Which-key ========
   {
     "folke/which-key.nvim",
@@ -779,18 +853,19 @@ return {
       return {
         spec = {
           { "<leader>f", group = icons.ui.Search .. " 搜索" },
-          { "<leader>t", group = icons.ui.Tab .. " 标签" },
-          { "<leader>d", group = icons.ui.Bug .. " 诊断/调试" },
-          { "<leader>l", group = icons.misc.LspAvailable .. " LSP" },
-          { "<leader>x", group = icons.ui.List .. " 面板" },
-          { "<leader>g", group = icons.git.Git .. " Git" },
-          { "<leader>q", group = icons.ui.History .. " 会话" },
-          { "<leader>a", group = icons.aichat.Chat .. " AI" },
-          { "<leader>E", group = icons.ui.FolderOpen .. " 目录树" },
-          { "<leader>S", group = icons.ui.Search .. " 搜索替换" },
+          { "<leader>s", group = icons.ui.History .. " 会话" },
           { "<leader>b", group = icons.ui.Buffer .. " Buffer" },
+          { "<leader>c", group = icons.aichat.Chat .. " AI 聊天" },
+          { "<leader>d", group = icons.ui.Bug .. " 调试" },
+          { "<leader>g", group = icons.git.Git .. " Git" },
+          { "<leader>l", group = icons.misc.LspAvailable .. " LSP" },
+          { "<leader>n", group = icons.ui.FolderOpen .. " 文件树" },
+          { "<leader>p", group = icons.ui.Package .. " 包管理" },
+          { "<leader>t", group = icons.ui.Keyboard .. " 终端" },
           { "<leader>W", group = icons.ui.Window .. " 窗口" },
-          { "<leader>m", group = icons.misc.Code .. " 代码操作" },
+          { "<leader>S", group = icons.ui.Search .. " 搜索替换" },
+          { "<leader>u", group = icons.ui.History .. " 撤销" },
+          { "<leader>x", group = icons.diagnostics.Error .. " 诊断" },
         },
       }
     end,

@@ -51,16 +51,18 @@ local function button(sc, txt, keybind)
 end
 
 dashboard.section.buttons.val = {
-  button(" f f", icons.ui.Search .. "  搜索文件    ", "<cmd>FzfLua files<CR>"),
-  button(" f g", icons.documents.Word .. "  全文搜索    ", "<cmd>FzfLua live_grep<CR>"),
-  button(" f r", icons.ui.History .. "  最近文件    ", "<cmd>FzfLua oldfiles<CR>"),
-  button(" e", icons.ui.Folder .. "  快速文件管理", "<cmd>Oil<CR>"),
-  button(" E", icons.ui.FolderOpen .. "  目录树浏览  ", "<cmd>Neotree toggle<CR>"),
-  button(" r", icons.misc.Code .. "  运行代码    ", ""),
+  button(" f f", icons.ui.Search .. "  搜索文件    ", "<cmd>Telescope find_files<CR>"),
+  button(" f g", icons.documents.Word .. "  全文搜索    ", "<cmd>Telescope live_grep<CR>"),
+  button(" f r", icons.ui.History .. "  最近文件    ", "<cmd>Telescope oldfiles<CR>"),
+  button(" e", icons.ui.Folder .. "  快速文件管理", "<cmd>NvimTreeToggle<CR>"),
+  button(" r", icons.misc.Code .. "  运行代码    ", "<leader>r"),
 }
 
 local function footer()
-  local stats = require("lazy").stats()
+  local ok, lazy = pcall(require, "lazy")
+  if not ok then return "" end
+  local stats = lazy.stats()
+  if not stats or not stats.startuptime then return "" end
   local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
   return "  " .. icons.misc.Ghost .. "  綾波レイ  "
     .. "  " .. icons.misc.Glass .. "  v" .. vim.version().major .. "." .. vim.version().minor .. "." .. vim.version().patch

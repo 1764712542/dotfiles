@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-个人 macOS 开发环境，基于 Zsh + Zimfw + Powerlevel10k，集成现代 CLI 工具链与 Tokyo Night 统一视觉体系。
+个人 macOS 开发环境，基于 Zsh + Zimfw + Powerlevel10k，集成现代 CLI 工具链、Tokyo Night 统一视觉体系与 59 插件 Neovim 配置。
 
 ## Stack
 
@@ -12,7 +12,8 @@
 | **Shell** | Zsh + [Zimfw](https://github.com/zimfw/zimfw) — 启动 < 50ms |
 | **Prompt** | [Powerlevel10k](https://github.com/romkatv/powerlevel10k) — Pure 风格，transient + instant prompt |
 | **Font** | Maple Mono NF 14pt — Nerd Font 全图标支持 |
-| **Theme** | Tokyo Night Storm — Ghostty / bat / fzf / lazygit / fastfetch / zellij 视觉统一 |
+| **Theme** | Tokyo Night Storm — 全工具视觉统一 |
+| **Editor** | [Neovim 0.12](https://neovim.io) — 59 插件，233ms 启动 |
 
 ### Toolchain
 
@@ -25,26 +26,42 @@ mise       → pyenv/nvm   carapace   → completions   direnv     → 环境变
 fastfetch  → neofetch    just       → task runner
 ```
 
+### Neovim 亮点
+
+| 类别 | 选型 |
+|------|------|
+| **文件树** | nvim-tree + edgy 侧边栏（左栏 NvimTree + Trouble，右栏 CodeCompanion） |
+| **搜索** | telescope + fzf-native（文件/文本/grep/undo/buffer） |
+| **补全** | nvim-cmp + luasnip + LSP |
+| **LSP** | lspconfig + mason + conform（pyright / gopls / lua_ls / rust_analyzer / ts_ls / ruff / bashls） |
+| **AI** | Supermaven（免费补全）+ CodeCompanion（OpenRouter 免费模型，Agent 模式直接读写文件） |
+| **调试** | nvim-dap + nvim-dap-ui（Python / Go / C++ / Rust） |
+| **界面** | lualine + bufferline + noice + Tokyo Night |
+| **跳转** | hop（单词/行/字符）+ flash（语法树）
+| **Git** | gitsigns + fugitive + diffview + lazygit |
+| **会话** | persisted.nvim（自动保存/恢复） |
+| **快捷键** | 对标 nvimdots，全部汉化，which-key 可视引导 |
+
 ## Structure
 
 ```
 dotfiles/
-├── zsh/          .zshenv .zprofile .zshrc    — Zimfw + 工具链集成
-├── zim/          .zimrc                      — Zim 模块声明
-├── p10k/         .p10k.zsh                   — Pure 风格 prompt
-├── ghostty/      config                      — 内置 tokyonight-storm
-├── yazi/         yazi.toml + keymap.toml     — Vim 风格键位
-├── zellij/       config.kdl                  — Tokyo Night 主题
+├── zsh/          .zshenv .zprofile .zshrc     — Zimfw + 工具链集成 + API Key
+├── zim/          .zimrc                       — Zim 模块声明
+├── p10k/         .p10k.zsh                    — Pure 风格 prompt
+├── ghostty/      config                       — 内置 tokyonight-storm
+├── yazi/         yazi.toml + keymap.toml      — Vim 风格键位
+├── zellij/       config.kdl                   — Tokyo Night 主题
 ├── btop/         btop.conf
-├── fastfetch/    config.jsonc                — Tokyo Night 配色
-├── lazygit/      config.yml                  — Tokyo Night + Vim 键位
-├── git/          .gitconfig                  — SSH 别名 + 全局 gitignore
+├── fastfetch/    config.jsonc                 — Tokyo Night 配色
+├── lazylgit/     config.yml                   — Tokyo Night + Vim 键位
+├── git/          .gitconfig                   — SSH 别名 + 全局 gitignore
 ├── conda/        .condarc                     — USTC 镜像
 ├── npm/          .npmrc                       — npmmirror 镜像
 ├── pip/          pip.conf
 ├── brew/         .Brewfile                    — Homebrew 包声明
 ├── docker/       docker-compose-ai.yml        — AI 服务栈
-├── nvim/         Neovim 配置                  — 基于 ayamir/nvimdots
+├── nvim/         Neovim 配置                  — 基于 nvimdots，59 插件
 ├── configure                                    — Stow 管理脚本
 └── justfile                                      — 本地任务编排
 ```
@@ -87,6 +104,7 @@ exec zsh
 - **GPU 加速终端** — Ghostty + 毛玻璃 + 活跃会话时隐藏鼠标
 - **安全性** — SSH 别名 Git 认证、API 密钥存 macOS Keychain
 - **Brewfile 声明式管理** — 换机一条命令还原全部包
+- **Neovim AI Agent** — 自带 CodeCompanion Agent 模式，AI 直接读写文件
 
 ## Requirements
 

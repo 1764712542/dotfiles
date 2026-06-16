@@ -58,17 +58,7 @@ opt.fillchars = {
   vert = "│",
 }
 
+-- 会话管理由 persisted.nvim 自动处理
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-
--- persistence
-vim.g.persist_save_on_leave = true
-
--- Auto-save session on exit
-vim.api.nvim_create_autocmd("VimLeavePre", {
-  callback = function()
-    if vim.fn.argc() == 0 and vim.bo.buftype == "" then
-      require("persistence").save()
-    end
-  end,
-})
