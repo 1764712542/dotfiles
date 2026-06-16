@@ -33,3 +33,6 @@ opt.clipboard = "unnamedplus"
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
+
+-- Inlay hints (nvim 0.12+)
+vim.lsp.inlay_hint.enable(true, nil)

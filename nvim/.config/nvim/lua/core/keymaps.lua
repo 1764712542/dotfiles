@@ -57,6 +57,18 @@ map("n", "<leader>fh", "<cmd>FzfLua help_tags<CR>", opts)
 map("n", "<leader>fr", "<cmd>FzfLua oldfiles<CR>", opts)
 map("n", "<leader>f.", "<cmd>FzfLua resume<CR>", opts)
 
+-- Trouble diagnostics
+map("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<CR>", opts)
+map("n", "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<CR>", opts)
+map("n", "<leader>xl", "<cmd>Trouble loclist toggle<CR>", opts)
+map("n", "<leader>xq", "<cmd>Trouble qflist toggle<CR>", opts)
+
+-- Git
+map("n", "<leader>gb", "<cmd>Gitsigns blame_line<CR>", opts)
+map("n", "<leader>gp", "<cmd>Gitsigns preview_hunk<CR>", opts)
+map("n", "<leader>gs", "<cmd>Gitsigns stage_hunk<CR>", opts)
+map("n", "<leader>gr", "<cmd>Gitsigns reset_hunk<CR>", opts)
+
 -- CodeCompanion
 map("n", "<leader>ac", "<cmd>CodeCompanion<CR>", opts)
 map("v", "<leader>ac", "<cmd>CodeCompanion<CR>", opts)
