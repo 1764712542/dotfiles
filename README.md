@@ -325,9 +325,6 @@ exec zsh
 - **快捷键体系** — 分类命名、中文提示，which-key 引导无需记忆
 - **AI 原生** — 免费 AI 补全（Supermaven）和任意模型聊天（CodeCompanion + OpenRouter）
 - **XDG 规范** — 所有缓存、配置、数据目录遵循 XDG 标准
-- **安全性** — API 密钥由用户自行配置环境变量，不写入代码仓库
-- **模块化** — 每个组件独立目录，按需选择，易于扩展
-
 ## 依赖
 
 - macOS（测试于 Apple Silicon）
