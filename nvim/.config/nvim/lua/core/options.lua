@@ -31,8 +31,35 @@ opt.updatetime = 250
 
 opt.clipboard = "unnamedplus"
 
+-- 补全菜单
+opt.completeopt = { "menu", "menuone", "noselect" }
+
+-- 滚动
+opt.scrolloff = 8
+opt.sidescrolloff = 8
+
+-- 行号宽度固定
+opt.numberwidth = 4
+
+-- 补全窗口边距
+opt.pumheight = 10
+
+-- list chars
+opt.list = true
+opt.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
+
+-- fillchars
+opt.fillchars = {
+  eob = " ",
+  diff = "╱",
+  foldopen = "",
+  foldclose = "",
+  foldsep = "│",
+  vert = "│",
+}
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- Inlay hints (nvim 0.12+)
-vim.lsp.inlay_hint.enable(true, nil)
+-- persistence
+vim.g.persist_save_on_leave = true
