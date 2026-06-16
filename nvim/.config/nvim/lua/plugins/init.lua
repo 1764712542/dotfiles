@@ -203,6 +203,44 @@ return {
   },
 
   {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+    },
+    opts = {
+      cmdline = {
+        enabled = true,
+        view = "cmdline_popup",
+        opts = {
+          position = {
+            row = "50%",
+            col = "50%",
+          },
+          size = {
+            width = "auto",
+            height = "auto",
+          },
+        },
+      },
+      messages = {
+        enabled = false,
+      },
+      notify = {
+        enabled = false,
+      },
+      lsp = {
+        progress = {
+          enabled = false,
+        },
+      },
+      popupmenu = {
+        enabled = false,
+      },
+    },
+  },
+
+  {
     "folke/which-key.nvim",
     event = "VeryLazy",
     opts = {},
