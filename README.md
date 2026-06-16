@@ -1,115 +1,113 @@
-# dotfiles — macOS 现代化终端配置
+# dotfiles — macOS 开发环境
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-个人 macOS 开发环境，基于 Zsh + Zimfw + Powerlevel10k，集成现代 CLI 工具链、Tokyo Night 统一视觉体系与 59 插件 Neovim 配置。
+个人 macOS 开发环境配置，使用 GNU Stow 管理。覆盖终端模拟器、Shell、编辑器、Git、包管理、Docker 等全栈工具链，统一 Tokyo Night Storm 视觉风格。
 
-## Stack
+## 组件概览
 
-| 层 | 选择 |
-|------|--------|
-| **Terminal** | [Ghostty](https://ghostty.org) — GPU 加速、原生毛玻璃 |
-| **Shell** | Zsh + [Zimfw](https://github.com/zimfw/zimfw) — 启动 < 50ms |
-| **Prompt** | [Powerlevel10k](https://github.com/romkatv/powerlevel10k) — Pure 风格，transient + instant prompt |
-| **Font** | Maple Mono NF 14pt — Nerd Font 全图标支持 |
-| **Theme** | Tokyo Night Storm — 全工具视觉统一 |
-| **Editor** | [Neovim 0.12](https://neovim.io) — 59 插件，233ms 启动 |
+### 终端与 Shell
 
-### Toolchain
+| 组件 | 工具 | 说明 |
+|------|------|------|
+| 终端模拟器 | [Ghostty](https://ghostty.org) | GPU 加速渲染，原生 macOS 毛玻璃效果 |
+| Shell | Zsh + [Zimfw](https://github.com/zimfw/zimfw) | 模块化框架，< 50ms 启动 |
+| 提示符 | [Powerlevel10k](https://github.com/romkatv/powerlevel10k) | Pure 风格，transient + instant prompt |
+| 字体 | Maple Mono NF 14pt | Nerd Font 全图标覆盖 |
+| 配色 | Tokyo Night Storm | 贯穿所有终端工具 |
+
+### 工具链
 
 ```
-eza        → ls          bat        → cat          rg         → grep
-fd         → find        delta      → diff         fzf        → 模糊搜索
-zoxide     → cd          atuin      → history      btop       → top
-lazygit    → git TUI     zellij     → tmux          yazi      → 文件管理
-mise       → pyenv/nvm   carapace   → completions   direnv     → 环境变量
-fastfetch  → neofetch    just       → task runner
+eza        → ls        bat        → cat        rg         → grep
+fd         → find      delta      → diff       fzf        → 模糊搜索
+zoxide     → cd        atuin      → history    btop       → top
+lazygit    → git TUI   zellij     → tmux       yazi       → 文件管理
+mise       → 运行时    carapace   → 补全       direnv     → 环境变量
+fastfetch  → 系统信息  just       → 任务编排
 ```
 
-### Neovim 亮点
+### Neovim 配置
 
-| 类别 | 选型 |
-|------|------|
-| **文件树** | nvim-tree + edgy 侧边栏（左栏 NvimTree + Trouble，右栏 CodeCompanion） |
-| **搜索** | telescope + fzf-native（文件/文本/grep/undo/buffer） |
-| **补全** | nvim-cmp + luasnip + LSP |
-| **LSP** | lspconfig + mason + conform（pyright / gopls / lua_ls / rust_analyzer / ts_ls / ruff / bashls） |
-| **AI** | Supermaven（免费补全）+ CodeCompanion（OpenRouter 免费模型，Agent 模式直接读写文件） |
-| **调试** | nvim-dap + nvim-dap-ui（Python / Go / C++ / Rust） |
-| **界面** | lualine + bufferline + noice + Tokyo Night |
-| **跳转** | hop（单词/行/字符）+ flash（语法树）
-| **Git** | gitsigns + fugitive + diffview + lazygit |
-| **会话** | persisted.nvim（自动保存/恢复） |
-| **快捷键** | 对标 nvimdots，全部汉化，which-key 可视引导 |
+59 个插件，233ms 冷启动，覆盖以下能力：
 
-## Structure
+| 能力 | 插件选型 |
+|------|----------|
+| **插件管理** | lazy.nvim — 按需加载，并行安装 |
+| **文件树** | nvim-tree + edgy.nvim — 左栏文件树，右侧 AI 聊天，底部终端/问题列表 |
+| **搜索** | telescope.nvim + fzf-native（文件检索、文本搜索、undo 历史、buffer 切换、live-grep） |
+| **补全** | nvim-cmp + luasnip — LSP / snippet / path / buffer 多来源 |
+| **LSP** | lspconfig + mason.nvim + conform.nvim — pyright / gopls / lua_ls / rust_analyzer / ts_ls / ruff / bashls |
+| **语法高亮** | treesitter — 60+ 语言，配合 textobjects 实现结构化编辑 |
+| **AI 补全** | supermaven-nvim — 免费云端补全，< 50ms 响应 |
+| **AI 聊天** | codecompanion.nvim — OpenRouter 免费模型，Agent 模式可直接读写文件、执行命令 |
+| **调试** | nvim-dap + nvim-dap-ui — Python / Go / C++ / Rust 断点调试 |
+| **Git** | gitsigns（行内标记）+ vim-fugitive（Git 操作）+ diffview.nvim（对比视图） |
+| **界面美化** | lualine（状态栏）+ bufferline.nvim（标签栏）+ noice.nvim（浮动命令行）+ Tokyo Night |
+| **跳转导航** | hop.nvim（单词/行/字符快速定位）+ flash.nvim（语法树跳转）|
+| **窗口管理** | smart-splits.nvim — Ctrl 方向键导航，Alt 方向键调整大小 |
+| **会话管理** | persisted.nvim — 自动保存/恢复会话，支持目录会话 |
+| **快捷键引导** | which-key.nvim — 按 `<leader>` 弹出汉化菜单 |
+
+### 快捷键体系
+
+- `<leader>` 为空格键，所有操作用中文描述
+- `g` 开头为 Git 操作（`gs` 暂存、`gb` blame、`gp` push、`gl` pull）
+- `Tab` / `S-Tab` 切换 buffer，`A-i` / `A-o` 前后切换，`A-1`~`A-9` 按编号跳转
+- `tn` / `tj` / `tk` / `to` 管理 Vim 标签页
+- `<leader>r` 在底部面板运行当前文件代码
+- `<leader>cc` 打开 AI 聊天，`<leader>ca` 将当前文件加入上下文
+- `<C-n>` 切换左侧文件树
+
+## 目录结构
 
 ```
 dotfiles/
-├── zsh/          .zshenv .zprofile .zshrc     — Zimfw + 工具链集成 + API Key
-├── zim/          .zimrc                       — Zim 模块声明
-├── p10k/         .p10k.zsh                    — Pure 风格 prompt
-├── ghostty/      config                       — 内置 tokyonight-storm
-├── yazi/         yazi.toml + keymap.toml      — Vim 风格键位
-├── zellij/       config.kdl                   — Tokyo Night 主题
-├── btop/         btop.conf
-├── fastfetch/    config.jsonc                 — Tokyo Night 配色
-├── lazylgit/     config.yml                   — Tokyo Night + Vim 键位
-├── git/          .gitconfig                   — SSH 别名 + 全局 gitignore
-├── conda/        .condarc                     — USTC 镜像
-├── npm/          .npmrc                       — npmmirror 镜像
-├── pip/          pip.conf
-├── brew/         .Brewfile                    — Homebrew 包声明
-├── docker/       docker-compose-ai.yml        — AI 服务栈
-├── nvim/         Neovim 配置                  — 基于 nvimdots，59 插件
-├── configure                                    — Stow 管理脚本
-└── justfile                                      — 本地任务编排
+├── zsh/           .zshenv .zprofile .zshrc     — Zimfw 加载 + 工具链集成
+├── zim/           .zimrc                       — Zim 模块声明
+├── p10k/          .p10k.zsh                    — Powerlevel10k 配置
+├── git/           .gitconfig                   — SSH 别名、代理、全局 gitignore
+├── ghostty/       config                       — Tokyo Night Storm 内置主题
+├── yazi/          yazi.toml + keymap.toml      — 文件管理器
+├── zellij/        config.kdl                   — 终端多路复用器
+├── btop/          btop.conf                    — 系统监控
+├── fastfetch/     config.jsonc                 — 系统信息
+├── lazygit/       config.yml                   — Git TUI
+├── nvim/          Neovim 配置                  — 59 插件
+├── brew/          .Brewfile                    — Homebrew 包声明
+├── conda/         .condarc                     — USTC 镜像
+├── npm/           .npmrc                       — npmmirror 镜像
+├── pip/           pip.conf                     — 清华源
+├── docker/        docker-compose-ai.yml        — AI 本地服务栈
+├── configure                                     — Stow 部署脚本
+└── justfile                                       — 任务编排
 ```
 
-## Quick Start
+## 快速部署
 
 ```bash
-# 1. Clone
 git clone git@github.com:1764712542/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-
-# 2. 部署 symlink
-./configure link
-
-# 3. 安装 Homebrew 包
-brew bundle --file ~/.Brewfile
-
-# 4. 安装 Zim 模块
-zimfw install
-
-# 5. 安装 mise runtime
-mise install
-
-# 6. 同步 atuin 历史
-atuin login && atuin sync
-
-# 7. 重开终端
-exec zsh
+./configure link          # 建立 symlink
+brew bundle --file .Brewfile  # 安装系统包
+zimfw install             # 安装 Zsh 模块
+mise install              # 安装运行时
+atuin login && atuin sync # 同步历史
+exec zsh                  # 重开终端
 ```
 
-恢复后用 `./configure doctor` 验证所有 symlink 正常。
+部署后执行 `./configure doctor` 验证全部 symlink。
 
-## Features
+## 安全
 
-- **XDG 兼容** — 所有缓存/配置/数据遵循 XDG 规范
-- **fzf 深度集成** — 主题化预览、Ctrl+Y 剪贴板、Ctrl+T/Alt+C 文件+目录搜索
-- **atuin 历史管理** — 模糊搜索、加密同步、enter_accept 即时执行
-- **zoxide 智能跳转** — `z`/`zi`/`za` 秒级目录切换
-- **代理自适应** — ClashX 混合端口 7892 自动检测
-- **GPU 加速终端** — Ghostty + 毛玻璃 + 活跃会话时隐藏鼠标
-- **安全性** — SSH 别名 Git 认证、API 密钥存 macOS Keychain
-- **Brewfile 声明式管理** — 换机一条命令还原全部包
-- **Neovim AI Agent** — 自带 CodeCompanion Agent 模式，AI 直接读写文件
+- API 密钥存储在 macOS Keychain，`.zshenv` 启动时自动加载
+- Git 通过 SSH 别名认证（`git@github.com`），避免令牌泄漏
+- 代理仅使用本地 ClashX 混合端口 `7892`，不写死远程地址
 
-## Requirements
+## 依赖
 
 - macOS (Apple Silicon)
-- Homebrew
+- [Homebrew](https://brew.sh)
 - Git
 
 ## License
