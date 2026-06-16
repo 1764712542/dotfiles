@@ -1,0 +1,36 @@
+// Zellij Configuration
+// Tokyo Night Storm Theme
+
+theme "tokyo-night-storm"
+
+// Simplified keybindings (consistent with tmux muscle memory)
+keybinds clear-defaults=true {
+    normal {
+        // Sessions
+        bind "Ctrl o" { SwitchToMode "tmxx"; }
+    }
+    locked {
+        bind "Ctrl g" { SwitchToMode "normal"; }
+    }
+    pane {
+        bind "Ctrl o" { SwitchToMode "normal"; }
+    }
+    tab {
+        bind "Ctrl o" { SwitchToMode "normal"; }
+    }
+    resize {
+        bind "Ctrl o" { SwitchToMode "normal"; }
+    }
+    move {
+        bind "Ctrl o" { SwitchToMode "normal"; }
+    }
+    search {
+        bind "Ctrl o" { SwitchToMode "normal"; }
+    }
+}
+
+// Options
+pane_frames = false
+mouse_mode = true
+scrollback_lines_to_search = 10000
+default_shell = "zsh"

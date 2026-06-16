@@ -1,0 +1,88 @@
+# ==============================================================================
+#  lazygit — Terminal Git UI
+#  Keybindings & Theme
+# ==============================================================================
+
+# --- 颜色主题 (Tokyo Night Storm) ---
+gui:
+  theme:
+    activeBorderColor:
+      - "#7aa2f7"
+      - bold
+    inactiveBorderColor:
+      - "#3b4261"
+    searchingActiveBorderColor:
+      - "#e0af68"
+      - bold
+    optionsTextColor:
+      - "#c0caf5"
+    selectedLineBgColor:
+      - "#292e42"
+    selectedRangeBgColor:
+      - "#3b4261"
+    cherryPickedCommitBgColor:
+      - "#bb9af7"
+    cherryPickedCommitFgColor:
+      - "#1d202f"
+    unstagedChangesColor:
+      - "#f7768e"
+    defaultFgColor:
+      - "#c0caf5"
+  # 分屏比例
+  sidePanelWidth: 0.3
+  bottomPanelHeight: 0.3
+  enlargedSidePanel: false
+  nerdFontsVersion: "3"
+  showFileTree: true
+  showCommandLog: true
+  showRandomTip: false
+  screenMode: full
+  border: rounded
+# --- 键绑定 (Vim 风格) ---
+keybinding:
+  universal:
+    quit: q
+    return: <esc>
+    quit-alt1: <c-c>
+    togglePanel: <tab>
+    prevItem: <up> k
+    nextItem: <down> j
+    prevItem-alt: <left> h
+    nextItem-alt: <right> l
+    scrollUpMain: <pgup>
+    scrollDownMain: <pgdown>
+    scrollUpAlt: <c-up>
+    scrollDownAlt: <c-down>
+    gotoTop: <home>
+    gotoBottom: <end>
+    toggleWhitespaceInDiffView: <c-w>
+  files:
+    commitChanges: c
+    commitChangesWithoutHook: w
+    amendLastCommit: A
+    stashAllChanges: s
+    viewResetOptions: D
+    toggleStaged: <space>
+    toggleTreeView: <disabled>
+  branches:
+    createPullRequest: o
+    checkoutByName: c
+    forceCheckout: F
+    rebaseBranch: r
+    mergeIntoCurrentBranch: M
+    createBranch: n
+  main:
+    toggleDiffView: <c-d>
+    editFile: e
+    openFile: o
+    scrollUp: <up> k
+    scrollDown: <down> j
+    pull: p
+    push: P
+    fastForward: f
+    undo: z
+    redo: <c-z>
+    stash: s
+    toggleShowDiffs: d
+  stash:
+    popStash: g

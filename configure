@@ -1,0 +1,61 @@
+#!/bin/bash
+# ==============================================================================
+#  configure — 管理 ~/dotfiles 的 GNU Stow 助手
+#  用法:
+#    ./configure       列出所有包
+#    ./configure link  部署所有 symlink (stow)
+#    ./configure unlink  移除所有 symlink (unstow)
+#    ./configure reinstall 重新部署 (unlink + link)
+# ==============================================================================
+
+DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
+PACKAGES=(
+  zsh p10k zim git conda npm
+  ghostty zellij yazi btop fastfetch lazygit pip
+)
+
+cd "$DOTFILES_DIR" || exit 1
+
+cmd="${1:-list}"
+
+case "$cmd" in
+  link|stow)
+    echo "→ 部署 symlink ..."
+    stow -v "${PACKAGES[@]}"
+    echo "✓ 完成"
+    ;;
+  unlink|unstow)
+    echo "→ 移除 symlink ..."
+    stow -v -D "${PACKAGES[@]}"
+    echo "✓ 完成"
+    ;;
+  reinstall|relink)
+    echo "→ 重新部署 ..."
+    stow -v -D "${PACKAGES[@]}" && stow -v "${PACKAGES[@]}"
+    echo "✓ 完成"
+    ;;
+  list|status)
+    echo "=== dotfiles packages ==="
+    for pkg in "${PACKAGES[@]}"; do
+      pkg_dir="$DOTFILES_DIR/$pkg"
+      if [ -d "$pkg_dir" ]; then
+        files=$(find "$pkg_dir" -type f -not -path '*/.git/*' 2>/dev/null | wc -l | tr -d ' ')
+        echo "  $pkg  ($files files)"
+      fi
+    done
+    echo ""
+    echo "=== symlink 状态 ==="
+    find "$HOME" -maxdepth 1 -type l -lname "dotfiles/*" -not -path "dotfiles/.git" 2>/dev/null | while read -r link; do
+      target=$(readlink "$link")
+      if [ -L "$link" ] && [ -e "$(dirname "$link")/$target" ]; then
+        echo "  ✓ $(basename "$link")"
+      else
+        echo "  ✗ $(basename "$link")  (broken)"
+      fi
+    done
+    ;;
+  *)
+    echo "用法: $0 [link|unlink|reinstall|list]"
+    exit 1
+    ;;
+esac

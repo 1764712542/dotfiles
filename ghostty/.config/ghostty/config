@@ -1,0 +1,70 @@
+# Ghostty Configuration
+# Tokyo Night Storm Theme | FiraCode Nerd Font
+
+# === Font ===
+font-family = Maple Mono NF
+font-size = 14
+font-feature = calt
+font-feature = liga
+
+# === Theme: Tokyo Night Storm ===
+background = #24283b
+foreground = #c0caf5
+
+# === Frosted Glass (毛玻璃) ===
+background-opacity = 0.85
+background-blur = macos-glass-regular
+background-opacity-cells = false
+
+# Black
+palette = 0=#1d202f
+# Red
+palette = 1=#f7768e
+# Green
+palette = 2=#9ece6a
+# Yellow
+palette = 3=#e0af68
+# Blue
+palette = 4=#7aa2f7
+# Magenta
+palette = 5=#bb9af7
+# Cyan
+palette = 6=#7dcfff
+# White
+palette = 7=#a9b1d6
+
+# Bright Black
+palette = 8=#414868
+# Bright Red
+palette = 9=#f7768e
+# Bright Green
+palette = 10=#9ece6a
+# Bright Yellow
+palette = 11=#e0af68
+# Bright Blue
+palette = 12=#7aa2f7
+# Bright Magenta
+palette = 13=#bb9af7
+# Bright Cyan
+palette = 14=#7dcfff
+# Bright White
+palette = 15=#c0caf5
+
+selection-foreground = #c0caf5
+selection-background = #2f3346
+
+# === Cursor ===
+cursor-style = bar
+cursor-style-blink = true
+adjust-cursor-thickness = 2
+
+# === Window ===
+window-padding-x = 4
+window-padding-y = 2
+macos-titlebar-style = tabs
+
+# === Shell ===
+command = /bin/zsh
+
+# === Mouse ===
+mouse-hide-while-typing = true

@@ -1,0 +1,29 @@
+# Yazi Configuration
+# Tokyo Night Storm Theme
+
+[manager]
+show_hidden = true
+sort_by = "natural"
+sort_dir_first = true
+linemode = "size"
+
+[preview]
+tab_size = 4
+
+[opener]
+edit = [
+  { run = "nvim %s", block = true, for = "unix" },
+]
+play = [
+  { run = "open %s", orphan = true, for = "unix" },
+]
+
+[open]
+rules = [
+  { url = "*.md", use = "edit" },
+  { url = "*.txt", use = "edit" },
+  { url = "*.{json,yaml,toml,xml}", use = "edit" },
+  { url = "*.{png,jpg,jpeg,gif,webp}", use = "play" },
+  { url = "*.{mp4,mp3,mkv,avi}", use = "play" },
+  { url = "*.{pdf,doc,docx,xls,xlsx}", use = "play" },
+]
