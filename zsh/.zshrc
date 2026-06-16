@@ -1,6 +1,6 @@
 # ==============================================================================
 #  ~/.zshrc — Zimfw + Modern Terminal Stack
-#  Theme: Tokyo Night Storm | Font: FiraCode Nerd Font
+#  Theme: Tokyo Night Storm | Font: Maple Mono NF
 #  Updated: 2026-04-28
 # ==============================================================================
 

@@ -2,6 +2,7 @@
 
 # === Font ===
 font-family = Maple Mono NF
+font-family-cjk = Maple Mono NF
 font-size = 14
 font-feature = calt
 font-feature = liga

@@ -187,10 +187,11 @@ return {
     },
   },
 
-  -- ======== Treesitter ========
+  -- ======== Treesitter + Textobjects ========
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
+    dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
     opts = {
       ensure_installed = {
         "bash", "c", "go", "lua", "python", "rust", "typescript",
@@ -200,6 +201,39 @@ return {
       auto_install = true,
       highlight = { enable = true },
       indent = { enable = true },
+      textobjects = {
+        select = {
+          enable = true,
+          lookahead = true,
+          keymaps = {
+            ["af"] = "@function.outer",
+            ["if"] = "@function.inner",
+            ["ac"] = "@class.outer",
+            ["ic"] = "@class.inner",
+            ["ab"] = "@block.outer",
+            ["ib"] = "@block.inner",
+          },
+        },
+        move = {
+          enable = true,
+          set_jumps = true,
+          goto_next_start = {
+            ["]f"] = "@function.outer",
+            ["]c"] = "@class.outer",
+            ["]a"] = "@parameter.outer",
+          },
+          goto_previous_start = {
+            ["[f"] = "@function.outer",
+            ["[c"] = "@class.outer",
+            ["[a"] = "@parameter.outer",
+          },
+        },
+        swap = {
+          enable = true,
+          swap_next = { ["<leader>an"] = "@parameter.inner" },
+          swap_previous = { ["<leader>ap"] = "@parameter.inner" },
+        },
+      },
     },
     config = function(_, opts)
       require("nvim-treesitter.config").setup(opts)
@@ -397,6 +431,43 @@ return {
     },
   },
 
+  -- ======== Window Management (smart-splits) ========
+  {
+    "mrjones2014/smart-splits.nvim",
+    event = "VeryLazy",
+    opts = {
+      at_end = "stop",
+      cursor_follows_win = true,
+    },
+  },
+
+  -- ======== Split/Join Code (treesj) ========
+  {
+    "Wansmer/treesj",
+    cmd = { "TSJToggle", "TSJSplit", "TSJJoin" },
+    keys = {
+      { "<leader>m", "<cmd>TSJToggle<CR>", desc = "拆分/合并代码" },
+    },
+    opts = {
+      use_default_keymaps = false,
+    },
+  },
+
+  -- ======== Search & Replace (grug-far) ========
+  {
+    "MagicDuck/grug-far.nvim",
+    cmd = "GrugFar",
+    keys = {
+      { "<leader>Sr", "<cmd>GrugFar<CR>", desc = "搜索替换" },
+      { "<leader>Sw", function() require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") } }) end, desc = "替换当前词" },
+    },
+    opts = {
+      border = "rounded",
+      engine = "ripgrep",
+      startInInsertMode = true,
+    },
+  },
+
   -- ======== Git ========
   {
     "lewis6991/gitsigns.nvim",
@@ -412,6 +483,24 @@ return {
       },
       current_line_blame = true,
       current_line_blame_opts = { delay = 500 },
+    },
+  },
+  {
+    "sindrets/diffview.nvim",
+    cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewFileHistory" },
+    keys = {
+      { "<leader>gd", "<cmd>DiffviewOpen<CR>", desc = "Git Diff" },
+      { "<leader>gD", "<cmd>DiffviewClose<CR>", desc = "关闭 Diff" },
+    },
+    opts = {
+      enhanced_diff_hl = true,
+    },
+  },
+  {
+    "tpope/vim-fugitive",
+    cmd = { "G", "Git", "Gdiffsplit", "Gread", "Gwrite", "Gstatus" },
+    keys = {
+      { "<leader>gG", "<cmd>Git<CR>", desc = "Git 面板" },
     },
   },
 
@@ -656,13 +745,15 @@ return {
       spec = {
         { "<leader>f", group = "📂 搜索" },
         { "<leader>t", group = "📑 标签" },
-        { "<leader>d", group = "⚠️ 诊断" },
+        { "<leader>d", group = "🩺 诊断/调试" },
         { "<leader>l", group = "🔧 LSP" },
         { "<leader>x", group = "📋 面板" },
         { "<leader>g", group = "🔄 Git" },
         { "<leader>q", group = "💾 会话" },
-        { "<leader>a", group = "🤖 AI" },
+        { "<leader>a", group = "🤖 AI / 参数" },
         { "<leader>E", group = "🌳 目录树" },
+        { "<leader>S", group = "🔎 搜索替换" },
+        { "<leader>b", group = "📄 Buffer" },
       },
     },
   },
