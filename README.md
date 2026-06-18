@@ -105,18 +105,19 @@ dotfiles/
 
 ### Neovim 配置
 
-基于 lazy.nvim，59 个插件，按功能模块划分。
+基于 lazy.nvim，56 个插件，按功能模块划分。
 
 #### 核心插件加载 (`init.lua`)
 
 - **lazy.nvim** — 插件管理器，并行安装、按需加载、内置 UI
 
-#### 文件树与侧边栏
+#### 文件管理
 
 | 插件 | 用途 |
 |------|------|
-| nvim-tree.lua | 文件树浏览器（左侧） |
-| edgy.nvim | 可编程侧边栏布局（左：文件树 + Trouble，右：AI 聊天，底：终端 + 问题列表 + 帮助） |
+| snacks.nvim (explorer) | 文件树浏览器 |
+| oil.nvim | 默认文件管理器（替代 NetRW，`-` 键打开） |
+| edgy.nvim | 可编程侧边栏布局（左：Trouble，底：终端 + 问题列表 + 帮助） |
 
 #### 搜索
 
@@ -131,14 +132,9 @@ dotfiles/
 
 | 插件 | 用途 |
 |------|------|
-| nvim-cmp | 补全引擎 |
-| luasnip | 代码片段引擎 |
-| cmp-nvim-lsp | LSP 补全来源 |
-| cmp-buffer | 当前 buffer 补全 |
-| cmp-path | 文件路径补全 |
-| cmp-emoji | Emoji 补全 |
+| blink.cmp | 补全引擎（LSP + 路径 + 片段 + buffer） |
+| LuaSnip | 代码片段引擎 |
 | friendly-snippets | 预置代码片段库 |
-| lspkind.nvim | 补全菜单图标 |
 
 #### LSP 与格式化
 
@@ -157,10 +153,9 @@ dotfiles/
 
 | 插件 | 用途 |
 |------|------|
-| supermaven-nvim | 云端 AI 代码补全（免费，< 50ms 响应） |
-| codecompanion.nvim | AI 聊天助手，支持 Agent 模式直接读写文件 |
+| avante.nvim | AI 聊天 + 内联编辑 + 自动建议，支持 OpenRouter 任意模型 |
 
-CodeCompanion 使用 OpenRouter API，支持任意模型切换。Agent 模式下可自动创建、读取、编辑文件，执行命令，搜索代码。
+Avante 使用 `OPENROUTER_API_KEY`，提供对话、内联编辑、代码自动建议等功能。
 
 #### 调试
 
@@ -193,15 +188,19 @@ CodeCompanion 使用 OpenRouter API，支持任意模型切换。Agent 模式下
 | grug-far.nvim | 项目范围搜索替换（支持 ripgrep） |
 | comment.nvim | 代码注释（`gc` / `gcc`） |
 | nvim-autopairs | 括号自动补全 |
-| hop.nvim | 快速跳转（单词/行/字符/双字符） |
-| flash.nvim | Treesitter 感知的快速跳转 |
-| persistence.nvim → persisted.nvim | 会话自动保存/恢复 |
+| flash.nvim | Treesitter 感知的快速跳转（单词/行/双字符） |
+| persisted.nvim | 会话自动保存/恢复 |
 | nvim-bufdel | 安全关闭 buffer（保留窗口布局） |
 | smart-splits.nvim | 窗口间智能导航与调整 |
+| smear-cursor.nvim | 光标平滑动画 |
 | colorizer.lua | 颜色代码高亮预览 |
-| indent-blankline.nvim | 缩进指示线 |
+| snacks.nvim (indent) | 缩进指示线（替代 indent-blankline） |
 | dressing.nvim | 内置 UI（vim.ui.input/select）美化 |
-| dropbar.nvim | 面包屑导航 Winbar |
+| todo-comments.nvim | TODO/FIXME/HACK 高亮与搜索 |
+| undotree | 可视化撤销树 |
+| toggleterm.nvim | 浮动/底部终端面板 |
+| render-markdown.nvim | Markdown 实时渲染 |
+| markdown-preview.nvim | Markdown 浏览器预览（F12） |
 
 #### Git 集成
 
@@ -220,52 +219,77 @@ CodeCompanion 使用 OpenRouter API，支持任意模型切换。Agent 模式下
 | | `<A-1>` .. `<A-9>` | 跳转到 buffer 1~9 |
 | | `<A-q>` | 关闭当前 buffer |
 | | `<A-S-i>` / `<A-S-o>` | 当前 buffer 右移/左移 |
-| | `<leader>bb` | Telescope buffer 列表 |
+| | `<leader>fb` | Telescope buffer 列表 |
 | | `<leader>bn` / `bp` / `bd` | 下一个 / 上一个 / 关闭 |
-| **文件树** | `<C-n>` | 切换左侧栏 |
-| | `<leader>nf` | 定位当前文件 |
-| | `<leader>nr` | 刷新文件树 |
-| **标签页** | `tn` / `tk` / `tj` / `to` | 新建 / 下 / 上 / 仅留当前 |
+| **文件管理** | `<leader>n` | snacks 文件树 |
+| | `-` | Oil 文件管理器（替代 NetRW） |
+| **标签页** | `<leader>tn` / `th` / `tl` | 新建 / 左 / 右 |
+| | `<leader>tc` / `to` | 关闭 / 仅留当前 |
+| | `<leader>t1`..`<leader>t9` | 跳转到标签 1~9 |
 | **窗口** | `<C-h/j/k/l>` | 窗口间导航 |
 | | `<A-h/j/k/l>` | 窗口大小调整 |
+| | `<leader>W` | 窗口导航（替代） |
 | **搜索** | `<leader>ff` | 文件搜索 |
 | | `<leader>fg` | 文本搜索（grep） |
 | | `<leader>fb` | buffer 列表 |
 | | `<leader>fh` | 帮助标签搜索 |
+| | `<leader>fr` | 恢复上次搜索 |
+| | `<leader>fp` | 当前目录文件搜索 |
+| | `<leader>f.` | 最近文件 |
+| | `<C-p>` | 命令面板 |
+| **搜索替换** | `<leader>Sr` | 项目搜索替换（GrugFar） |
+| | `<leader>Sw` | 替换当前词 |
 | **LSP** | `gd` | 跳转到定义 |
 | | `gD` | 跳转到声明 |
+| | `gi` | 查找实现 |
 | | `K` | 悬浮文档 |
 | | `gh` | 引用列表 |
 | | `gr` | 重命名 |
 | | `ga` | 代码操作 |
 | | `gs` | 签名帮助 |
 | | `go` | Trouble 符号大纲 |
-| | `gt` | 诊断开关 |
+| | `gt` | Trouble 诊断开关 |
 | | `g[` / `g]` | 上/下一个诊断 |
 | **Git** | `]g` / `[g` | 下/上一个 hunk |
 | | `<leader>gs` | 暂存 hunk |
 | | `<leader>gr` | 重置 hunk |
+| | `<leader>gR` | 重置整个缓冲区 |
+| | `<leader>gp` | 预览 hunk |
 | | `<leader>gb` | blame |
-| | `<leader>gB` | blame（预览） |
-| | `gps` | git push |
-| | `gpl` | git pull |
-| **AI** | `<leader>cc` | 打开 AI 聊天 |
-| | `<leader>ci` | AI 内联助手 |
-| | `<leader>ca` | 当前文件添加到聊天上下文 |
+| | `<leader>gB` | 切换行内 blame |
+| | `<leader>gd` | Diffview 打开 |
+| | `<leader>gD` | Diffview 关闭 |
+| | `<leader>gG` | Git 面板 |
+| | `<leader>gP` | git push |
+| | `<leader>gl` | git pull |
+| **AI** | `<leader>aa` | Avante 对话 |
+| | `<leader>ae` | Avante 编辑选区（可视模式） |
+| | `<leader>am` | 选择模型 |
+| | `<leader>at` | 切换侧边栏 |
+| | `<leader>as` | 切换 fast/strong 模型 |
+| | `<C-y>` | Avante 接受建议 |
 | **运行/调试** | `<leader>r` | 运行当前文件（底部面板） |
-| | `<F5>` | 切换终端 |
+| | `<A-d>` | 浮动终端 |
+| | `<C-\>` | 切换终端 |
 | | `<F6>`..`<F11>` | DAP 调试控制 |
+| | `<leader>dc/b/dB/do/di/dO/dt/dr` | DAP 操作别名 |
+| **测试** | `<leader>tf` | 运行当前文件测试 |
+| | `<leader>tN` | 运行最近测试 |
+| | `<leader>tO` | 测试输出 |
+| | `<leader>ts` | 测试汇总 |
 | **文本操作** | `jk` / `kj` | 退出插入模式 |
-| | `<Esc>` | 清除搜索高亮 |
+| | `<leader>h` | 清除搜索高亮 |
+| | `<leader>rr` | 屏幕重绘 |
 | | `Y` | 复制到行尾 |
 | | `gc` | 注释切换 |
 | | `<leader>m` | 拆分/合并代码 |
-| | `<leader>;` | 面包屑导航 |
-| | `<leader>w` | Hop 单词跳转 |
-| | `<leader>S` | Flash 快速跳转 |
+| | `<leader>u` | 撤销树 |
+| | `<leader>j` | Flash 单词跳转 |
+| | `<leader>k` | Flash 语法跳转 |
 | **包管理** | `<leader>ph..px` | lazy.nvim 面板/同步/更新等 |
 | **会话** | `<leader>ss` | 保存会话 |
-| | `<leader>sl` | Telescope 会话列表 |
+| | `<leader>sl` | 加载会话 |
+| | `<leader>sd` | 删除会话 |
 | **格式化** | `<A-f>` | 切换保存时格式化 |
 | | `<A-S-f>` | 手动格式化 |
 
@@ -323,7 +347,7 @@ exec zsh
 - **一致视觉** — 所有组件配置 Tokyo Night Storm 配色
 - **声明式管理** — 一个 `configure link` + `brew bundle` 部署完整环境
 - **快捷键体系** — 分类命名、中文提示，which-key 引导无需记忆
-- **AI 原生** — 免费 AI 补全（Supermaven）和任意模型聊天（CodeCompanion + OpenRouter）
+- **AI 原生** — Avante.nvim 全功能 AI 助手（对话 + 内联编辑 + 自动建议），支持 OpenRouter 任意模型
 - **XDG 规范** — 所有缓存、配置、数据目录遵循 XDG 标准
 ## 依赖
 

@@ -16,6 +16,9 @@ require("core.keymaps")
 
 require("lazy").setup("plugins", {
   performance = {
+    cache = {
+      enabled = true,
+    },
     rtp = {
       disabled_plugins = {
         "gzip",

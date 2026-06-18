@@ -432,6 +432,28 @@ port() { lsof -iTCP -sTCP:LISTEN -n -P | grep -i "$1" }
 ipinfo() { curl -s "ipinfo.io/$1" | jq . }
 
 # ==============================================================================
+#  中文帮助命令
+# ==============================================================================
+
+# tlrc (tldr 中文版) — 已通过 ~/Library/Application Support/tlrc/config.toml 配置默认中文
+
+# 中文 man 手册页 (man-pages-zh)
+# 安装: git clone --depth=1 https://github.com/man-pages-zh/manpages-zh.git ~/.local/share/man-pages-zh
+export MANPATH_ZH="$HOME/.local/share/man-pages-zh/src"
+cman() { man -M "$MANPATH_ZH" "$@" }
+
+# cht.sh — 在线命令示例（支持中文）
+# 用法: cht <command>          # 默认中文
+#       cht <command> en       # 英文
+cht() {
+  if [ "$2" = "en" ]; then
+    curl -s "cheat.sh/$1"
+  else
+    curl -s "cheat.sh/$1?q=zh"
+  fi
+}
+
+# ==============================================================================
 #  Startup
 # ==============================================================================
 

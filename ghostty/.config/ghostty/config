@@ -1,19 +1,19 @@
 # Ghostty Configuration
 
 # === Font ===
-font-family = Maple Mono NF
-font-family-cjk = Maple Mono NF
+font-family = Maple Mono NF CN
 font-size = 14
 font-feature = calt
 font-feature = liga
 
 # === Theme ===
-theme = tokyonight-storm
+theme = TokyoNight Storm
 background-opacity = 0.85
 background-blur = macos-glass-regular
 background-opacity-cells = false
 
 # === Cursor ===
+cursor-color = #7dcfff
 cursor-style = bar
 cursor-style-blink = true
 adjust-cursor-thickness = 2
@@ -26,3 +26,6 @@ macos-titlebar-style = tabs
 # === Mouse ===
 mouse-hide-while-typing = true
 confirm-close-surface = false
+
+# === Keyboard ===
+macos-option-as-alt = true
