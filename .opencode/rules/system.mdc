@@ -1,0 +1,106 @@
+---
+description: 系统核心配置及编程偏好
+globs: 
+---
+# 系统核心配置
+
+## 硬件与系统
+- macOS Apple Silicon (arm64), 个人开发机
+- Shell: zsh + zimfw + powerlevel10k (Pure style)
+- 终端: Ghostty (TokyoNight Storm 主题, Maple Mono NF CN 字体 14pt)
+- 包管理: Homebrew (Brewfile 声明式), mise 管理运行时版本
+
+## 网络代理
+- 代理工具: 猫猫云 (Clash Meta 内核)
+- 端口: 127.0.0.1:7892 (混合端口，支持 HTTP CONNECT + SOCKS5)
+- 环境变量:
+  - `HTTPS_PROXY=http://127.0.0.1:7892`
+  - `ALL_PROXY=socks5h://127.0.0.1:7892`
+- API Key 通过 macOS Keychain 加载 (`security find-generic-password`)
+
+## Dotfiles 管理
+- 使用 GNU Stow, 每个子目录是一个 stow package
+- 仓库路径: `/Users/zhuyao/dotfiles`
+- 部署: `./configure link|unlink|reinstall|doctor|list`
+- `configure` 中的 packages 数组(line 13-17) 是 stow 操作的权威来源
+
+## 编辑器: Neovim
+- 包管理器: lazy.nvim, 插件在 `lua/plugins/` 下按功能模块拆分
+- 补全: blink.cmp (+ LuaSnip + friendly-snippets)
+- AI: avante.nvim (OpenRouter, `openrouter/owl-alpha`, env: `OPENROUTER_API_KEY`)
+- 搜索: snacks.picker (替代 telescope, 内置 Rust 模糊匹配)
+- 文件树: snacks.explorer + oil.nvim
+- LSP: vim.lsp.config / vim.lsp.enable (Neovim >= 0.11), mason 管理 LSP 安装
+- 格式化: conform.nvim (保存时自动格式化, `<A-f>` 切换开关)
+- 调试: nvim-dap + dap-ui (Python/Go/C++/Rust)
+- 测试: neotest (Python + Go)
+- 输入法: im-select.nvim, 退出插入模式自动切回 ABC 英文输入法
+- 快捷键体系: 中文 desc, which-key 引导; leader 键为空格
+
+### 核心语言支持
+| 语言 | LSP | 格式化 | 调试 |
+|------|-----|--------|------|
+| Python | pyright + ruff | ruff_format | nvim-dap-python |
+| Go | gopls | gofumpt | nvim-dap-go (dlv) |
+| Rust | rust-analyzer | rustfmt | nvim-dap |
+| TypeScript | ts_ls | prettierd | - |
+| Lua | lua_ls | stylua | - |
+| Bash | bashls | shfmt | - |
+
+### 重要 keymaps
+- `<leader>ff/fg/fb/fh/fr/fp/f.` — 文件/全文/buffer/帮助/恢复/目录/最近搜索
+- `<C-p>` — 命令面板 (snacks.picker.keymaps)
+- `<leader>aa/ae/am/at/as` — Avante AI 对话/编辑/模型/侧栏/切换
+- `gd/gD/K/gi/gh/gr/ga/gs/go` — LSP 操作
+- `<leader>n` — snacks 文件树, `-` — Oil 文件管理器
+- `<leader>r` — 运行当前文件, `<A-d>` — 浮动终端
+- `<leader>tf/tN/tO/ts` — neotest 测试
+
+## 主要编程语言与工具链
+- **Python**: uv 管理 (非 pip), `~/venvs/ai/` AI 虚拟环境, conda 作为备用
+- **Go**: mise 管理版本, `~/go/bin` 放编译产物
+- **Rust**: mise 管理, cargo 构建
+- **TypeScript/Node**: mise 管理, node 22
+- **Shell**: zsh + bash, 脚本以 bash 运行
+
+## AI 开发栈
+- OpenRouter API (环境变量 `OPENROUTER_API_KEY`)
+- Ollama 本地推理 (Docker, port 11434)
+- LiteLLM 统一代理 (Docker, port 4000, 路由到 OpenRouter/Ollama)
+- ChromaDB (Docker, port 8000)
+- Qdrant (Docker, port 6333)
+- pgvector (Docker, port 5432)
+- `justfile` 管理 AI 任务: `just activate/jupyter/ollama/update/freeze/gpu/ane`
+- LM Studio 本地模型推理 (备选, `/Applications/LM Studio.app`)
+- MLX 框架用于 Apple Silicon 模型推理
+
+## 常用 CLI 工具
+- `cat` → bat, `ls` → eza, `grep` → rg, `diff` → delta
+- `top` → btop, `ps` → procs (如安装), `htop` 备用
+- `cd` → zoxide (z/zi/za), `fzf` 增强 Ctrl+R/T/Alt+C
+- `atuin` 替代 history (交互式 `hg`)
+- `lazygit` (lg), `zellij` 替代 tmux
+- `fd` 替代 find, `just` 替代 make, `httpie` 替代 curl
+- 安全: `cp/mv/rm` 别名带 `-iv` 确认
+- 网络: `dog` 替代 dig, `bandwhich` 带宽监控, `ping -c 5`
+
+## Git 配置
+- GitHub SSH: `git@github.com:` insteadOf `https://github.com/`
+- pull.rebase = true, init.defaultBranch = main, rebase.autosquash = true
+- diff pager: delta (side-by-side, line-numbers, TokyoNight 主题)
+- 完整 alias 集 (st/co/br/ci/cm/cam/df/dc/lg/lga/rb/rbi/cp 等)
+
+## 代码风格偏好
+- 类型标注优先 (Python Type Hints, Go 原生类型, TypeScript 类型)
+- 函数 < 30 行, Neovim 插件配置 < 150 行
+- 异步: Python 用 `async/await`, Go 用 goroutine+channel
+- 不写注释解释 what, 写注释解释 why
+- 缩进: Lua 2 spaces, 其他语言 4 spaces
+- 中文注释/desc 优先 (Neovim keymaps desc 全部用中文)
+
+## Opencode 配置
+- 复杂任务先给方案摘要再执行
+- 每完成一个子任务用 todowrite 更新进度
+- 引用代码时标注 `文件:行号`
+- 保持回答简洁 (默认 1-4 行)
+- 代码改前先读文件, 改后 lint/typecheck/test 验证
