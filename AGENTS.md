@@ -55,7 +55,7 @@ Note: `<C-l>` and `<C-L>` send the same byte (0x0C) in terminals — Neovim can'
 
 ### Intentional overrides
 
-`gt` → Trouble diagnostics (overrides `:tabnext`); `<C-\>` in terminal → ToggleTerm (uses `<Esc><Esc>` as escape); `<C-p>` → Telescope command palette.
+`gt` → Trouble diagnostics (overrides `:tabnext`); `<C-\>` in terminal → ToggleTerm (uses `<Esc><Esc>` as escape); `<C-p>` → snacks command palette.
 
 ## Gotchas
 

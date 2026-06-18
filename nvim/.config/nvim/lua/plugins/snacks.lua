@@ -55,6 +55,22 @@ return {
       },
       scroll = { enabled = true },
       notifier = { enabled = true, timeout = 3000 },
+      picker = {
+        enabled = true,
+        select = { enable = true },
+        sources = {
+          explorer = { auto_close = true },
+        },
+        formatters = {
+          file = { truncate = 80 },
+        },
+        win = {
+          input = { keys = {
+            ["<C-j>"] = { "list_down", mode = { "n", "i" } },
+            ["<C-k>"] = { "list_up", mode = { "n", "i" } },
+          }},
+        },
+      },
     },
   },
 }

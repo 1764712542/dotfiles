@@ -65,7 +65,7 @@ return {
       input = { enabled = true, default_prompt = " ", border = "rounded" },
       select = {
         enabled = true,
-        backend = { "telescope", "builtin" },
+        backend = { "builtin" },
         builtin = { border = "rounded" },
       },
     },

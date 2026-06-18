@@ -24,6 +24,16 @@ keymap("n", "<leader>Wj", function() require("smart-splits").move_cursor_down() 
 keymap("n", "<leader>Wk", function() require("smart-splits").move_cursor_up() end, "窗口上移")
 keymap("n", "<leader>Wl", function() require("smart-splits").move_cursor_right() end, "窗口右移")
 
+-- ======== 搜索 (snacks.picker) ========
+keymap("n", "<leader>ff", function() Snacks.picker.files() end, "查找文件")
+keymap("n", "<leader>fg", function() Snacks.picker.grep() end, "全文搜索")
+keymap("n", "<leader>fb", function() Snacks.picker.buffers() end, "缓冲区")
+keymap("n", "<leader>fh", function() Snacks.picker.help() end, "帮助标签")
+keymap("n", "<leader>fr", function() Snacks.picker.resume() end, "恢复搜索")
+keymap("n", "<leader>fp", function() Snacks.picker.files({ cwd = vim.fn.expand("%:p:h") }) end, "当前目录文件")
+keymap("n", "<leader>f.", function() Snacks.picker.recent() end, "最近文件")
+keymap("n", "<C-p>", function() Snacks.picker.keymaps() end, "命令面板")
+
 -- ======== 文件树 (snacks.explorer) ========
 keymap("n", "<leader>n", function() require("snacks").explorer() end, "文件树")
 
