@@ -22,6 +22,7 @@ adjust-cursor-thickness = 2
 window-padding-x = 4
 window-padding-y = 2
 macos-titlebar-style = tabs
+window-minimum-size = 800, 450
 
 # === Mouse ===
 mouse-hide-while-typing = true
@@ -29,3 +30,15 @@ confirm-close-surface = false
 
 # === Keyboard ===
 macos-option-as-alt = true
+
+# === Shell ===
+shell-integration = zsh
+
+# === Clipboard ===
+clipboard-read = allow
+clipboard-write = allow
+copy-on-select = clipboard
+
+# === Quick Terminal ===
+quick-terminal-position = bottom
+quick-terminal-screen = main

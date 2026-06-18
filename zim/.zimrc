@@ -15,7 +15,7 @@ zmodule completion
 zmodule archive
 
 # --- 高亮与建议 ---
-zmodule zsh-users/zsh-syntax-highlighting
+zmodule zdharma-continuum/fast-syntax-highlighting
 zmodule zsh-users/zsh-autosuggestions
 
 # --- 增强模块 ---

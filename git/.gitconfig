@@ -1,9 +1,62 @@
 [user]
 	name = ryanzhu
 	email = 1764712542@qq.com
+
 [core]
 	excludesfile = ~/.gitignore_global
+	pager = delta
+
+[init]
+	defaultBranch = main
+
+[pull]
+	rebase = true
+
+[rebase]
+	autosquash = true
+
+[log]
+	decorate = auto
+
 [safe]
 	directory = *
+
 [url "git@github.com:"]
 	insteadOf = https://github.com/
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	side-by-side = true
+	navigate = true
+	line-numbers = true
+	syntax-theme = TokyoNight
+
+[alias]
+	st = status -sb
+	co = checkout
+	cob = checkout -b
+	br = branch
+	ci = commit
+	cm = commit -m
+	ca = commit -a
+	cam = commit -am
+	amend = commit --amend --no-edit
+	df = diff
+	dc = diff --cached
+	lg = log --oneline --graph --decorate --all -20
+	lga = log --oneline --graph --decorate --all
+	rh = reset HEAD~
+	rb = rebase
+	rbc = rebase --continue
+	rba = rebase --abort
+	rbi = rebase -i
+	cp = cherry-pick
+	ss = stash save
+	sl = stash list
+	sp = stash pop
+	sh = show
+	sw = switch
+	ssw = switch -
+	mg = merge --no-ff

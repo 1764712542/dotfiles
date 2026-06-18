@@ -53,6 +53,19 @@ services:
       - pgvector_data:/var/lib/postgresql/data
     restart: unless-stopped
 
+  # LiteLLM — OpenAI 兼容 API 代理（统一路由到 Ollama / OpenRouter）
+  litellm:
+    image: ghcr.io/berriai/litellm:main-latest
+    container_name: litellm
+    ports:
+      - "4000:4000"
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+    volumes:
+      - ./litellm_config.yaml:/app/config.yaml
+    command: ["--config", "/app/config.yaml", "--port", "4000", "--num_workers", "4"]
+    restart: unless-stopped
+
 volumes:
   ollama_data:
   chroma_data:
