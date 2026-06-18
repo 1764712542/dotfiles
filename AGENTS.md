@@ -65,6 +65,7 @@ Note: `<C-l>` and `<C-L>` send the same byte (0x0C) in terminals — Neovim can'
 - `./configure doctor` checks symlinks at depth-1/2/3 — covers `~` and `~/.config`, but not orphan files
 - Ghostty `macos-option-as-alt = true` enables `<A-...>` keybindings; `cursor-color = #7dcfff`
 - `<C-l>` = window right (normal mode); `<C-y>` = Avante accept (insert mode); `<C-L>` removed (can't distinguish from `<C-l>` in terminals)
+- `im-select.nvim` auto-switches to ABC input method on `InsertLeave` — prevents Chinese IME from breaking `jk` escape or inserting Chinese chars into normal mode commands
 - Avante provider config uses same model (`openrouter/owl-alpha`) for both `fast` and `strong` — switching provider is cosmetic only
 - `configure` packages array at line 13-17 is the source of truth for stow operations
 - `docker-compose-ai.yml` requires `colima start` before `docker compose up`

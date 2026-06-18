@@ -2,6 +2,7 @@
 # Managed via dotfiles (stow)
 
 tap "anomalyco/tap"
+tap "daipeihust/tap"
 tap "hashicorp/tap"
 
 # === CLI Tools ===
@@ -41,6 +42,7 @@ brew "bandwhich"
 brew "choose-rust"
 brew "dog"
 brew "hyperfine"
+brew "im-select"
 brew "mas"
 brew "ouch"
 brew "tokei"
