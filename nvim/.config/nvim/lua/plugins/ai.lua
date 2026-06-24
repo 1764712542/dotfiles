@@ -19,13 +19,6 @@ return {
           api_key_name = "OPENROUTER_API_KEY",
           model = "openrouter/owl-alpha",
         },
-        strong = {
-          __inherited_from = "openai",
-          endpoint = "https://openrouter.ai/api/v1",
-          api_key = "OPENROUTER_API_KEY",
-          api_key_name = "OPENROUTER_API_KEY",
-          model = "openrouter/owl-alpha",
-        },
       },
       behaviour = {
         auto_set_keymaps = false,

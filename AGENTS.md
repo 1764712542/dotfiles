@@ -64,7 +64,7 @@ Note: `<C-l>` and `<C-L>` send the same byte (0x0C) in terminals — Neovim can'
 - Ghostty `macos-option-as-alt = true` enables `<A-...>` keybindings; `cursor-color = #7dcfff`
 - `<C-l>` = window right (normal mode); `<C-y>` = Supermaven accept (insert mode); `<C-L>` removed (can't distinguish from `<C-l>` in terminals)
 - `im-select.nvim` auto-switches to ABC input method on `InsertLeave` — prevents Chinese IME from breaking `jk` escape or inserting Chinese chars into normal mode commands
-- Avante provider config uses same model (`openrouter/owl-alpha`) for both `fast` and `strong` — switching provider is cosmetic only
+- Avante uses `openrouter/owl-alpha` via OpenRouter
 - `configure` PACKAGES array (line 13-16) is the source of truth for stow operations
 - `docker-compose-ai.yml` requires `colima start` before `docker compose up`
 - Detailed environment reference in `.opencode/rules/system.mdc` (agent pref, proxy, toolchain, code style), `dev-environment.md` (shell aliases/keymaps), and `ml-dl-reference.md` (ML/DL setup)

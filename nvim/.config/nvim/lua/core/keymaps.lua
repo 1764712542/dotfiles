@@ -119,12 +119,6 @@ end, "手动格式化")
 keymap("n", "<leader>aa", function() require("avante.api").ask() end, "Avante 对话")
 keymap("n", "<leader>am", function() require("avante.api").select_model() end, "选择模型")
 keymap("n", "<leader>at", function() require("avante.api").toggle() end, "切换侧边栏")
-keymap("n", "<leader>as", function()
-  local cur = require("avante.config").provider
-  local next = cur == "fast" and "strong" or "fast"
-  require("avante.api").switch_provider(next)
-  vim.notify("Avante 切换: " .. next)
-end, "切换模型")
 keymap("v", "<leader>ae", function() require("avante.api").edit() end, "编辑选区")
 
 -- ======== 运行代码 (终端底部面板) ========

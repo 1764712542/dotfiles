@@ -300,7 +300,7 @@ alias path='echo -e ${PATH//:/\\n}'
 alias reload='source ~/.zshrc'
 alias zshconfig="nvim ~/.zshrc"
 alias p10kconfig="nvim ~/.p10k.zsh"
-alias tmuxconfig="nvim ~/.config/tmux/tmux.conf"
+alias zellijconfig="nvim ~/.config/zellij/config.kdl"
 
 # --- Quick Look (macOS) ---
 alias ql='qlmanage -p &>/dev/null'
@@ -348,12 +348,13 @@ alias asitop='asitop --color'
 mkcd() { mkdir -pv "$1" && cd "$1" }
 take() { mkdir -p "$1" && cd "$1" }
 
-# tmux 快速会话管理
+# zellij 快速会话管理
 t() {
-  if [[ -n "$TMUX" ]]; then
-    tmux switch-client -t "$1" 2>/dev/null || { tmux new-session -d -s "$1" && tmux switch-client -t "$1"; }
+  if [[ -n "$ZELLIJ_SESSION_NAME" ]]; then
+    echo "Already in zellij session: $ZELLIJ_SESSION_NAME"
+    zellij list-sessions
   else
-    tmux new-session -A -s "${1:-main}"
+    zellij attach -c "${1:-default}"
   fi
 }
 
@@ -457,8 +458,8 @@ cht() {
 #  Startup
 # ==============================================================================
 
-# 交互式 shell 启动时显示系统信息（tmux pane 中跳过）
-if [[ $- == *i* ]] && [[ -z "$TMUX" ]]; then
+# 交互式 shell 启动时显示系统信息（zellij pane 中跳过）
+if [[ $- == *i* ]] && [[ -z "$ZELLIJ_SESSION_NAME" ]]; then
   fastfetch --pipe false
 fi
 

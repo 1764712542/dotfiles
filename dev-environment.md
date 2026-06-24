@@ -254,7 +254,6 @@
 | `<leader>aa` | Avante 对话 |
 | `<leader>am` | 选择模型 |
 | `<leader>at` | 切换侧边栏 |
-| `<leader>as` | 切换 fast/strong provider |
 | `<leader>ae` (Visual 模式) | 编辑选区 |
 
 ### 快速跳转 (flash.nvim)
@@ -443,7 +442,6 @@ ai                              # source ~/.venvs/ai/bin/activate
 | 自动补全 | blink.cmp (LSP/path/snippets/buffer) |
 | AI 行内补全 | supermaven-nvim (`<C-y>` 接受, `<C-]>` 取消) |
 | Avante 侧边栏 | 快捷键 `<leader>aa` |
-| 模型切换 | fast/strong (实际相同模型) |
 
 ---
 

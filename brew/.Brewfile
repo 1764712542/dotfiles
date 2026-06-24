@@ -72,7 +72,6 @@ brew "wget"
 brew "zlib"
 
 # === Cask (GUI Apps) ===
-cask "anaconda"
 cask "dbeaver-community"
 cask "ghostty"
 cask "lm-studio"

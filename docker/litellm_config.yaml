@@ -5,7 +5,7 @@
 model_list:
   - model_name: qwen-local
     litellm_params:
-      model: ollama/qwen2.5:7b
+      model: ollama/qwen3:8b
       api_base: http://host.docker.internal:11434
 
   - model_name: embed-local
