@@ -337,7 +337,7 @@ alias brewcask='brew install --cask'
 alias lg='lazygit'
 alias bt='btop'
 alias tldr='tldr --color always'
-alias ai='source ~/venvs/ai/bin/activate'
+alias ai='source ~/.venvs/ai/bin/activate'
 alias asitop='asitop --color'
 
 # ==============================================================================
@@ -457,8 +457,8 @@ cht() {
 #  Startup
 # ==============================================================================
 
-# 仅在交互式首窗口显示 fastfetch
-if [[ $- == *i* ]] && [[ -z "$TMUX" ]] && [[ -z "${GHOSTTY_RESOURCES_DIR:-}" ]]; then
+# 交互式 shell 启动时显示系统信息（tmux pane 中跳过）
+if [[ $- == *i* ]] && [[ -z "$TMUX" ]]; then
   fastfetch --pipe false
 fi
 

@@ -3,17 +3,6 @@
 # 前置条件: colima start
 
 services:
-  # Ollama - 本地 LLM 推理
-  ollama:
-    image: ollama/ollama:latest
-    container_name: ollama
-    ports:
-      - "11434:11434"
-    volumes:
-      - ollama_data:/root/.ollama
-    restart: unless-stopped
-    platform: linux/arm64
-
   # ChromaDB - 向量数据库
   chromadb:
     image: chromadb/chroma:latest
@@ -53,7 +42,7 @@ services:
       - pgvector_data:/var/lib/postgresql/data
     restart: unless-stopped
 
-  # LiteLLM — OpenAI 兼容 API 代理（统一路由到 Ollama / OpenRouter）
+  # LiteLLM — OpenAI 兼容 API 代理（统一路由: Ollama 本机 + OpenRouter）
   litellm:
     image: ghcr.io/berriai/litellm:main-latest
     container_name: litellm
@@ -63,11 +52,12 @@ services:
       - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
     volumes:
       - ./litellm_config.yaml:/app/config.yaml
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     command: ["--config", "/app/config.yaml", "--port", "4000", "--num_workers", "4"]
     restart: unless-stopped
 
 volumes:
-  ollama_data:
   chroma_data:
   qdrant_data:
   pgvector_data:

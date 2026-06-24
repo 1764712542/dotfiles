@@ -5,7 +5,7 @@ macOS personal dotfiles managed by [GNU Stow](https://www.gnu.org/software/stow/
 ## Essential commands
 
 ```bash
-./configure link|unlink|reinstall|doctor|list   # stow 15 packages (see `configure` line 13-17)
+./configure link|unlink|reinstall|doctor|list   # stow 14 packages (see `configure` line 13-16)
 brew bundle --file brew/.Brewfile               # install all Homebrew packages
 zimfw install                                    # install Zim modules
 mise install                                     # install runtimes (Python/Node/Go/Rust)
@@ -22,10 +22,9 @@ First Neovim launch auto-runs `:Lazy! sync`. Stow must run from repo root — `c
 | `zim/` | `.zimrc` | Zimfw modules + zsh-abbr + p10k |
 | `p10k/` | `.p10k.zsh` | Pure-style prompt, Tokyo Night colors |
 | `git/` | `.gitconfig` | SSH insteadOf for GitHub; no proxy in config |
-| `nvim/` | `.config/nvim/` | lazy.nvim, 18 plugin specs in `lua/plugins/` |
+| `nvim/` | `.config/nvim/` | lazy.nvim, 20 plugin specs in `lua/plugins/` |
 | `ghostty/` | `.config/ghostty/config` | `Maple Mono NF CN` for unified Latin+CJK; `macos-option-as-alt = true` required for `<A-...>` keybindings |
 | `docker/` | `docker-compose-ai.yml` | Ollama + ChromaDB + Qdrant + pgvector (no Open WebUI) |
-| `conda/` | `.condarc` | USTC mirror, lazy-loaded in .zshrc |
 | `npm/` | `.npmrc` | npmmirror registry |
 | `pip/` | `pip.conf` | Tsinghua mirror |
 | `brew/` | `.Brewfile` | All Homebrew formulae + casks |
@@ -40,6 +39,7 @@ First Neovim launch auto-runs `:Lazy! sync`. Stow must run from repo root — `c
 - **Tokyo Night Storm** theme across all tools
 - **XDG** dirs (`XDG_CONFIG_HOME`/`CACHE_HOME`/`DATA_HOME`)
 - Aliases: `vim`/`vi`/`v` → nvim, `cat` → bat, `ls` → eza, `grep` → rg, `diff` → delta, `top` → btop
+- **uv** manages Python packages (primary, not pip); `ai` alias sources `~/.venvs/ai/bin/activate`
 - **mise** manages runtimes (not pyenv/nvm/rbenv), installed by Homebrew
 - **carapace** provides shell completions (not fzf's `--zsh`, avoids compinit conflicts)
 - `mapleader` is `<Space>`, `maplocalleader` is also `<Space>`
@@ -50,8 +50,6 @@ First Neovim launch auto-runs `:Lazy! sync`. Stow must run from repo root — `c
 Fixed in previous sessions: Avante `auto_set_keymaps=false` (now in `core/keymaps.lua`), flash.nvim moved to `<leader>j`/`<leader>k`, neotest output moved to `<leader>tO` to avoid `<leader>to` race with tabonly, dead which-key groups `<leader>q/r/u/n` removed.
 
 Note: `<C-l>` and `<C-L>` send the same byte (0x0C) in terminals — Neovim can't distinguish them. `<C-L>` mapping removed; `<C-l>` now works for smart-splits window right. Use `<leader>h` for nohlsearch, `<leader>rr` for redraw.
-
-
 
 ### Intentional overrides
 
@@ -67,5 +65,6 @@ Note: `<C-l>` and `<C-L>` send the same byte (0x0C) in terminals — Neovim can'
 - `<C-l>` = window right (normal mode); `<C-y>` = Avante accept (insert mode); `<C-L>` removed (can't distinguish from `<C-l>` in terminals)
 - `im-select.nvim` auto-switches to ABC input method on `InsertLeave` — prevents Chinese IME from breaking `jk` escape or inserting Chinese chars into normal mode commands
 - Avante provider config uses same model (`openrouter/owl-alpha`) for both `fast` and `strong` — switching provider is cosmetic only
-- `configure` packages array at line 13-17 is the source of truth for stow operations
+- `configure` PACKAGES array (line 13-16) is the source of truth for stow operations
 - `docker-compose-ai.yml` requires `colima start` before `docker compose up`
+- Detailed environment reference in `.opencode/rules/system.mdc` (agent pref, proxy, toolchain, code style), `dev-environment.md` (shell aliases/keymaps), and `ml-dl-reference.md` (ML/DL setup)

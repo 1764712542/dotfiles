@@ -1,12 +1,12 @@
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
   "logo": {
-    "type": "auto",
-    "source": "macos",
+    "type": "raw",
+    "source": "/Users/zhuyao/.config/fastfetch/logo.txt",
     "padding": {
-      "top": 1,
-      "left": 2,
-      "right": 4
+      "top": 0,
+      "left": 0,
+      "right": 2
     },
     "color": {
       "1": "#7dcfff",
@@ -27,19 +27,6 @@
     }
   },
   "modules": [
-    {
-      "type": "title",
-      "color": {
-        "user": "#7dcfff",
-        "at": "#bb9af7",
-        "host": "#7aa2f7"
-      }
-    },
-    "break",
-    {
-      "type": "custom",
-      "format": " "
-    },
     {
       "type": "os",
       "key": "\u001b[38;2;125;207;255m  \uf179  系统\u001b[0m",

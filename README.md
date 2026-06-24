@@ -17,11 +17,11 @@ dotfiles/
 ├── fastfetch/     config.jsonc
 ├── lazygit/       config.yml
 ├── nvim/          .config/nvim/
-├── conda/         .condarc
+├── mise/          .config/mise/config.toml
 ├── npm/           .npmrc
 ├── pip/           pip.conf
 ├── brew/          .Brewfile
-├── docker/        docker-compose-ai.yml
+├── docker/        docker-compose-ai.yml + litellm_config.yaml
 ├── configure       — 部署脚本
 └── justfile        — 任务编排
 ```
@@ -31,8 +31,8 @@ dotfiles/
 #### Shell 环境 (`zsh/`, `zim/`, `p10k/`)
 
 - **`.zshenv`** — 所有 Shell 共享环境变量（PATH、cargo、编辑器变量）
-- **`.zprofile`** — 登录 Shell 初始化（Homebrew、包管理器、conda 延迟加载）
-- **`.zshrc`** — 交互式 Shell 配置（Zimfw 加载、工具链别名、fzf 键位、补全、atuin 历史、zoxide 目录跳转、Powerlevel10k 提示符、代理检测、conda 延迟加载）
+- **`.zprofile`** — 登录 Shell 初始化（Homebrew、包管理器）
+- **`.zshrc`** — 交互式 Shell 配置（Zimfw 加载、工具链别名、fzf 键位、补全、atuin 历史、zoxide 目录跳转、Powerlevel10k 提示符、代理检测）
 - **`.zimrc`** — Zimfw 模块声明清单
 - **`.p10k.zsh`** — Powerlevel10k Pure 风格配置，transient prompt + instant prompt
 
@@ -85,9 +85,9 @@ dotfiles/
   - 所有 Homebrew formulae / casks / mas 应用
   - `brew bundle --file .Brewfile` 一键还原
 
-- **conda** (`conda/.condarc`) — Python 环境管理
-  - USTC 镜像源（`mirrors.ustc.edu.cn`）
-  - 延迟加载：首次调用 `conda` 命令时才初始化
+- **mise** (`mise/.config/mise/config.toml`) — 运行时版本管理
+  - 当前管理 Node 22 + Python 3.12
+  - `mise install` 一键安装
 
 - **npm** (`npm/.npmrc`) — Node.js 包管理
   - npmmirror 镜像源
@@ -98,14 +98,15 @@ dotfiles/
 #### 容器化
 
 - **Docker** (`docker/docker-compose-ai.yml`) — AI 服务栈
-  - Ollama（本地 LLM 推理）
-  - Open WebUI（Web 聊天界面）
-  - Qdrant（向量数据库）
+  - ChromaDB（向量数据库）
+  - Qdrant（向量数据库，备选）
   - pgvector（PostgreSQL 向量扩展）
+  - LiteLLM（OpenAI 兼容 API 代理，路由到 Ollama + OpenRouter）
+  - Ollama 由 `just ollama` 在宿主机直接运行
 
 ### Neovim 配置
 
-基于 lazy.nvim，56 个插件，按功能模块划分。
+基于 lazy.nvim，52 个插件，按功能模块划分。
 
 #### 核心插件加载 (`init.lua`)
 
@@ -324,7 +325,7 @@ cd ~/dotfiles
 ./configure link
 
 # 安装系统包
-brew bundle --file .Brewfile
+brew bundle --file brew/.Brewfile
 
 # 安装 Zim 模块
 zimfw install
@@ -347,6 +348,7 @@ exec zsh
 - **一致视觉** — 所有组件配置 Tokyo Night Storm 配色
 - **声明式管理** — 一个 `configure link` + `brew bundle` 部署完整环境
 - **快捷键体系** — 分类命名、中文提示，which-key 引导无需记忆
+- **uv 优先** — Python 包管理首选 uv，`ai` 别名快速激活 AI 虚拟环境
 - **AI 原生** — Avante.nvim 全功能 AI 助手（对话 + 内联编辑 + 自动建议），支持 OpenRouter 任意模型
 - **XDG 规范** — 所有缓存、配置、数据目录遵循 XDG 标准
 ## 依赖
