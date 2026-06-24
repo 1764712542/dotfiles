@@ -26,12 +26,12 @@ First Neovim launch auto-runs `:Lazy! sync`. Stow must run from repo root — `c
 | `ghostty/` | `.config/ghostty/config` | `Maple Mono NF CN` for unified Latin+CJK; `macos-option-as-alt = true` required for `<A-...>` keybindings |
 | `docker/` | `docker-compose-ai.yml` | Ollama + ChromaDB + Qdrant + pgvector (no Open WebUI) |
 | `npm/` | `.npmrc` | npmmirror registry |
-| `pip/` | `pip.conf` | Tsinghua mirror |
+| `pip/` | `.config/pip/pip.conf` | Tsinghua mirror |
 | `brew/` | `.Brewfile` | All Homebrew formulae + casks |
 | `yazi/` | `yazi.toml` `keymap.toml` | Terminal file manager |
 | `zellij/` | `config.kdl` | Terminal multiplexer |
 | `btop/` | `btop.conf` | System monitor, Tokyo Night colors |
-| `fastfetch/` | `config.jsonc` | System info, only on interactive non-TMUX non-Ghostty sessions |
+| `fastfetch/` | `config.jsonc` | System info, on interactive shell and not inside Zellij |
 | `lazygit/` | `config.yml` | Git TUI |
 
 ## Conventions
@@ -62,7 +62,7 @@ Note: `<C-l>` and `<C-L>` send the same byte (0x0C) in terminals — Neovim can'
 - LSP config uses `vim.lsp.config`/`vim.lsp.enable` — requires Neovim >= 0.11
 - `./configure doctor` checks symlinks at depth-1/2/3 — covers `~` and `~/.config`, but not orphan files
 - Ghostty `macos-option-as-alt = true` enables `<A-...>` keybindings; `cursor-color = #7dcfff`
-- `<C-l>` = window right (normal mode); `<C-y>` = Avante accept (insert mode); `<C-L>` removed (can't distinguish from `<C-l>` in terminals)
+- `<C-l>` = window right (normal mode); `<C-y>` = Supermaven accept (insert mode); `<C-L>` removed (can't distinguish from `<C-l>` in terminals)
 - `im-select.nvim` auto-switches to ABC input method on `InsertLeave` — prevents Chinese IME from breaking `jk` escape or inserting Chinese chars into normal mode commands
 - Avante provider config uses same model (`openrouter/owl-alpha`) for both `fast` and `strong` — switching provider is cosmetic only
 - `configure` PACKAGES array (line 13-16) is the source of truth for stow operations

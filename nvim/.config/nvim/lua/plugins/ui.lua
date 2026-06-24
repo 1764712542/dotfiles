@@ -71,6 +71,40 @@ return {
     },
   },
   {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    dependencies = { "MunifTanjim/nui.nvim" },
+    opts = {
+      cmdline = {
+        enabled = true,
+        view = "cmdline_popup",
+        opts = { border = "rounded", position = { row = "50%", col = "50%" } },
+      },
+      messages = {
+        enabled = true,
+        view = "notify",
+      },
+      popupmenu = {
+        enabled = true,
+        backend = "nui",
+      },
+      lsp = {
+        progress = { enabled = false },
+        override = {
+          "vim.lsp.util.convert_input_to_markdown_lines",
+          "vim.lsp.util.stylify_markdown",
+          "vim.lsp.util.open_floating_preview",
+        },
+      },
+      presets = {
+        bottom_search = true,
+        command_palette = true,
+        long_message_to_split = true,
+        inc_rename = true,
+      },
+    },
+  },
+  {
     "folke/trouble.nvim",
     cmd = "Trouble",
     keys = {

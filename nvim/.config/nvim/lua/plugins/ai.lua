@@ -11,7 +11,6 @@ return {
     event = "VeryLazy",
     opts = {
       provider = "fast",
-      auto_suggestions_provider = "fast",
       providers = {
         fast = {
           __inherited_from = "openai",
@@ -28,22 +27,21 @@ return {
           model = "openrouter/owl-alpha",
         },
       },
-      suggestion = {
-        debounce = 600,
-        throttle = 300,
-      },
-      mappings = {
-        suggestion = {
-          accept = "<C-y>",
-          next = "<M-]>",
-          prev = "<M-[>",
-          dismiss = "<C-]>",
-        },
-      },
       behaviour = {
         auto_set_keymaps = false,
-        auto_suggestions = true,
+        auto_suggestions = false,
         auto_add_current_file = true,
+      },
+    },
+  },
+  {
+    "supermaven-inc/supermaven-nvim",
+    event = "InsertEnter",
+    opts = {
+      keymaps = {
+        accept_suggestion = "<C-y>",
+        clear_suggestion = "<C-]>",
+        accept_word = "<C-j>",
       },
     },
   },

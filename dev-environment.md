@@ -115,7 +115,7 @@
 | `port <关键词>` | 查找端口占用 |
 | `ipinfo [IP]` | IP 信息查询 |
 | `extract <文件>` | 智能解压 (支持 15+ 格式) |
-| `t [会话名]` | tmux 快速会话管理 |
+| `t [会话名]` | zellij 快速会话管理 |
 | `ff <关键词>` | 按文件名查找 |
 | `gacf <提交信息>` | git 交互式提交 |
 
@@ -125,7 +125,7 @@
 |------|------|
 | `zshconfig` | nvim ~/.zshrc |
 | `p10kconfig` | nvim ~/.p10k.zsh |
-| `tmuxconfig` | nvim ~/.config/tmux/tmux.conf |
+| `zellijconfig` | nvim ~/.config/zellij/config.kdl |
 
 ---
 
@@ -441,6 +441,7 @@ ai                              # source ~/.venvs/ai/bin/activate
 |------|------|
 | Provider | OpenRouter (openrouter/owl-alpha) |
 | 自动补全 | blink.cmp (LSP/path/snippets/buffer) |
+| AI 行内补全 | supermaven-nvim (`<C-y>` 接受, `<C-]>` 取消) |
 | Avante 侧边栏 | 快捷键 `<leader>aa` |
 | 模型切换 | fast/strong (实际相同模型) |
 
@@ -474,6 +475,8 @@ docker compose -f ~/dotfiles/docker/docker-compose-ai.yml up -d
 | `dps` | docker ps |
 | `dpsa` | docker ps -a |
 | `di` | docker images |
+| `drm` | docker rm |
+| `drmi` | docker rmi |
 | `dstop` | 停止所有容器 |
 | `dprune` | 清理所有 |
 
@@ -554,5 +557,5 @@ docker compose -f ~/dotfiles/docker/docker-compose-ai.yml up -d
 
 ---
 
-> 最后更新: 2026-06-19
+> 最后更新: 2026-06-24
 > 自动生成自 dotfiles 配置
