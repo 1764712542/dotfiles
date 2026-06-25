@@ -13,7 +13,7 @@ DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 PACKAGES=(
   zsh p10k zim git npm
   ghostty zellij yazi btop fastfetch lazygit pip
-  docker nvim brew cheatsheet
+  mise docker nvim brew cheatsheet
 )
 
 cd "$DOTFILES_DIR" || exit 1

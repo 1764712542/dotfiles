@@ -22,7 +22,7 @@ globs:
 - 使用 GNU Stow, 每个子目录是一个 stow package
 - 仓库路径: `/Users/zhuyao/dotfiles`
 - 部署: `./configure link|unlink|reinstall|doctor|list`
-- `configure` 中的 packages 数组(line 13-16) 是 stow 操作的权威来源
+- `configure` 中的 packages 数组(line 13-17) 是 stow 操作的权威来源
 
 ## 编辑器: Neovim
 - 包管理器: lazy.nvim, 插件在 `lua/plugins/` 下按功能模块拆分
@@ -70,7 +70,7 @@ globs:
 - ChromaDB (Docker, port 8000)
 - Qdrant (Docker, port 6333)
 - pgvector (Docker, port 5432)
-- `justfile` 管理 AI 任务: `just activate/jupyter/ollama/update/freeze/gpu/ane`; 还有 `fix/lint/update-all/clean/doctor` 用于格式化、检查和维护
+- `justfile` 管理 AI 任务: `just activate/jupyter/ollama/chroma/lmstudio/update/freeze/gpu/ane`; 还有 `fix/lint/update-all/clean/doctor` 用于格式化、检查和维护
 - LM Studio 本地模型推理 (备选, `/Applications/LM Studio.app`)
 - MLX 框架用于 Apple Silicon 模型推理
 

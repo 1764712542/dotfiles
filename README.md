@@ -21,6 +21,7 @@ dotfiles/
 ├── npm/           .npmrc
 ├── pip/           .config/pip/pip.conf
 ├── brew/          .Brewfile
+├── cheatsheet/    ai-dev-cheatsheet.md
 ├── docker/        docker-compose-ai.yml + litellm_config.yaml
 ├── configure       — 部署脚本
 └── justfile        — 任务编排

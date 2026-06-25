@@ -1,23 +1,11 @@
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
   "logo": {
-    "type": "raw",
-    "source": "/Users/zhuyao/.config/fastfetch/logo.txt",
+    "type": "small",
     "padding": {
       "top": 0,
       "left": 0,
       "right": 2
-    },
-    "color": {
-      "1": "#7dcfff",
-      "2": "#7aa2f7",
-      "3": "#bb9af7",
-      "4": "#c0caf5",
-      "5": "#9ece6a",
-      "6": "#e0af68",
-      "7": "#f7768e",
-      "8": "#7dcfff",
-      "9": "#7aa2f7"
     }
   },
   "display": {

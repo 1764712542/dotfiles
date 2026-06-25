@@ -22,7 +22,6 @@ adjust-cursor-thickness = 2
 window-padding-x = 4
 window-padding-y = 2
 macos-titlebar-style = tabs
-window-minimum-size = 800, 450
 
 # === Mouse ===
 mouse-hide-while-typing = true
