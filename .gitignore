@@ -10,3 +10,18 @@
 # OS metadata
 .Spotlight-V100
 .Trashes
+
+# Virtual environments (build artifacts)
+venv/
+
+# OpenCode build artifacts
+.opencode/node_modules/
+.opencode/package.json
+.opencode/package-lock.json
+.opencode/skills/
+.opencode/skill-sources/
+.superpowers/
+.opencode/AGENTS.md
+
+# OpenCode project instructions (local only)
+AGENTS.md

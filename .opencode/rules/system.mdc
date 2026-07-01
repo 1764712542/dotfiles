@@ -11,11 +11,9 @@ globs:
 - 包管理: Homebrew (Brewfile 声明式), mise 管理运行时版本
 
 ## 网络代理
-- 代理工具: 猫猫云 (Clash Meta 内核)
-- 端口: 127.0.0.1:7892 (混合端口，支持 HTTP CONNECT + SOCKS5)
-- 环境变量:
-  - `HTTPS_PROXY=http://127.0.0.1:7892`
-  - `ALL_PROXY=socks5h://127.0.0.1:7892`
+- 代理工具: 猫猫云 (Clash Meta 内核), port 127.0.0.1:7892 (HTTP + SOCKS5)
+- 默认不开启 — 使用 `proxy on|off|status` 管理 (zsh 函数)
+- 开启时设置 `HTTPS_PROXY` + `ALL_PROXY`
 - API Key 通过 macOS Keychain 加载 (`security find-generic-password`)
 
 ## Dotfiles 管理
@@ -27,7 +25,7 @@ globs:
 ## 编辑器: Neovim
 - 包管理器: lazy.nvim, 插件在 `lua/plugins/` 下按功能模块拆分
 - 补全: blink.cmp (+ LuaSnip + friendly-snippets)
-- AI: avante.nvim (OpenRouter, `openrouter/owl-alpha`, env: `OPENROUTER_API_KEY`)
+- AI: avante.nvim (chat, OpenRouter) + supermaven-nvim (inline completion, free, no API key)
 - 搜索: snacks.picker (替代 telescope, 内置 Rust 模糊匹配)
 - 文件树: snacks.explorer + oil.nvim
 - LSP: vim.lsp.config / vim.lsp.enable (Neovim >= 0.11), mason 管理 LSP 安装
