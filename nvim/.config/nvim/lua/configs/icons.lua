@@ -1,3 +1,9 @@
+-- ==========================================
+-- icons.lua — 文件类型图标定义
+-- 部署路径: .config/nvim/lua/configs/icons.lua
+-- 所属包: nvim/
+-- 功能: 自定义图标映射，供 snacks/telescope/mini.icons 使用
+-- ==========================================
 local M = {
   documents = {
     Default = "",

@@ -1,30 +1,34 @@
+-- ==========================================
+-- plugins/tools.lua — UI 工具
+-- 部署路径: .config/nvim/lua/plugins/tools.lua
+-- 所属包: nvim/
+-- 功能: dressing.nvim（vim.ui 美化）、colorizer（颜色预览）、treesj（行拆分/合并）
+-- ==========================================
 return {
   {
-    "akinsho/toggleterm.nvim",
-    cmd = "ToggleTerm",
-    keys = {
-      { "<C-\\>", "<cmd>ToggleTerm<CR>", desc = "切换终端", mode = { "n", "i", "t" } },
-      { "<leader>tt", "<cmd>ToggleTerm<CR>", desc = "切换终端" },
-    },
-    opts = {
-      size = 12,
-      open_mapping = nil,
-      direction = "float",
-      float_opts = { border = "rounded" },
-    },
-  },
-  {
     "folke/flash.nvim",
-    event = "VeryLazy",
     keys = {
-      { "<leader>j", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "快速跳转" },
-      { "<leader>k", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "语法跳转" },
+      {
+        "<leader>j",
+        mode = { "n", "x", "o" },
+        function()
+          require("flash").jump()
+        end,
+        desc = "快速跳转",
+      },
+      {
+        "<leader>k",
+        mode = { "n", "x", "o" },
+        function()
+          require("flash").treesitter()
+        end,
+        desc = "语法跳转",
+      },
     },
     opts = { modes = { char = { enabled = false } } },
   },
   {
     "mrjones2014/smart-splits.nvim",
-    event = "VeryLazy",
     opts = {
       at_end = "stop",
       cursor_follows_win = true,
@@ -45,7 +49,13 @@ return {
     cmd = "GrugFar",
     keys = {
       { "<leader>Sr", "<cmd>GrugFar<CR>", desc = "搜索替换" },
-      { "<leader>Sw", function() require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") } }) end, desc = "替换当前词" },
+      {
+        "<leader>Sw",
+        function()
+          require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") } })
+        end,
+        desc = "替换当前词",
+      },
     },
     opts = {
       border = "rounded",
@@ -55,7 +65,7 @@ return {
   },
   {
     "folke/todo-comments.nvim",
-    event = "VeryLazy",
+    event = { "BufReadPost", "BufNewFile" },
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {},
   },
@@ -68,12 +78,50 @@ return {
   },
   {
     "olimorris/persisted.nvim",
-    event = "BufReadPre",
-    opts = {},
+    cmd = "SessionSave",
     keys = {
-      { "<leader>ss", function() require("persisted").save() end, desc = "保存会话" },
-      { "<leader>sl", function() require("persisted").load() end, desc = "加载会话" },
-      { "<leader>sd", function() require("persisted").delete() end, desc = "删除会话" },
+      {
+        "<leader>ss",
+        function()
+          require("persisted").save()
+        end,
+        desc = "保存会话",
+      },
+      {
+        "<leader>sl",
+        function()
+          require("persisted").load()
+        end,
+        desc = "加载会话",
+      },
+      {
+        "<leader>sd",
+        function()
+          require("persisted").delete()
+        end,
+        desc = "删除会话",
+      },
     },
+    opts = {},
+  },
+  {
+    "Saecki/crates.nvim",
+    ft = "toml",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {},
+  },
+  {
+    "danymat/neogen",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    keys = {
+      {
+        "<leader>ng",
+        function()
+          require("neogen").generate()
+        end,
+        desc = "生成注释",
+      },
+    },
+    opts = {},
   },
 }

@@ -1,10 +1,19 @@
+-- ==========================================
+-- plugins/ai.lua — AI 插件（Avante + blink.cmp）
+-- 部署路径: .config/nvim/lua/plugins/ai.lua
+-- 所属包: nvim/
+-- 功能: AI 对话补全及内联编辑，通过 Zen Proxy 路由到 DeepSeek V4 Flash
+-- ==========================================
 return {
   {
     "saghen/blink.cmp",
     version = "*",
     event = "InsertEnter",
     dependencies = {
-      "L3MON4D3/LuaSnip",
+      {
+        "L3MON4D3/LuaSnip",
+        build = "make install_jsregexp",
+      },
       "rafamadriz/friendly-snippets",
     },
     opts = function()
@@ -37,11 +46,6 @@ return {
     end,
   },
   {
-    "L3MON4D3/LuaSnip",
-    build = "make install_jsregexp",
-    dependencies = { "rafamadriz/friendly-snippets" },
-  },
-  {
     "yetone/avante.nvim",
     build = "make",
     dependencies = {
@@ -50,20 +54,20 @@ return {
       "MeanderingProgrammer/render-markdown.nvim",
       "nvim-tree/nvim-web-devicons",
     },
-    event = "VeryLazy",
+    cmd = { "AvanteAsk", "AvanteChat", "AvanteEdit", "AvanteToggle" },
     opts = {
-      provider = "fast",
+      provider = "zen",
       providers = {
-        fast = {
+        zen = {
           __inherited_from = "openai",
-          endpoint = "https://openrouter.ai/api/v1",
-          api_key_name = "OPENROUTER_API_KEY",
-          model = "openrouter/free",
+          endpoint = "http://127.0.0.1:8123/v1",
+          model = "deepseek-v4-flash-free",
+          api_key_name = "",
         },
       },
       behaviour = {
         auto_set_keymaps = false,
-        auto_suggestions = true,
+        auto_suggestions = false,
         auto_add_current_file = true,
       },
     },

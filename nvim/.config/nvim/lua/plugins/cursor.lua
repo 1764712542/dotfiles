@@ -1,3 +1,9 @@
+-- ==========================================
+-- plugins/cursor.lua — 光标与导航
+-- 部署路径: .config/nvim/lua/plugins/cursor.lua
+-- 所属包: nvim/
+-- 功能: flash.nvim（快速跳转）、smart-splits（窗口导航）、smear-cursor（平滑动画）
+-- ==========================================
 return {
   {
     "sphamba/smear-cursor.nvim",

@@ -1,8 +1,17 @@
+-- ==========================================
+-- plugins/lsp.lua — LSP 客户端配置
+-- 部署路径: .config/nvim/lua/plugins/lsp.lua
+-- 所属包: nvim/
+-- 功能: 通过 mason + lspconfig 管理语言服务器（bash/go/lua/python/typescript）
+-- 注意事项: 需要 Neovim >= 0.11（vim.lsp.config API）
+-- ==========================================
 -- Neovim >= 0.11 required for vim.lsp.config / vim.lsp.enable API
 if vim.fn.has("nvim-0.11") ~= 1 then
   vim.notify("LSP config requires Neovim >= 0.11", vim.log.levels.ERROR)
   return {}
 end
+
+local servers = { "bashls", "gopls", "jsonls", "lua_ls", "pyright", "ruff", "rust_analyzer", "ts_ls", "yamlls" }
 
 return {
   {
@@ -22,38 +31,74 @@ return {
   },
   {
     "williamboman/mason-lspconfig.nvim",
-    dependencies = { "mason.nvim" },
+    dependencies = { "williamboman/mason.nvim" },
     opts = {
-      ensure_installed = { "bashls", "gopls", "lua_ls", "pyright", "ruff", "rust_analyzer", "ts_ls" },
-      automatic_installation = true,
+      ensure_installed = servers,
+      automatic_enable = false,
     },
   },
   {
     "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-      "mason-lspconfig.nvim",
+      "williamboman/mason-lspconfig.nvim",
       "williamboman/mason.nvim",
+      "SmiteshP/nvim-navic",
+      "saghen/blink.cmp",
     },
     config = function()
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities.textDocument.completion.completionItem.snippetSupport = true
+      local capabilities = require("blink.cmp").get_lsp_capabilities()
 
       local on_attach = function(client, bufnr)
         local bufopts = { noremap = true, silent = true, buffer = bufnr }
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, vim.tbl_extend("force", bufopts, { desc = "跳转定义" }))
         vim.keymap.set("n", "gD", vim.lsp.buf.declaration, vim.tbl_extend("force", bufopts, { desc = "跳转声明" }))
         vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", bufopts, { desc = "悬浮文档" }))
-        vim.keymap.set("n", "gi", vim.lsp.buf.implementation, vim.tbl_extend("force", bufopts, { desc = "查找实现" }))
-        vim.keymap.set("n", "gh", vim.lsp.buf.references, vim.tbl_extend("force", bufopts, { desc = "查找引用" }))
-        vim.keymap.set("n", "gr", vim.lsp.buf.rename, vim.tbl_extend("force", bufopts, { desc = "重命名" }))
-        vim.keymap.set("n", "ga", vim.lsp.buf.code_action, vim.tbl_extend("force", bufopts, { desc = "代码操作" }))
-        vim.keymap.set("n", "gs", vim.lsp.buf.signature_help, vim.tbl_extend("force", bufopts, { desc = "签名帮助" }))
-        vim.keymap.set("n", "go", "<cmd>Trouble symbols toggle win.position=right<CR>", vim.tbl_extend("force", bufopts, { desc = "符号大纲" }))
-        vim.keymap.set("n", "g[", vim.diagnostic.goto_prev, vim.tbl_extend("force", bufopts, { desc = "上个诊断" }))
-        vim.keymap.set("n", "g]", vim.diagnostic.goto_next, vim.tbl_extend("force", bufopts, { desc = "下个诊断" }))
+        vim.keymap.set(
+          "n",
+          "gi",
+          vim.lsp.buf.implementation,
+          vim.tbl_extend("force", bufopts, { desc = "查找实现" })
+        )
+        vim.keymap.set(
+          "n",
+          "<leader>lr",
+          vim.lsp.buf.references,
+          vim.tbl_extend("force", bufopts, { desc = "查找引用" })
+        )
+        vim.keymap.set("n", "<leader>lR", vim.lsp.buf.rename, vim.tbl_extend("force", bufopts, { desc = "重命名" }))
+        vim.keymap.set(
+          "n",
+          "<leader>la",
+          vim.lsp.buf.code_action,
+          vim.tbl_extend("force", bufopts, { desc = "代码操作" })
+        )
+        vim.keymap.set(
+          "n",
+          "gs",
+          vim.lsp.buf.signature_help,
+          vim.tbl_extend("force", bufopts, { desc = "签名帮助" })
+        )
+        vim.keymap.set(
+          "n",
+          "<leader>ls",
+          "<cmd>Trouble symbols toggle win.position=right<CR>",
+          vim.tbl_extend("force", bufopts, { desc = "符号大纲" })
+        )
+        vim.keymap.set("n", "g[", function()
+          vim.diagnostic.jump({ count = -1, float = true })
+        end, vim.tbl_extend("force", bufopts, { desc = "上个诊断" }))
+        vim.keymap.set("n", "g]", function()
+          vim.diagnostic.jump({ count = 1, float = true })
+        end, vim.tbl_extend("force", bufopts, { desc = "下个诊断" }))
 
         if client.server_capabilities.inlayHintProvider then
           vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+        end
+
+        local ok, navic = pcall(require, "nvim-navic")
+        if ok and client.server_capabilities.documentSymbolProvider then
+          navic.attach(client, bufnr)
         end
       end
 
@@ -76,10 +121,34 @@ return {
         },
       })
 
-      local servers = { "bashls", "gopls", "pyright", "ruff", "rust_analyzer", "ts_ls", "lua_ls" }
+      vim.lsp.config("gopls", {
+        settings = {
+          gopls = {
+            gofumpt = true,
+            staticcheck = true,
+            analyses = { unusedparams = true },
+          },
+        },
+      })
+
+      vim.lsp.config("yamlls", {
+        settings = {
+          yaml = {
+            schemas = {
+              ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+              ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/compose-spec.json"] = "docker-compose*.yml",
+            },
+          },
+        },
+      })
+
       for _, server in ipairs(servers) do
         vim.lsp.enable(server)
       end
     end,
+  },
+  {
+    "SmiteshP/nvim-navic",
+    opts = {},
   },
 }

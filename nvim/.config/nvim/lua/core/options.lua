@@ -1,3 +1,9 @@
+-- ==========================================
+-- options.lua — 编辑器选项
+-- 部署路径: .config/nvim/lua/core/options.lua
+-- 所属包: nvim/
+-- 功能: 行号、缩进、主题、快捷键等全局 Vim 选项
+-- ==========================================
 local opt = vim.opt
 
 opt.fileencoding = "utf-8"
@@ -23,15 +29,16 @@ opt.hidden = true
 opt.swapfile = false
 opt.backup = false
 opt.undofile = true
+opt.writebackup = false
 opt.splitright = true
 opt.splitbelow = true
 opt.timeoutlen = 300
-opt.updatetime = 250
+opt.updatetime = 200
+opt.redrawtime = 1500
+opt.synmaxcol = 300
+opt.maxmempattern = 2000
 
 opt.clipboard = "unnamedplus"
-
--- 补全菜单
-opt.completeopt = { "menu", "menuone", "noselect" }
 
 -- 滚动
 opt.scrolloff = 8
@@ -42,6 +49,7 @@ opt.numberwidth = 4
 
 -- 补全窗口边距
 opt.pumheight = 10
+opt.completeopt = { "menu", "menuone", "noselect" }
 
 -- list chars
 opt.list = true

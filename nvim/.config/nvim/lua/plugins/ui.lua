@@ -1,3 +1,9 @@
+-- ==========================================
+-- plugins/ui.lua — UI 增强
+-- 部署路径: .config/nvim/lua/plugins/ui.lua
+-- 所属包: nvim/
+-- 功能: lualine.nvim（状态栏）、trouble.nvim（诊断/引用/符号列表）
+-- ==========================================
 return {
   {
     "nvim-lualine/lualine.nvim",
@@ -13,12 +19,29 @@ return {
       },
       sections = {
         lualine_a = { "mode" },
-        lualine_b = { { "branch", icon = "" }, { "diff", symbols = { added = " ", modified = " ", removed = " " } } },
+        lualine_b = {
+          { "branch", icon = "" },
+          { "diff", symbols = { added = " ", modified = " ", removed = " " } },
+        },
         lualine_c = {
           { "filename", path = 1, symbols = { modified = " ●", readonly = " ", unnamed = " [No Name]" } },
+          {
+            function()
+              local ok, loc = pcall(require("nvim-navic").get_location)
+              return ok and loc or ""
+            end,
+            cond = function()
+              local ok, navic = pcall(require, "nvim-navic")
+              return ok and navic.is_available()
+            end,
+          },
         },
         lualine_x = {
-          { "diagnostics", sources = { "nvim_diagnostic" }, symbols = { error = " ", warn = " ", info = " ", hint = " " } },
+          {
+            "diagnostics",
+            sources = { "nvim_diagnostic" },
+            symbols = { error = " ", warn = " ", info = " ", hint = " " },
+          },
           { "filetype" },
         },
         lualine_y = { "progress" },
@@ -46,17 +69,15 @@ return {
           local ret = ""
           for _, d in ipairs(diag) do
             local icon = icons[d[1]] or ""
-            if d[2] > 0 then ret = ret .. icon .. d[2] .. " " end
+            if d[2] > 0 then
+              ret = ret .. icon .. d[2] .. " "
+            end
           end
           return ret
         end,
         offsets = {},
       },
     },
-  },
-  {
-    "ojroques/nvim-bufdel",
-    opts = { next = "tabs" },
   },
   {
     "stevearc/dressing.nvim",
@@ -144,6 +165,8 @@ return {
           { "<leader>g", group = icons.git.Git .. " Git" },
           { "<leader>l", group = icons.misc.LspAvailable .. " LSP" },
           { "<leader>p", group = icons.ui.Package .. " 包管理" },
+          { "<leader>nt", group = icons.ui.List .. " 测试" },
+          { "<leader>r", group = icons.ui.Play .. " 运行" },
           { "<leader>t", group = icons.ui.Tab .. " 标签页" },
           { "<leader>W", group = icons.ui.Window .. " 窗口" },
           { "<leader>S", group = icons.ui.Search .. " 搜索替换" },

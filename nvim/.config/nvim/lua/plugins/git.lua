@@ -1,16 +1,72 @@
+-- ==========================================
+-- plugins/git.lua — Git 集成
+-- 部署路径: .config/nvim/lua/plugins/git.lua
+-- 所属包: nvim/
+-- 功能: gitsigns（行内标记）、vim-fugitive（Git 操作）、diffview.nvim（对比视图）
+-- ==========================================
 return {
   {
     "lewis6991/gitsigns.nvim",
     event = { "BufReadPre", "BufNewFile" },
     keys = {
-      { "]g", function() require("gitsigns").nav_hunk("next") end, desc = "下个 Hunk" },
-      { "[g", function() require("gitsigns").nav_hunk("prev") end, desc = "上个 Hunk" },
-      { "<leader>gs", function() require("gitsigns").stage_hunk() end, desc = "暂存 Hunk", mode = { "n", "v" } },
-      { "<leader>gr", function() require("gitsigns").reset_hunk() end, desc = "重置 Hunk", mode = { "n", "v" } },
-      { "<leader>gR", function() require("gitsigns").reset_buffer() end, desc = "重置缓冲区" },
-      { "<leader>gp", function() require("gitsigns").preview_hunk() end, desc = "预览 Hunk" },
-      { "<leader>gb", function() require("gitsigns").blame_line({ full = true }) end, desc = "Blame" },
-      { "<leader>gB", function() require("gitsigns").toggle_current_line_blame() end, desc = "切换行号 Blame" },
+      {
+        "]g",
+        function()
+          require("gitsigns").nav_hunk("next")
+        end,
+        desc = "下个 Hunk",
+      },
+      {
+        "[g",
+        function()
+          require("gitsigns").nav_hunk("prev")
+        end,
+        desc = "上个 Hunk",
+      },
+      {
+        "<leader>gs",
+        function()
+          require("gitsigns").stage_hunk()
+        end,
+        desc = "暂存 Hunk",
+        mode = { "n", "v" },
+      },
+      {
+        "<leader>gr",
+        function()
+          require("gitsigns").reset_hunk()
+        end,
+        desc = "重置 Hunk",
+        mode = { "n", "v" },
+      },
+      {
+        "<leader>gR",
+        function()
+          require("gitsigns").reset_buffer()
+        end,
+        desc = "重置缓冲区",
+      },
+      {
+        "<leader>gp",
+        function()
+          require("gitsigns").preview_hunk()
+        end,
+        desc = "预览 Hunk",
+      },
+      {
+        "<leader>gb",
+        function()
+          require("gitsigns").blame_line({ full = true })
+        end,
+        desc = "Blame",
+      },
+      {
+        "<leader>gB",
+        function()
+          require("gitsigns").toggle_current_line_blame()
+        end,
+        desc = "切换行号 Blame",
+      },
     },
     opts = {
       signs = {
@@ -21,7 +77,7 @@ return {
         changedelete = { text = "~" },
         untracked = { text = "┆" },
       },
-      current_line_blame = true,
+      current_line_blame = false,
       current_line_blame_opts = { delay = 500 },
     },
   },

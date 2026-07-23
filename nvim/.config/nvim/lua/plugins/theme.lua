@@ -1,3 +1,9 @@
+-- ==========================================
+-- plugins/theme.lua — UI 主题
+-- 部署路径: .config/nvim/lua/plugins/theme.lua
+-- 所属包: nvim/
+-- 功能: tokyonight（配色）、lualine（状态栏）、bufferline（标签栏）、which-key（快捷键引导）
+-- ==========================================
 return {
   {
     "folke/tokyonight.nvim",
@@ -15,7 +21,15 @@ return {
         loops = { bold = true },
         booleans = { bold = true, italic = true },
       },
-      sidebars = { "trouble", "qf", "dapui_scaffold", "dapui_console", "dapui_watches", "dapui_stacks", "dapui_breakpoints" },
+      sidebars = {
+        "trouble",
+        "qf",
+        "dapui_scaffold",
+        "dapui_console",
+        "dapui_watches",
+        "dapui_stacks",
+        "dapui_breakpoints",
+      },
       on_highlights = function(hl, c)
         hl.Normal = { fg = c.fg, bg = c.none }
         hl.NormalFloat = { fg = c.fg, bg = c.none }

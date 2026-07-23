@@ -1,7 +1,13 @@
+-- ==========================================
+-- plugins/explorer.lua — 侧边栏布局（Yazi 替代了文件管理器）
+-- 部署路径: .config/nvim/lua/plugins/explorer.lua
+-- 所属包: nvim/
+-- 功能: edgy.nvim（侧边栏布局，Yazi 替代 oil / snacks-explorer）
+-- ==========================================
 return {
   {
     "folke/edgy.nvim",
-    event = "VeryLazy",
+    event = "WinNew",
     opts = {
       left = {
         { title = "符号大纲", ft = "trouble", pinned = true, collapsed = false, size = { h = 0.5, w = 0.2 } },
@@ -9,26 +15,8 @@ return {
       right = {},
       bottom = {
         { title = "快速修复", ft = "qf", size = { h = 0.3 } },
-        { title = "终端", ft = "toggleterm", size = { h = 0.3 } },
+        { title = "终端", ft = "snacks_terminal", size = { h = 0.3 } },
         { title = "帮助", ft = "help", size = { h = 0.3 } },
-      },
-    },
-  },
-  {
-    "stevearc/oil.nvim",
-    cmd = { "Oil" },
-    keys = {
-      { "-", "<cmd>Oil<CR>", desc = "Oil: 文件管理" },
-    },
-    opts = {
-      default_file_explorer = true,
-      columns = { "icon" },
-      keymaps = {
-        ["g?"] = "actions.show_help",
-        ["<CR>"] = "actions.select",
-        ["<C-v>"] = "actions.select_vsplit",
-        ["<C-h>"] = false,
-        ["<M-h>"] = "actions.select_split",
       },
     },
   },

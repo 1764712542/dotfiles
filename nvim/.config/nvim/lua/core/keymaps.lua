@@ -1,3 +1,9 @@
+-- ==========================================
+-- keymaps.lua — 全局快捷键映射
+-- 部署路径: .config/nvim/lua/core/keymaps.lua
+-- 所属包: nvim/
+-- 功能: Leader 键、窗口导航、Buffer 管理、LSP、Git、AI 等快捷键
+-- ==========================================
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true, desc = "" }
 local function keymap(mode, lhs, rhs, desc)
@@ -11,31 +17,68 @@ map("c", "<C-a>", "<Home>", opts)
 map("c", "<C-e>", "<End>", opts)
 
 -- ======== 窗口导航 (smart-splits) ========
-keymap("n", "<C-h>", function() require("smart-splits").move_cursor_left() end, "左窗口")
-keymap("n", "<C-j>", function() require("smart-splits").move_cursor_down() end, "下窗口")
-keymap("n", "<C-k>", function() require("smart-splits").move_cursor_up() end, "上窗口")
-keymap("n", "<C-l>", function() require("smart-splits").move_cursor_right() end, "右窗口")
-keymap("n", "<A-h>", function() require("smart-splits").resize_left() end, "缩小")
-keymap("n", "<A-j>", function() require("smart-splits").resize_down() end, "缩小")
-keymap("n", "<A-k>", function() require("smart-splits").resize_up() end, "放大")
-keymap("n", "<A-l>", function() require("smart-splits").resize_right() end, "放大")
-keymap("n", "<leader>Wh", function() require("smart-splits").move_cursor_left() end, "窗口左移")
-keymap("n", "<leader>Wj", function() require("smart-splits").move_cursor_down() end, "窗口下移")
-keymap("n", "<leader>Wk", function() require("smart-splits").move_cursor_up() end, "窗口上移")
-keymap("n", "<leader>Wl", function() require("smart-splits").move_cursor_right() end, "窗口右移")
+keymap("n", "<C-h>", function()
+  require("smart-splits").move_cursor_left()
+end, "左窗口")
+keymap("n", "<C-j>", function()
+  require("smart-splits").move_cursor_down()
+end, "下窗口")
+keymap("n", "<C-k>", function()
+  require("smart-splits").move_cursor_up()
+end, "上窗口")
+keymap("n", "<C-l>", function()
+  require("smart-splits").move_cursor_right()
+end, "右窗口")
+keymap("n", "<A-h>", function()
+  require("smart-splits").resize_left()
+end, "缩小")
+keymap("n", "<A-j>", function()
+  require("smart-splits").resize_down()
+end, "缩小")
+keymap("n", "<A-k>", function()
+  require("smart-splits").resize_up()
+end, "放大")
+keymap("n", "<A-l>", function()
+  require("smart-splits").resize_right()
+end, "放大")
+keymap("n", "<leader>Wh", function()
+  require("smart-splits").move_cursor_left()
+end, "窗口左移")
+keymap("n", "<leader>Wj", function()
+  require("smart-splits").move_cursor_down()
+end, "窗口下移")
+keymap("n", "<leader>Wk", function()
+  require("smart-splits").move_cursor_up()
+end, "窗口上移")
+keymap("n", "<leader>Wl", function()
+  require("smart-splits").move_cursor_right()
+end, "窗口右移")
 
 -- ======== 搜索 (snacks.picker) ========
-keymap("n", "<leader>ff", function() Snacks.picker.files() end, "查找文件")
-keymap("n", "<leader>fg", function() Snacks.picker.grep() end, "全文搜索")
-keymap("n", "<leader>fb", function() Snacks.picker.buffers() end, "缓冲区")
-keymap("n", "<leader>fh", function() Snacks.picker.help() end, "帮助标签")
-keymap("n", "<leader>fr", function() Snacks.picker.resume() end, "恢复搜索")
-keymap("n", "<leader>fp", function() Snacks.picker.files({ cwd = vim.fn.expand("%:p:h") }) end, "当前目录文件")
-keymap("n", "<leader>f.", function() Snacks.picker.recent() end, "最近文件")
-keymap("n", "<C-p>", function() Snacks.picker.keymaps() end, "命令面板")
-
--- ======== 文件树 (snacks.explorer) ========
-keymap("n", "<leader>n", function() require("snacks").explorer() end, "文件树")
+keymap("n", "<leader>ff", function()
+  Snacks.picker.files()
+end, "查找文件")
+keymap("n", "<leader>fg", function()
+  Snacks.picker.grep()
+end, "全文搜索")
+keymap("n", "<leader>fb", function()
+  Snacks.picker.buffers()
+end, "缓冲区")
+keymap("n", "<leader>fh", function()
+  Snacks.picker.help()
+end, "帮助标签")
+keymap("n", "<leader>fr", function()
+  Snacks.picker.resume()
+end, "恢复搜索")
+keymap("n", "<leader>fp", function()
+  Snacks.picker.files({ cwd = vim.fn.expand("%:p:h") })
+end, "当前目录文件")
+keymap("n", "<leader>f.", function()
+  Snacks.picker.recent()
+end, "最近文件")
+keymap("n", "<C-p>", function()
+  Snacks.picker.keymaps()
+end, "命令面板")
 
 -- ======== 标签页 (term: <leader>t) ========
 keymap("n", "<leader>tn", "<cmd>tabnew<CR>", "新建标签")
@@ -58,7 +101,9 @@ keymap("n", "<Tab>", "<cmd>BufferLineCycleNext<CR>", "下一个 Buffer")
 keymap("n", "<S-Tab>", "<cmd>BufferLineCyclePrev<CR>", "上一个 Buffer")
 keymap("n", "<A-i>", "<cmd>BufferLineCycleNext<CR>", "下一个 Buffer")
 keymap("n", "<A-o>", "<cmd>BufferLineCyclePrev<CR>", "上一个 Buffer")
-keymap("n", "<A-q>", "<cmd>BufDel<CR>", "关闭 Buffer")
+keymap("n", "<A-q>", function()
+  Snacks.bufdelete()
+end, "关闭 Buffer")
 keymap("n", "<A-1>", "<cmd>BufferLineGoToBuffer 1<CR>", "Buffer 1")
 keymap("n", "<A-2>", "<cmd>BufferLineGoToBuffer 2<CR>", "Buffer 2")
 keymap("n", "<A-3>", "<cmd>BufferLineGoToBuffer 3<CR>", "Buffer 3")
@@ -72,13 +117,17 @@ keymap("n", "<A-S-i>", "<cmd>BufferLineMoveNext<CR>", "Buffer 右移")
 keymap("n", "<A-S-o>", "<cmd>BufferLineMovePrev<CR>", "Buffer 左移")
 keymap("n", "<leader>bn", "<cmd>BufferLineCycleNext<CR>", "下一个 Buffer")
 keymap("n", "<leader>bp", "<cmd>BufferLineCyclePrev<CR>", "上一个 Buffer")
-keymap("n", "<leader>bd", "<cmd>BufDel<CR>", "关闭 Buffer")
+keymap("n", "<leader>bd", function()
+  Snacks.bufdelete()
+end, "关闭 Buffer")
 
 -- ======== 编辑器 ========
 keymap("n", "<leader>h", "<cmd>nohlsearch<CR>", "清除搜索高亮")
 keymap("n", "<leader>rr", "<cmd>redraw!<CR>", "屏幕重绘")
 map("v", "p", function()
-  if vim.bo.modifiable then vim.cmd('normal! "_dP') end
+  if vim.bo.modifiable then
+    vim.cmd('normal! "_dP')
+  end
 end, { noremap = true, silent = true, desc = "粘贴不丢失" })
 map("v", "J", ":m '>+1<CR>gv=gv", opts)
 map("v", "K", ":m '<-2<CR>gv=gv", opts)
@@ -97,14 +146,32 @@ keymap("n", "<leader>pp", "<cmd>Lazy profile<CR>", "包管理: 性能")
 keymap("n", "<leader>pr", "<cmd>Lazy restore<CR>", "包管理: 恢复")
 keymap("n", "<leader>px", "<cmd>Lazy clean<CR>", "包管理: 清理")
 
+-- ======== 文件管理器 (Fm) ========
+keymap("n", "<leader>y", function()
+  require("core.fm").toggle()
+end, "Fm 文件管理器")
+keymap("n", "-", function()
+  require("core.fm").toggle()
+end, "Fm 文件管理器")
 -- ======== 保存 / 退出 ========
 keymap({ "n", "i" }, "<C-s>", "<cmd>w<CR>", "保存")
 keymap("n", "<leader>q", "<cmd>q<CR>", "退出")
 keymap("n", "<leader>Q", "<cmd>qa<CR>", "全部退出")
 
--- ======== 终端 ========
+-- ======== 终端 (snacks.terminal) ========
 map("t", "<Esc><Esc>", [[<C-\><C-n>]], opts)
-keymap({ "n", "i" }, "<A-d>", "<cmd>ToggleTerm direction=float<CR>", "浮动终端")
+keymap("t", "<A-d>", function()
+  require("snacks").terminal(nil, { position = "float" })
+end, "浮动终端")
+keymap("n", "<A-d>", function()
+  require("snacks").terminal(nil, { position = "float" })
+end, "浮动终端")
+keymap({ "n", "i", "t" }, "<C-\\>", function()
+  require("snacks").terminal.toggle()
+end, "切换终端")
+keymap("n", "<leader>tt", function()
+  require("snacks").terminal.toggle()
+end, "切换终端")
 
 -- ======== 格式化 ========
 keymap("n", "<A-f>", function()
@@ -116,71 +183,41 @@ keymap("n", "<A-S-f>", function()
 end, "手动格式化")
 
 -- ======== AI (Avante) ========
-keymap("n", "<leader>aa", function() require("avante.api").ask() end, "Avante 对话")
-keymap("n", "<leader>am", function() require("avante.api").select_model() end, "选择模型")
-keymap("n", "<leader>at", function() require("avante.api").toggle() end, "切换侧边栏")
-keymap("v", "<leader>ae", function() require("avante.api").edit() end, "编辑选区")
+keymap("n", "<leader>aa", function()
+  require("avante.api").ask()
+end, "Avante 对话")
+keymap("n", "<leader>am", function()
+  require("avante.api").select_model()
+end, "选择模型")
+keymap("n", "<leader>at", function()
+  require("avante.api").toggle()
+end, "切换侧边栏")
+keymap("v", "<leader>ae", function()
+  require("avante.api").edit()
+end, "编辑选区")
+keymap("n", "<leader>ao", function()
+  require("core.runner").open_agent("opencode")
+end, "OpenCode 项目 Agent")
+keymap("n", "<leader>ac", function()
+  require("core.runner").open_agent("codex")
+end, "Codex 项目 Agent")
 
--- ======== 运行代码 (终端底部面板) ========
+-- ======== Git 操作 ========
+local g = require("core.git")
+keymap("n", "<leader>gs", function() g.status() end, "Git 状态")
+keymap("n", "<leader>gc", function() g.commit() end, "Git 提交")
+keymap("n", "<leader>gC", function() g.commit_all() end, "Git 全部提交")
+keymap("n", "<leader>gp", function() g.push() end, "Git 推送")
+keymap("n", "<leader>gP", function() g.pull() end, "Git 拉取")
+keymap("n", "<leader>gl", function() g.log() end, "Git 日志")
+keymap("n", "<leader>gb", function() g.branch() end, "Git 分支")
+keymap("n", "<leader>gd", function() g.diff() end, "Git Diff")
+keymap("n", "<leader>gK", function() g.clone() end, "Git 克隆")
+
+-- ======== 运行代码 (内置 :term, 复用单终端) ========
 keymap("n", "<leader>r", function()
-  vim.cmd("silent! write")
-  local ft = vim.bo.filetype
-  local filename = vim.fn.expand("%:p")
-  if filename == "" then
-    vim.notify("请先保存文件", vim.log.levels.WARN)
-    return
-  end
-  local cmd_map = {
-    python = "python3 " .. filename,
-    lua = "lua " .. filename,
-    go = "go run " .. filename,
-    rust = function()
-      local cargo = vim.fn.findfile("Cargo.toml", ".;")
-      if cargo ~= "" then
-        return "cargo run --manifest-path " .. cargo
-      end
-      return "cargo run"
-    end,
-    javascript = "node " .. filename,
-    typescript = "node " .. filename,
-    bash = "bash " .. filename,
-    sh = "bash " .. filename,
-    c = "gcc " .. filename .. " -o /tmp/a.out && /tmp/a.out",
-    cpp = "g++ " .. filename .. " -o /tmp/a.out && /tmp/a.out",
-  }
-  local cmd_raw = cmd_map[ft]
-  if not cmd_raw then
-    vim.notify("不支持运行 " .. ft .. " 文件", vim.log.levels.WARN)
-    return
-  end
-  local cmd = type(cmd_raw) == "function" and cmd_raw() or cmd_raw
-  local buf = vim.api.nvim_create_buf(false, true)
-  local win = vim.api.nvim_open_win(buf, true, { split = "below", height = 12 })
-  vim.bo[buf].filetype = "toggleterm"
-  vim.keymap.set("t", "<Esc><Esc>", [[<C-\><C-n>]], { buffer = buf, noremap = true })
-  vim.keymap.set("n", "q", "<cmd>close!<CR>", { buffer = buf, noremap = true, silent = true })
-  vim.fn.termopen(cmd, {
-    on_exit = function()
-      vim.schedule(function()
-        vim.notify("运行完毕，按 q / <Esc><Esc> 关闭面板")
-      end)
-    end,
-  })
-  vim.cmd("startinsert")
+  require("core.runner").run_current_file()
 end, "运行代码")
-
--- ======== 调试 (DAP) ========
-keymap("n", "<F6>", function() require("dap").continue() end, "继续")
-keymap("n", "<F7>", function() require("dap").terminate() end, "停止")
-keymap("n", "<F8>", function() require("dap").toggle_breakpoint() end, "断点")
-keymap("n", "<F9>", function() require("dap").step_into() end, "步入")
-keymap("n", "<F10>", function() require("dap").step_over() end, "步过")
-keymap("n", "<F11>", function() require("dap").step_out() end, "步出")
-keymap("n", "<leader>dc", function() require("dap").continue() end, "继续")
-keymap("n", "<leader>db", function() require("dap").toggle_breakpoint() end, "断点切换")
-keymap("n", "<leader>dB", function() require("dap").set_breakpoint(vim.fn.input("条件: ")) end, "条件断点")
-keymap("n", "<leader>do", function() require("dap").step_over() end, "单步跳过")
-keymap("n", "<leader>di", function() require("dap").step_into() end, "单步进入")
-keymap("n", "<leader>dO", function() require("dap").step_out() end, "单步跳出")
-keymap("n", "<leader>dt", function() require("dap").terminate() end, "终止调试")
-keymap("n", "<leader>dr", function() require("dapui").toggle() end, "调试界面")
+keymap("n", "<leader>rv", function()
+  require("core.runner").verify_project()
+end, "验证项目")
