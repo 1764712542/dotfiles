@@ -2,7 +2,7 @@
 -- plugins/ui.lua — UI 增强
 -- 部署路径: .config/nvim/lua/plugins/ui.lua
 -- 所属包: nvim/
--- 功能: lualine.nvim（状态栏）、trouble.nvim（诊断/引用/符号列表）
+-- 功能: lualine.nvim（状态栏）、bufferline.nvim（标签栏）、dressing.nvim/noice.nvim/which-key.nvim（界面增强）
 -- ==========================================
 return {
   {
@@ -122,31 +122,6 @@ return {
         command_palette = true,
         long_message_to_split = true,
         inc_rename = true,
-      },
-    },
-  },
-  {
-    "folke/trouble.nvim",
-    cmd = "Trouble",
-    keys = {
-      { "gt", "<cmd>Trouble diagnostics toggle<CR>", desc = "全部诊断" },
-      { "<leader>lw", "<cmd>Trouble diagnostics toggle<CR>", desc = "诊断列表" },
-      { "<leader>lp", "<cmd>Trouble project_diagnostics toggle<CR>", desc = "项目诊断" },
-      { "<leader>ld", "<cmd>Trouble diagnostics toggle filter.buf=0<CR>", desc = "当前诊断" },
-      { "<leader>xs", "<cmd>Trouble symbols toggle<CR>", desc = "符号列表" },
-      { "<leader>xl", "<cmd>Trouble loclist toggle<CR>", desc = "位置列表" },
-      { "<leader>xq", "<cmd>Trouble qflist toggle<CR>", desc = "快速修复" },
-    },
-    opts = {
-      focus = true,
-      multiline = true,
-      pinned = false,
-      warn_no_results = true,
-      open_no_result = true,
-      win = {
-        position = "right",
-        size = 0.3,
-        type = "split",
       },
     },
   },
