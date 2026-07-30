@@ -1,0 +1,3 @@
+[2mbranch:[0m[36mmain[0m[2m | [0m[31m![0m51 [36m?[0m11
+[1m[OMC#4.15.2][0m[2m | [0m[36mModel: deepseek-v4-flash[0m[2m | [0msession:[32m1m[0m[2m | [0mctx:[[32m##[2m--------[0m][32m18%[0m[2m | [0magents:[36m1[0m[2m | [0m🔧1 🤖1
+[2m└─[0m [36me[0m [2mexplore     [0m[32m 52s[0m  Investigate API auth error

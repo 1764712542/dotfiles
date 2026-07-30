@@ -1,0 +1,46 @@
+{
+  "_comment1": "=== Claude Code 配置模板（Zen Proxy + 免费模型）===",
+  "_comment2": "使用前提: zen-proxy 必须已在运行 (zen-proxy start)",
+  "_comment3": "Your ZEN_API_KEY_1 / ZEN_API_KEY_2 从 macOS Keychain 加载",
+
+  "enabledPlugins": {
+    "_note": "已启用的 Claude Code 插件",
+    "everything-claude-code@everything-claude-code": true,
+    "oh-my-claudecode@omc": true
+  },
+
+  "env": {
+    "_note_auth": "=== 认证 (经由本地 zen-proxy) ===",
+    "ANTHROPIC_BASE_URL": "http://127.0.0.1:8123",
+    "ANTHROPIC_AUTH_TOKEN": "not-used-by-zen-proxy",
+
+    "_note_models": "=== 模型（全部走本地 Zen Proxy 的免费模型）===",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "deepseek-v4-flash-free",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "deepseek-v4-flash-free",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "deepseek-v4-flash-free",
+    "ANTHROPIC_MODEL": "deepseek-v4-flash-free",
+
+    "_note_tuning": "=== 调优 ===",
+    "API_TIMEOUT_MS": "3000000",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+
+  "extraKnownMarketplaces": {
+    "_note": "第三方插件市场（oh-my-claudecode 的 HUD 等）",
+    "omc": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/Yeachan-Heo/oh-my-claudecode.git"
+      }
+    }
+  },
+
+  "skipDangerousModePermissionPrompt": false,
+  "statusLine": {
+    "_note": "底部状态栏（需安装 oh-my-claudecode 插件）",
+    "command": "node ${CLAUDE_CONFIG_DIR:-$HOME/.claude}/hud/omc-hud.mjs",
+    "type": "command"
+  },
+  "theme": "auto"
+}

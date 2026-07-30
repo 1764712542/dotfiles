@@ -25,7 +25,7 @@ return {
       { icon = " ", key = "f", desc = "查找文件", action = ":lua Snacks.dashboard.pick('files')" },
       { icon = " ", key = "g", desc = "全文搜索", action = ":lua Snacks.dashboard.pick('live_grep')" },
       { icon = "󰄉 ", key = "r", desc = "最近文件", action = ":lua Snacks.dashboard.pick('oldfiles')" },
-      { icon = " ", key = "e", desc = "Yazi", action = ":lua require('core.yazi').open()<CR>" },
+      { icon = " ", key = "e", desc = "文件管理", action = ":lua Snacks.explorer()<CR>" },
       {
         icon = " ",
         key = "c",

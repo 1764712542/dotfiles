@@ -1,0 +1,35 @@
+# ==========================================
+# .gitignore_global — 全局 Git 忽略规则
+# 部署路径: ~/.gitignore_global
+# 所属包: git/
+# 功能: 跨所有 Git 仓库的通用忽略规则（macOS 系统文件、编辑器临时文件、编译产物）
+# ==========================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+
+# Editor / IDE
+*.swp
+*.swo
+*~
+.vim/
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+*.log
+
+# OS
+ehthumbs.db
+Desktop.ini
+Thumbs.db
+
+**/.claude/settings.local.json

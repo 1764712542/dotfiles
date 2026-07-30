@@ -11,7 +11,7 @@ return {
     lazy = false,
     opts = {
       bigfile = { enabled = true },
-      explorer = { enabled = false }, -- 用 Yazi 替代
+      explorer = { enabled = true },
       terminal = { enabled = true },
       dashboard = require("configs.dashboard"),
       indent = {

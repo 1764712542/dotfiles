@@ -23,5 +23,15 @@ venv/
 .superpowers/
 .opencode/AGENTS.md
 
+# OpenCode runtime state
+.omo/
+
+# Claude Code local files
+/.claude/
+
+# Machine-local credentials and client runtime state
+gh/.config/gh/hosts.yml
+opencode/.claude.json
+
 # OpenCode project instructions (local only)
 AGENTS.md

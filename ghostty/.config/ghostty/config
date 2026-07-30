@@ -1,4 +1,10 @@
-# Ghostty Configuration
+# ==========================================
+# config — Ghostty 终端模拟器
+# 部署路径: ~/.config/ghostty/config
+# 所属包: ghostty/
+# 功能: GPU 加速终端模拟器，macOS 毛玻璃效果
+# 技术要点: Maple Mono NF CN 14pt, Tokyo Night Storm, option-as-alt=true
+# ==========================================
 
 # === Font ===
 font-family = Maple Mono NF CN
@@ -8,7 +14,7 @@ font-feature = liga
 
 # === Theme ===
 theme = TokyoNight Storm
-background-opacity = 0.85
+background-opacity = 0.65
 background-blur = macos-glass-regular
 background-opacity-cells = false
 

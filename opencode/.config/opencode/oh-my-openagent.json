@@ -1,0 +1,146 @@
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
+  "agents": {
+    "sisyphus": {
+      "description": "主编排器 - 规划、分配、驱动任务完成",
+      "model": "zen-proxy/deepseek-v4-flash-free",
+      "fallback_models": [
+        { "model": "zen-proxy/mimo-v2.5-free" },
+        { "model": "zen-proxy/hy3-free" }
+      ]
+    },
+    "hephaestus": {
+      "description": "深度执行器 - 拆解目标并端到端执行",
+      "model": "zen-proxy/deepseek-v4-flash-free",
+      "fallback_models": [
+        { "model": "zen-proxy/mimo-v2.5-free" }
+      ]
+    },
+    "oracle": {
+      "description": "架构顾问/调试 - 深层代码分析和方案设计",
+      "model": "zen-proxy/deepseek-v4-flash-free",
+      "fallback_models": [
+        { "model": "zen-proxy/mimo-v2.5-free" },
+        { "model": "zen-proxy/hy3-free" }
+      ]
+    },
+    "prometheus": {
+      "description": "策略规划师 - 需求访谈，构建验证计划",
+      "model": "zen-proxy/deepseek-v4-flash-free",
+      "fallback_models": [
+        { "model": "zen-proxy/mimo-v2.5-free" },
+        { "model": "zen-proxy/hy3-free" }
+      ]
+    },
+    "metis": {
+      "description": "深度分析 - 技术方案评估与优化建议",
+      "model": "zen-proxy/deepseek-v4-flash-free",
+      "fallback_models": [
+        { "model": "zen-proxy/mimo-v2.5-free" },
+        { "model": "zen-proxy/hy3-free" }
+      ]
+    },
+    "multimodal-looker": {
+      "description": "多模态视觉理解",
+      "model": "zen-proxy/deepseek-v4-flash-free",
+      "fallback_models": [
+        { "model": "zen-proxy/hy3-free" }
+      ]
+    },
+    "momus": {
+      "description": "代码审查/批评 - 检查缺陷和优化点",
+      "model": "zen-proxy/mimo-v2.5-free",
+      "fallback_models": [
+        { "model": "zen-proxy/deepseek-v4-flash-free" },
+        { "model": "zen-proxy/hy3-free" }
+      ]
+    },
+    "sisyphus-junior": {
+      "description": "轻量子任务执行 - 简单编码/修bug",
+      "model": "zen-proxy/mimo-v2.5-free",
+      "fallback_models": [
+        { "model": "zen-proxy/deepseek-v4-flash-free" },
+        { "model": "zen-proxy/hy3-free" }
+      ]
+    },
+    "explore": {
+      "description": "代码搜索 - 快速文件查找和文本搜索",
+      "model": "zen-proxy/hy3-free",
+      "fallback_models": [
+        { "model": "zen-proxy/deepseek-v4-flash-free" }
+      ]
+    },
+    "atlas": {
+      "description": "上下文管理/会话恢复 - 轻量维护任务",
+      "model": "zen-proxy/hy3-free",
+      "fallback_models": [
+        { "model": "zen-proxy/deepseek-v4-flash-free" }
+      ]
+    }
+  },
+  "categories": {
+    "ultrabrain": {
+      "description": "重度推理 - 算法、架构、复杂逻辑",
+      "model": "zen-proxy/deepseek-v4-flash-free",
+      "fallback_models": [
+        { "model": "zen-proxy/mimo-v2.5-free" },
+        { "model": "zen-proxy/hy3-free" }
+      ]
+    },
+    "deep": {
+      "description": "深度任务 - 重构、迁移、复杂编码",
+      "model": "zen-proxy/deepseek-v4-flash-free",
+      "fallback_models": [
+        { "model": "zen-proxy/mimo-v2.5-free" },
+        { "model": "zen-proxy/hy3-free" }
+      ]
+    },
+    "visual-engineering": {
+      "description": "UI/前端工程 - 界面和交互逻辑",
+      "model": "zen-proxy/deepseek-v4-flash-free",
+      "fallback_models": [
+        { "model": "zen-proxy/mimo-v2.5-free" }
+      ]
+    },
+    "unspecified-high": {
+      "description": "未分类重任务 - 兜底高负载",
+      "model": "zen-proxy/deepseek-v4-flash-free",
+      "fallback_models": [
+        { "model": "zen-proxy/mimo-v2.5-free" },
+        { "model": "zen-proxy/hy3-free" }
+      ]
+    },
+    "artistry": {
+      "description": "创意/UI设计 - 不需要深度推理",
+      "model": "zen-proxy/hy3-free",
+      "fallback_models": [
+        { "model": "zen-proxy/deepseek-v4-flash-free" },
+        { "model": "zen-proxy/mimo-v2.5-free" }
+      ]
+    },
+    "writing": {
+      "description": "文档/注释写作 - 轻量文本生成",
+      "model": "zen-proxy/hy3-free",
+      "fallback_models": [
+        { "model": "zen-proxy/deepseek-v4-flash-free" },
+        { "model": "zen-proxy/mimo-v2.5-free" }
+      ]
+    },
+    "quick": {
+      "description": "快速任务 - 单文件修改/简单查询",
+      "model": "zen-proxy/hy3-free",
+      "fallback_models": [
+        { "model": "zen-proxy/mimo-v2.5-free" },
+        { "model": "zen-proxy/deepseek-v4-flash-free" }
+      ]
+    },
+    "unspecified-low": {
+      "description": "未分类轻任务 - 兜底低负载",
+      "model": "zen-proxy/hy3-free",
+      "fallback_models": [
+        { "model": "zen-proxy/mimo-v2.5-free" },
+        { "model": "zen-proxy/deepseek-v4-flash-free" }
+      ]
+    }
+  }
+}

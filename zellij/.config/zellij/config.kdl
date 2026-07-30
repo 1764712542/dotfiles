@@ -1,44 +1,8 @@
-// Zellij Configuration
-// Tokyo Night Storm Theme
-
-theme "tokyo-night-storm"
-
-shared-session {
-    pane_frames false
-    mouse_mode true
-    scroll_buffer_size 10000
-    default_shell "zsh"
-}
-
-// Ctrl+o 作为 leader 键（替代默认 Ctrl+p），进入 tmux 兼容模式
-keybinds {
-    normal {
-        bind "Ctrl o" { SwitchToMode "Tmux"; }
-    }
-    locked {
-        bind "Ctrl g" { SwitchToMode "Normal"; }
-    }
-    shared_except "locked" {
-        bind "Ctrl g" { SwitchToMode "Locked"; }
-        bind "Ctrl q" { Quit; }
-    }
-    tmux {
-        bind "[" { SwitchToMode "Scroll"; }
-        bind "Ctrl b" { Write 2; SwitchToMode "Normal"; }
-        bind "\"" { NewPane "Down"; SwitchToMode "Normal"; }
-        bind "%" { NewPane "Right"; SwitchToMode "Normal"; }
-        bind "z" { ToggleFocusFullscreen; SwitchToMode "Normal"; }
-        bind "c" { NewTab; SwitchToMode "Normal"; }
-        bind "," { SwitchToMode "RenameTab"; }
-        bind "p" { GoToPreviousTab; SwitchToMode "Normal"; }
-        bind "n" { GoToNextTab; SwitchToMode "Normal"; }
-        bind "h" { MoveFocus "Left"; SwitchToMode "Normal"; }
-        bind "l" { MoveFocus "Right"; SwitchToMode "Normal"; }
-        bind "j" { MoveFocus "Down"; SwitchToMode "Normal"; }
-        bind "k" { MoveFocus "Up"; SwitchToMode "Normal"; }
-        bind "o" { FocusNextPane; }
-        bind "d" { Detach; }
-        bind "Space" { NextSwapLayout; }
-        bind "x" { CloseFocus; SwitchToMode "Normal"; }
-    }
-}
+// Zellij configuration. Session orchestration is handled by Zellij itself.
+default_mode "normal"
+pane_frames true
+mouse_mode true
+copy_on_select true
+scroll_buffer_size 10000
+session_serialization true
+pane_viewport_serialization true

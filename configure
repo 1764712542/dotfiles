@@ -12,8 +12,14 @@
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 PACKAGES=(
   zsh p10k zim git npm
-  ghostty zellij yazi btop fastfetch lazygit pip
-  mise docker nvim brew cheatsheet
+  ghostty yazi btop fastfetch lazygit pip
+  mise nvim brew opencode zellij
+  gh claude prox docker pentest
+)
+STOW_ARGS=(
+  --ignore='(^|/)AGENTS\.md$'
+  --ignore='^\.claude/(CLAUDE\.md|settings\.json)$'
+  --ignore='^\.config/opencode/oh-my-openagent\.json$'
 )
 
 cd "$DOTFILES_DIR" || exit 1
@@ -37,21 +43,38 @@ check_symlinks() {
 case "$cmd" in
   link|stow)
     echo "→ 部署 symlink ..."
-    stow -v "${PACKAGES[@]}"
+    if ! stow -v "${STOW_ARGS[@]}" "${PACKAGES[@]}"; then
+      echo "✗ 部署失败" >&2
+      exit 1
+    fi
     echo "✓ 完成"
     ;;
   unlink|unstow)
     echo "→ 移除 symlink ..."
-    stow -v -D "${PACKAGES[@]}"
+    if ! stow -v -D "${STOW_ARGS[@]}" "${PACKAGES[@]}"; then
+      echo "✗ 移除失败" >&2
+      exit 1
+    fi
     echo "✓ 完成"
     ;;
   reinstall|relink)
     echo "→ 重新部署 ..."
-    stow -v -D "${PACKAGES[@]}" && stow -v "${PACKAGES[@]}"
+    if ! stow -v -D "${STOW_ARGS[@]}" "${PACKAGES[@]}"; then
+      echo "✗ 移除旧 symlink 失败" >&2
+      exit 1
+    fi
+    if ! stow -v "${STOW_ARGS[@]}" "${PACKAGES[@]}"; then
+      echo "✗ 重新部署失败" >&2
+      exit 1
+    fi
     echo "✓ 完成"
     ;;
   doctor)
     echo "=== doctor: 检查 symlink 健康状态 ==="
+    if ! stow --simulate "${STOW_ARGS[@]}" "${PACKAGES[@]}" >/dev/null 2>&1; then
+      echo "✗ Stow 部署模拟失败（存在文件冲突或无效包）" >&2
+      exit 1
+    fi
     {
       find "$HOME" -maxdepth 1 -type l -lname "dotfiles/*" 2>/dev/null
       find "$HOME/.config" -maxdepth 2 -type l -lname "../../dotfiles/*" 2>/dev/null
@@ -59,7 +82,12 @@ case "$cmd" in
     } | sort -u | check_symlinks
     rc=$?
     echo ""
-    [ "$rc" -eq 0 ] && echo "✓ 全部正常" || echo "✗ $rc 个异常"
+    if [ "$rc" -eq 0 ]; then
+      echo "✓ 全部正常"
+    else
+      echo "✗ $rc 个异常"
+      exit "$rc"
+    fi
     ;;
   list|status)
     echo "=== dotfiles packages ==="

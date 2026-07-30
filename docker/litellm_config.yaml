@@ -1,6 +1,10 @@
-# LiteLLM 配置 — 统一 API 路由
-# 本机 Ollama (GPU) + OpenRouter (云端) 二合一
-# 使用: 所有客户端连 http://localhost:4000 , 兼容 OpenAI SDK
+# ==========================================
+# litellm_config.yaml — LiteLLM API 路由配置
+# 部署路径: ~/dotfiles/docker/litellm_config.yaml
+# 所属包: docker/
+# 功能: Ollama（本机 GPU）+ OpenRouter（云端）统一 API 路由
+# 使用: 客户端连接 http://localhost:4000, 兼容 OpenAI SDK
+# ==========================================
 
 model_list:
   - model_name: qwen-local

@@ -12,7 +12,7 @@ dotfiles/
 ├── git/           .gitconfig
 ├── ghostty/       config
 ├── yazi/          yazi.toml + keymap.toml
-├── zellij/        config.kdl
+├── zellij/          .config/zellij/config.kdl
 ├── btop/          btop.conf
 ├── fastfetch/     config.jsonc
 ├── lazygit/       config.yml
@@ -21,19 +21,19 @@ dotfiles/
 ├── npm/           .npmrc
 ├── pip/           .config/pip/pip.conf
 ├── brew/          .Brewfile
-├── cheatsheet/    ai-dev-cheatsheet.md
 ├── docker/        docker-compose-ai.yml + litellm_config.yaml
-├── configure       — 部署脚本
-└── justfile        — 任务编排
+├── claude/        .claude/
+├── configure      — 部署脚本
+└── justfile         — 任务编排
 ```
 
 ### 配置文件说明
 
 #### Shell 环境 (`zsh/`, `zim/`, `p10k/`)
 
-- **`.zshenv`** — 所有 Shell 共享环境变量（PATH、cargo、编辑器变量）
+- **`.zshenv`** — 所有 Shell 共享的轻量环境变量
 - **`.zprofile`** — 登录 Shell 初始化（Homebrew、包管理器）
-- **`.zshrc`** — 交互式 Shell 配置（Zimfw 加载、工具链别名、fzf 键位、补全、atuin 历史、zoxide 目录跳转、Powerlevel10k 提示符、代理检测）
+- **`.zshrc`** — 交互式 Shell 配置（Zimfw、原生历史、fzf、zoxide、Powerlevel10k 和代理检测）
 - **`.zimrc`** — Zimfw 模块声明清单
 - **`.p10k.zsh`** — Powerlevel10k Pure 风格配置，transient prompt + instant prompt
 
@@ -43,8 +43,7 @@ dotfiles/
   - SSH 别名认证（`git@github.com` → HTTPS 映射）
   - 全局 gitignore（macOS 系统文件、编辑器临时文件、编译产物）
   - delta 作为 diff 分页器（语法高亮 + 行号）
-  - 代理配置（SOCKS5 127.0.0.1:7892）
-  - 别名（`lg` = lazygit, `st` = status, `co` = checkout, `br` = branch）
+  - 别名（`lg` = 图形化日志, `st` = status, `co` = checkout, `br` = branch）
 
 #### 终端工具
 
@@ -60,10 +59,8 @@ dotfiles/
   - 文件预览（代码语法高亮、图片、PDF、视频）
   - Tokyo Night 配色
 
-- **Zellij** (`zellij/`) — 终端多路复用器
-  - Tokyo Night 主题
-  - 自定义布局：主编辑区 + 底部终端 + 右侧文件树
-  - 鼠标支持
+- **zellij** (`zellij/`) — 终端多路复用器
+  - 原生 Zellij 模式、鼠标支持和滚动缓冲
 
 - **btop** (`btop/`) — 系统监控
   - Tokyo Night 配色
@@ -99,11 +96,19 @@ dotfiles/
 #### 容器化
 
 - **Docker** (`docker/docker-compose-ai.yml`) — AI 服务栈
-  - ChromaDB（向量数据库）
-  - Qdrant（向量数据库，备选）
-  - pgvector（PostgreSQL 向量扩展）
-  - LiteLLM（OpenAI 兼容 API 代理，路由到 Ollama + OpenRouter）
+  - Qdrant（默认向量数据库）
+  - LiteLLM（`llm` profile，确需统一模型路由时启用）
+  - 所有服务端口仅绑定本机回环地址
+  - 使用 Homebrew 的 `docker-compose` 插件进行编排与静态验证
   - Ollama 由 `just ollama` 在宿主机直接运行
+
+### Claude Code
+
+- **CLAUDE.md** (`claude/.claude/`) — 全局系统提示词（OMC 编排 + 安全/代码/Git 规则）
+- **rules/** (`claude/.claude/rules/`) — 30 个按路径匹配的规则文件
+- **skills/** (`claude/.claude/skills/`) — 37 个 OMC 技能，提供自动化和工作流
+- **agents/** (`claude/.claude/agents/`) — 子智能体定义（探索/代码评审/安全等）
+- `~/.claude.json` 由 `opencode/` 包管理（运行时状态）
 
 ### Neovim 配置
 
@@ -117,7 +122,7 @@ dotfiles/
 
 | 插件 | 用途 |
 |------|------|
-| snacks.nvim (explorer) | 文件树浏览器 |
+| snacks.nvim (explorer + picker + terminal) | 文件树 + 模糊搜索 + 内置终端 |
 | oil.nvim | 默认文件管理器（替代 NetRW，`-` 键打开） |
 | edgy.nvim | 可编程侧边栏布局（左：Trouble，底：终端 + 问题列表 + 帮助） |
 
@@ -145,7 +150,7 @@ dotfiles/
 | conform.nvim | 代码格式化（保存时自动 / 手动触发） |
 | trouble.nvim | LSP 诊断 / 引用 / 符号列表 |
 
-支持的语言和 LSP 服务器：bashls / gopls / lua_ls / pyright / ruff / rust_analyzer / ts_ls
+支持的语言和 LSP 服务器：bashls / gopls / lua_ls / pyright / ruff / ts_ls
 
 #### AI 辅助
 
@@ -155,7 +160,7 @@ dotfiles/
 | supermaven-nvim | AI 行内代码补全（`y` 接受全部，`j` 接受单词，`l` 取消） |
 | im-select.nvim | 退出插入模式自动切换英文输入法，解决中英混输问题 |
 
-Avante 使用 `OPENROUTER_API_KEY`，提供对话、内联编辑等功能；行内补全由 supermaven-nvim 提供（免费，无需 API Key）。
+Avante 通过本地 Zen Proxy（127.0.0.1:8123）路由到 DeepSeek V4 Flash 等模型；行内补全由 supermaven-nvim 提供（免费，无需 API Key）。
 
 #### 调试
 
@@ -165,7 +170,7 @@ Avante 使用 `OPENROUTER_API_KEY`，提供对话、内联编辑等功能；行�
 | nvim-dap-ui | 调试界面（变量/堆栈/断点/监视） |
 | mason-nvim-dap.nvim | DAP 适配器自动安装 |
 
-支持 Python / Go / C++ / Rust 断点调试。
+支持 Python / Go / C++ 断点调试。
 
 #### 界面美化
 
@@ -187,20 +192,18 @@ Avante 使用 `OPENROUTER_API_KEY`，提供对话、内联编辑等功能；行�
 | treesj | 代码行拆分/合并 |
 | grug-far.nvim | 项目范围搜索替换（支持 ripgrep） |
 | im-select.nvim | 退出插入模式自动切回英文输入法，避免中文输入干扰 Vim 模式 |
-| comment.nvim | 代码注释（`gc` / `gcc`） |
-| nvim-autopairs | 括号自动补全 |
+| blink.pairs | Treesitter 感知的括号自动补全 |
 | flash.nvim | Treesitter 感知的快速跳转（单词/行/双字符） |
 | persisted.nvim | 会话自动保存/恢复 |
-| nvim-bufdel | 安全关闭 buffer（保留窗口布局） |
 | smart-splits.nvim | 窗口间智能导航与调整 |
 | smear-cursor.nvim | 光标平滑动画 |
 | colorizer.lua | 颜色代码高亮预览 |
-| snacks.nvim (indent) | 缩进指示线（替代 indent-blankline） |
+| snacks.nvim (indent) | 缩进指示线 |
+| snacks.nvim (terminal) | 内置终端面板（替代 toggleterm） |
 | dressing.nvim | 内置 UI（vim.ui.input/select）美化 |
 | mini.nvim | 模块化工具集：文本对象增强 (ai)、环绕编辑 (surround)、图标 (icons)、注释 (comment) |
 | todo-comments.nvim | TODO/FIXME/HACK 高亮与搜索 |
 | undotree | 可视化撤销树 |
-| toggleterm.nvim | 浮动/底部终端面板 |
 | render-markdown.nvim | Markdown 实时渲染 |
 | markdown-preview.nvim | Markdown 浏览器预览（F12） |
 
@@ -305,13 +308,11 @@ Avante 使用 `OPENROUTER_API_KEY`，提供对话、内联编辑等功能；行�
 | `delta` | `diff` | Git diff 语法高亮分页器 |
 | `fzf` | — | 模糊搜索，集成 Ctrl+R / Ctrl+T / Alt+C |
 | `zoxide` | `cd` | 智能目录跳转（`z` / `zi` / `za`） |
-| `atuin` | `history` | shell 历史模糊搜索 + 加密同步 |
 | `btop` | `top` | 系统监控（CPU / 内存 / 磁盘 / GPU） |
 | `lazygit` | — | Git TUI |
-| `zellij` | `tmux` | 终端多路复用器 |
+| `zellij` | — | 终端多路复用器 |
 | `yazi` | — | 终端文件管理器 |
 | `mise` | `pyenv`/`nvm`/`rbenv` | 统一运行时版本管理 |
-| `carapace` | — | Shell 补全 |
 | `fastfetch` | `neofetch` | 系统信息 |
 | `just` | `make` | 任务编排 |
 
@@ -330,7 +331,7 @@ brew bundle --file brew/.Brewfile
 # 安装 Zim 模块
 zimfw install
 
-# 安装运行时（Python / Node / Go / Rust 等）
+# 安装运行时（Python / Node；Go 由 Homebrew 管理）
 mise install
 
 # 重开终端
@@ -344,11 +345,11 @@ exec zsh
 
 ## 特色
 
-- **全栈覆盖** — 从终端模拟器到编辑器、版本控制、容器化、AI 辅助，统一管理和维护
+- **聚焦应用开发** — 围绕 Python、Go、容器和 AI 应用维护核心工具链
 - **一致视觉** — 所有组件配置 Tokyo Night Storm 配色
 - **声明式管理** — 一个 `configure link` + `brew bundle` 部署完整环境
 - **快捷键体系** — 分类命名、中文提示，which-key 引导无需记忆
-- **uv 优先** — Python 包管理首选 uv，`ai` 别名快速激活 AI 虚拟环境
+- **uv 优先** — Python 依赖由各项目的 `pyproject.toml` 和 `uv.lock` 管理
 - **AI 原生** — Avante.nvim AI 聊天 + Supermaven 内联补全，双引擎协同样式
 - **XDG 规范** — 所有缓存、配置、数据目录遵循 XDG 标准
 ## 依赖

@@ -1,5 +1,9 @@
-# Yazi Configuration
-# Tokyo Night Storm Theme
+# ==========================================
+# yazi.toml — Yazi 终端文件管理器
+# 部署路径: ~/.config/yazi/yazi.toml
+# 所属包: yazi/
+# 功能: Vim 风格文件浏览、文件预览、Tokyo Night 配色
+# ==========================================
 
 [manager]
 show_hidden = true
@@ -22,6 +26,7 @@ play = [
 rules = [
   { url = "*.md", use = "edit" },
   { url = "*.txt", use = "edit" },
+  { url = "*.{py,js,ts,jsx,tsx,java,go,rs,c,cpp,h,hpp,rb,php}", use = "edit" },
   { url = "*.{json,yaml,toml,xml}", use = "edit" },
   { url = "*.{png,jpg,jpeg,gif,webp}", use = "play" },
   { url = "*.{mp4,mp3,mkv,avi}", use = "play" },

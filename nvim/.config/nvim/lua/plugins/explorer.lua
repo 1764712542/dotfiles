@@ -1,8 +1,8 @@
 -- ==========================================
--- plugins/explorer.lua — 侧边栏布局（Yazi 替代了文件管理器）
+-- plugins/explorer.lua — 侧边栏布局
 -- 部署路径: .config/nvim/lua/plugins/explorer.lua
 -- 所属包: nvim/
--- 功能: edgy.nvim（侧边栏布局，Yazi 替代 oil / snacks-explorer）
+-- 功能: edgy.nvim（侧边栏布局）
 -- ==========================================
 return {
   {

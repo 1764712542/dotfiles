@@ -80,6 +80,14 @@ keymap("n", "<C-p>", function()
   Snacks.picker.keymaps()
 end, "命令面板")
 
+-- ======== 文件管理器 (Snacks Explorer) ========
+keymap("n", "<leader>n", function()
+  Snacks.explorer()
+end, "文件管理器")
+keymap("n", "-", function()
+  Snacks.explorer()
+end, "文件管理器")
+
 -- ======== 标签页 (term: <leader>t) ========
 keymap("n", "<leader>tn", "<cmd>tabnew<CR>", "新建标签")
 keymap("n", "<leader>th", "<cmd>tabprev<CR>", "左标签")
@@ -146,13 +154,6 @@ keymap("n", "<leader>pp", "<cmd>Lazy profile<CR>", "包管理: 性能")
 keymap("n", "<leader>pr", "<cmd>Lazy restore<CR>", "包管理: 恢复")
 keymap("n", "<leader>px", "<cmd>Lazy clean<CR>", "包管理: 清理")
 
--- ======== 文件管理器 (Fm) ========
-keymap("n", "<leader>y", function()
-  require("core.fm").toggle()
-end, "Fm 文件管理器")
-keymap("n", "-", function()
-  require("core.fm").toggle()
-end, "Fm 文件管理器")
 -- ======== 保存 / 退出 ========
 keymap({ "n", "i" }, "<C-s>", "<cmd>w<CR>", "保存")
 keymap("n", "<leader>q", "<cmd>q<CR>", "退出")

@@ -1,3 +1,11 @@
+# ==========================================
+# .gitconfig — Git 全局配置
+# 部署路径: ~/.gitconfig
+# 所属包: git/
+# 功能: 用户信息、别名、delta diff 分页器、SSH 代替 HTTPS
+# 注意事项: 全局 gitignore 在 .gitignore_global
+# ==========================================
+
 [user]
 	name = ryanzhu
 	email = 1764712542@qq.com
@@ -12,17 +20,25 @@
 [pull]
 	rebase = true
 
+[diff]
+	algorithm = histogram
+
+[merge]
+	conflictstyle = zdiff3
+
+[fetch]
+	prune = true
+	pruneTags = true
+
+[push]
+	autoSetupRemote = true
+	followTags = true
+
 [rebase]
 	autosquash = true
 
 [log]
 	decorate = auto
-
-[safe]
-	directory = *
-
-[url "git@github.com:"]
-	insteadOf = https://github.com/
 
 [interactive]
 	diffFilter = delta --color-only
@@ -60,3 +76,10 @@
 	sw = switch
 	ssw = switch -
 	mg = merge --no-ff
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[safe]
+	directory = /Users/zhuyao
+	directory = *
+[http]
+	version = HTTP/1.1

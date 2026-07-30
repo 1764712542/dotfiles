@@ -1,0 +1,2 @@
+[2mbranch:[0m[36mmain[0m[2m | [0m[31m![0m51 [36m?[0m9
+[1m[OMC#4.15.2][0m[2m | [0m[36mModel: deepseek-v4-flash[0m[2m | [0msession:[32m2m[0m[2m | [0mctx:[[32m###[2m-------[0m][32m26%[0m[2m | [0m🔧16

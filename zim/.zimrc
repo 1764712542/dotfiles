@@ -21,7 +21,7 @@ zmodule zsh-users/zsh-autosuggestions
 # --- 增强模块 ---
 zmodule git
 zmodule ssh
-zmodule ruby
+# zmodule ruby  # not used
 
 # --- 现代增强 ---
 zmodule olets/zsh-abbr    # 智能缩写展开 (空格触发)

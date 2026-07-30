@@ -1,3 +1,11 @@
+# ==========================================
+# config.toml — mise 运行时版本管理
+# 部署路径: ~/.config/mise/config.toml
+# 所属包: mise/
+# 功能: 统一管理 Node 22 + Python 3.12（Go 由 Homebrew 管理）
+# 使用: mise install
+# ==========================================
+
 [tools]
-node = "22"
-python = "3.12"
+node = "22.23.0"
+python = "3.12.13"

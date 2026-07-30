@@ -1,0 +1,1 @@
+[1m[OMC#4.15.2][0m[2m | [0m[36mModel: deepseek-v4-flash[0m[2m | [0m[36mthinking[0m[2m | [0msession:[32m7m[0m[2m | [0m[36mskill:deepinit[0m[2m | [0mctx:[[32m####[2m------[0m][32m43%[0m[2m | [0m🔧77 🤖3 ⚡1

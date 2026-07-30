@@ -1,0 +1,2 @@
+[2mbranch:[0m[36mmain[0m[2m | [0m[36m?[0m23
+[1m[OMC#4.15.2][0m[2m | [0m[36mModel: Sonnet 4.6[0m[2m | [0msession:[32m0m[0m[2m | [0mctx:[[32m[2m----------[0m][32m0%[0m

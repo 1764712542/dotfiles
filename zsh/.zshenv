@@ -1,9 +1,6 @@
-. "$HOME/.cargo/env"
-
-# Proxy for OpenRouter / AI tools (猫猫云 mixed port 7892 supports HTTP + SOCKS5)
-export HTTPS_PROXY=http://127.0.0.1:7892
-export ALL_PROXY=socks5h://127.0.0.1:7892
-# opencode.ai 直连可访问，Bun fetch 不支持 HTTP proxy CONNECT 隧道
-
-# Load API keys from macOS Keychain
-export OPENROUTER_API_KEY="$(security find-generic-password -s OPENROUTER_API_KEY -w 2>/dev/null)"
+export ANTHROPIC_BASE_URL="https://api.aslnet.cloud"
+export ANTHROPIC_MODEL="claude-sonnet-4-5"
+export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
+export CLAUDE_CODE_ATTRIBUTION_HEADER=0
+export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
+export CLAUDE_CODE_EFFORT_LEVEL="max"
